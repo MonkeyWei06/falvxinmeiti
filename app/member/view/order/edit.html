@@ -1,0 +1,67 @@
+<{include file="public/member_header" /}>
+<script type="text/javascript">
+    function submitbut() {
+        var title=$('#title').val();
+        var beizhu=$('#beizhu').val();
+       if(title==""){
+           alert("文字标题不能为空");
+           return false;
+       }
+        $('#MyForm').submit();
+    }
+</script>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf am-btn-group">
+          <button class="am-btn am-btn-primary am-btn-sm">编辑文章</button>
+		  </div>
+      </div>
+      <hr>
+    </div>
+    <div class="page-content">
+      <div class="page-content-area" style="margin-left: 3%;" >
+      <form class="am-form" id="MyForm" method="post" action="<{:url("editsave")}> ">
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-12 am-u-md-1 am-md-text-right">标题：</div>
+          <div class="am-u-sm-12 am-u-md-11">
+            <input id="article_title" type="text" name="article_title" value="<{$title}>" autocomplete="off" placeholder="建议25字内,不要出现特殊字符,否则容易乱码" style="width:350px;">
+           </div>
+        </div>
+        <div class="am-g am-margin-top" style="margin-top: 30px;">
+          <div class="am-u-sm-12 am-u-md-1 am-md-text-right">内容：</div>
+          <textarea id="article_content" name="article_content" style="float:left;width:80%;height: 40%;"><{$editorValue}></textarea>
+        </div>
+        </div>
+
+        <div class="am-g am-margin-top">
+          <div class="am-u-sm-12 am-u-md-1 am-md-text-right" style="margin-top: 20px;">备 注：</div>
+          <div class="am-u-sm-12 am-u-md-11" style="margin-top: 20px;">
+            <input type="text" name="article_remarks" value="<{$beizhu}>" id="article_remarks" style="width:350px;">
+			 <input type="hidden" name="article_id" value="<{$id}>" id="article_id" style="width:350px;">
+          </div>
+        </div>
+
+		<div class="am-form-group am-margin-top">
+			<label class="am-u-sm-3 am-form-label am-padding-horizontal-0"></label>
+			<div class="am-u-sm-5">
+				<button id="submitForm" type="button" class="am-btn am-btn-warning am-btn-block" onClick="submitbut();">保存并提交</button>
+			</div>
+			<div class="am-u-sm-4 am-margin-top"></div>
+		</div>
+		<hr>
+      </form>
+    </div>
+  </div>
+</div>
+<{include file="public/member_footer" /}>
+<script type="text/javascript">
+    var ue = new UE.ui.Editor({initialFrameHeight:400});
+    ue.render("article_content");
+</script>
+</body>
+</html>

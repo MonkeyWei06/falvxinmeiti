@@ -1,0 +1,178 @@
+<{include file="public/header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">会员列表</strong>
+       </div>
+    </div>
+	<hr>
+	<div class="am-g">
+		<div class="am-u-sm-12">
+			<!--检索开始---> 
+			   <div class="am-margin-bottom-xs am-margin-top"> 
+ 				  <div class="am-form-group am-margin-bottom-0"> 
+				   <label class="am-form-label am-u-sm-1" for="search_media">用户名：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+					<input name="keyword" id="keyword" type="text" placeholder="请输入用户名" autocomplete="off" style="height: 32px" /> 
+				   </div> 
+				    <label class="am-form-label am-u-sm-1" for="search_media">邀请码：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+					<input name="invitecode" id="invitecode" type="text" placeholder="请输邀请码" autocomplete="off" style="height: 32px" /> 
+				   </div> 
+				   <div class="am-u-sm-6 "> 
+					<button type="button" id="SearchBut" class="am-btn am-btn-sm am-btn-primary">搜索</button> 
+				   </div> 
+ 				</div> 
+			   </div> 
+			   <!--检索结束--->
+		</div>
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+				</div>
+			  <div class="clear"></div>
+			</div>
+		   </div>
+		</div>
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script type="text/html" id="DataOperation">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">财务报表</a>
+	<a class="layui-btn layui-btn-xs" lay-event="modify_pwd">修改密码</a>
+	<a class="layui-btn layui-btn-xs" lay-event="modify_wallet">资金调整</a>
+	<a class="layui-btn layui-btn-xs " lay-event="enable">启用</a>
+	<a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="forbidden">禁用</a>
+	<a class="layui-btn layui-btn-xs" lay-event="userlevel" data-level="{{d.userlevel}}" data-name="{{d.name}}">会员等级</a>
+</script>
+<script>
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var invitecode = $("#invitecode").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getMemberlist')}>'
+            ,where:{keyword:keyword,invitecode:invitecode}
+        });
+    });
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('getMemberlist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,cols: [[
+                {field:'MemberName', title:'用户名',align:'center', width:100}
+                ,{field:'MemberMobile', title:'手机号',align:'center', width:100}
+                ,{field:'MemberQQ', title:'QQ号',align:'center', width:100}
+                ,{field:'MemberTime', title:'注册时间',align:'center', width:150}
+                ,{field:'MemberBalanceCount', title:'账户余额',align:'center', width:100}
+                ,{field:'MemberState', title:'状态',align:'center', width:60}
+                ,{field:'MemberTypeIDName', title:'会员等级',align:'center', width:90}
+                ,{field:'MemberPriceTypeName', title:'会员价格',align:'center', width:90}
+                ,{field:'MemberInviteCode', title:'邀请码',align:'center', width:80}
+                ,{fixed: 'right', title:'操作',align:'center', toolbar: '#DataOperation', width:400}
+            ]]
+            ,limit:20
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next'] //自定义分页布局 ,'limit',  'skip'
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 7 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            },
+            done:function(){
+            }
+        });
+        //监听工具条
+        table.on('tool(DataList)',function(obj) {
+            var data = obj.data;
+            //console.log(data);
+            if (obj.event === 'modify_pwd'){
+                //iframe层-父子操作
+                layer.open({
+                    title:'密码修改',
+                    type: 2,
+                    area: ['500px', '240px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '<{:url('modify_pwd')}>?MemberID='+data.MemberID+'&MemberName='+data.MemberName
+                });
+            } else if (obj.event === 'modify_wallet') {
+                //资金调整
+                layer.open({
+                    type: 2,
+                    title: '资金调整',
+                    maxmin: true,
+                    shadeClose: false, //点击遮罩关闭层
+                    area: ['500px', '240px'],
+                    content: '<{:url('modify_wallet')}>?MemberID='+data.MemberID
+                });
+            } else if(obj.event === 'userlevel'){
+                //iframe层-父子操作
+                layer.open({
+                    title:'会员等级',
+                    type: 2,
+                    area: ['500px', '280px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '<{:url('userlevel')}>?MemberID='+data.MemberID
+                });
+            } else if(obj.event === 'edit'){
+                window.location.href='<{:url('topup')}>?MemberID='+data.MemberID;
+            }
+            //会员详情
+            else if(obj.event==='userDetail'){
+                window.location.href='/index.php/fxadmin/user/detail'+'/user_id/'+data.id;
+                //alert(666);
+            }
+            //禁用
+            else if(obj.event==='forbidden'){
+                var MemberID=data.MemberID;
+                $.post('<{:url('forbidden')}>',{MemberID:MemberID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+						});
+					}else{
+                        layer.msg('系统调用错误');
+					}
+                });
+            }
+            //启用
+            else if(obj.event==='enable'){
+                var MemberID=data.MemberID;
+                $.post('<{:url('enable')}>',{MemberID:MemberID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            }
+        });
+        //已冻结
+        table.on('tool(user_delete)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                window.location.href='/index.php/fxadmin/user2/user_detail'+'/id/'+data.user_id;
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+    ul.content{ padding-left:25px;}
+    ul.content li{ padding-top: 10px;}
+    ul.content li a{ padding-left:5px; cursor: pointer;}
+    .ShowHide{ cursor: pointer;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>推荐图谱</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('atlas')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 80px;">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="会员名称" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<div class="layui-row">
+    <div class="layui-col-xs12 layui-col-md12">
+        <ul class="content">
+            <{volist name="List" id="val"}>
+            <li>
+                <div>
+                    <span class="layui-badge-dot layui-bg-blue"></span>
+                    <a onclick="OpenNextLevel(this,'<{:url('ajax/Atlas',['id'=>$val.MemberID])}>');">会员名称：<{$val.MemberName}>(会员级别：<{$val.TypeName}>)</a>
+                    <span class="ShowHide" onclick="ShowHideNextLevel(this);">显示</span>
+                </div>
+            </li>
+            <{/volist}>
+        </ul>
+    </div>
+</div>
+<{include file="public/admin_footer" /}>

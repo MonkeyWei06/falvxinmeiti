@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>管理系统</title>
+<meta name="renderer" content="webkit">
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-status-bar-style" content="black">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="format-detection" content="telephone=no">
+<style type="text/css">
+.layui-elem-quote {
+    margin-bottom: 20px;
+    padding: 15px;
+    line-height: 22px;
+    border-left: 5px solid #0059b3;
+    border-radius: 0 2px 2px 0;
+    background-color: #f2f2f2;
+}
+.bodycontent{padding: 15px;}
+.layui-table th.title{ text-align: center;}
+.layui-table td.content{ text-align: center;}
+.layui-table td.content1{ text-align: right; padding-right: 10px;}
+.layui-table td.content2{  padding-left: 10px;}
+</style>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css">
+<link rel="stylesheet" href="__STATIC__/admin/css/common.css">
+<script type="text/javascript" src="__STATIC__/lib/jquery-1.10.2.js"></script>
+<!-- <link href="__STATIC__/admin/css/public.css" rel="stylesheet" type="text/css"> -->
+</head>
+<body>
+<div class="bodycontent">
+<!--内容页主体部分Begin-->
+ <div class="layui-elem-quote">
+    欢迎您的光临！
+ </div> 
+  <table class="layui-table">
+      <thead>
+          <tr>
+              <th colspan="2" scope="col" class="title">服务器信息</th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr>
+              <td class="content1">服务器IP地址：</td>
+              <td class="content2"><{$ServerIP}></td>
+          </tr>
+          <tr>
+              <td class="content1">服务器域名：</td>
+              <td class="content2"><{$ServerName}></td>
+          </tr>
+          <tr>
+              <td class="content1">服务器端口：</td>
+              <td class="content2"><{$ServerPort}></td>
+          </tr>
+          <tr>
+              <td class="content1">Web 服务器：</td>
+              <td class="content2"><{$WebServer}></td>
+          </tr>
+          <tr>
+              <td class="content1">PHP 版本：</td>
+              <td class="content2"><{$PHPVersion}></td>
+          </tr>
+          <tr>
+              <td class="content1">MySQL 版本：</td>
+              <td class="content2"><{$MySQLVersion}></td>
+          </tr>
+          <tr>
+              <td class="content1">服务器操作系统：</td>
+              <td class="content2"><{$ServerSystem}></td>
+          </tr>
+          <tr>
+              <td class="content1">文件上传限制：</td>
+              <td class="content2"><{$FileUpSize}></td>
+          </tr>
+          <tr>
+              <td class="content1">GD 库支持：</td>
+              <td class="content2"><{$GDState}></td>
+          </tr>
+          <tr>
+              <td class="content1">服务器当前时间：</td>
+              <td class="content2"><{:date('Y-m-d H:i:s')}></td>
+          </tr>
+          <tr>
+              <td class="content1">程序编码：</td>
+              <td class="content2">UTF-8</td>
+          </tr>
+          <tr>
+              <td class="content1">系统版本：</td>
+              <td class="content2">v1.00</td>
+          </tr>
+          <tr>
+              <td class="content1">当前SessionID：</td>
+              <td class="content2"><{:session_id()}></td>
+          </tr>
+      </tbody>
+  </table>
+<{include file="public/admin_footer" /}>

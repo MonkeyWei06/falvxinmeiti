@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title><{$Config.WebSiteName|default=''}></title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <script type="text/javascript" src="__STATIC__/lib/jquery-1.10.2.js"></script>
+  <link rel="stylesheet" href="__STATIC__/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="__STATIC__/assets/css/admin.css">
+  <link rel="stylesheet" href="__STATIC__/lib/ace_admin/css/bootstrap.min.css" />
+
+    <!--[if lt IE 9]>
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+	<script src="__STATIC__/assets/js/amazeui.ie8polyfill.min.js"></script>
+	<![endif]-->	
+	<script src="__STATIC__/assets/js/amazeui.min.js"></script>
+	<script src="__STATIC__/assets/js/app.js"></script>
+   <!--[if lte IE 8]>
+    <style>
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+        .fileinput-button input{
+            position:absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 100px;
+        }
+    </style>
+    <![endif]-->
+</head>
+<body>
+<header class="am-topbar am-topbar-inverse admin-header" style="border-color:transparent;">
+    <div class="am-topbar-brand" <{if condition="!empty($Config['WebSiteLogo'])"}>style="width:242px;height:60px;background:url(<{$path}><{$Config['WebSiteLogo']}>) 20px center no-repeat;"<{/if}>><{if condition="empty($Config['WebSiteLogo'])"}><{$Config.WebSiteName|default=''}><{/if}></div>
+    <button class="am-topbar-btn am-topbar-toggle am-btn am-btn-sm am-btn-success am-show-sm-only" data-am-collapse="{target: '#topbar-collapse'}"><span class="am-sr-only">导航切换</span> <span class="am-icon-bars"></span></button>
+
+    <div class="am-collapse am-topbar-collapse" id="topbar-collapse">
+		 <div class="am-nav am-topbar-nav am-topbar-left admin-header-list">
+			<ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+				<li><a href="<{:url('media/index')}>">媒体价格</a></li>
+				<li><a href="<{:url('wemedia/index')}>">自媒体价格</a></li>
+				<!--代写-->
+				<li><a href="<{:url('../index/writer')}>" target="_blank">软文代写</a></li>
+				<li class="sm-hide"><a href="<{:url('/admin/index')}>">后台首页</a></li>
+			</ul>
+		</div>
+
+        <ul class="am-nav am-nav-pills am-topbar-nav am-topbar-right admin-header-list">
+            <li class="am-dropdown" data-am-dropdown>
+                <a class="am-dropdown-toggle" data-am-dropdown-toggle href="javascript:;">
+                    <span class="am-icon-user"></span> <{$AgencyMemberName}> <span class="am-icon-caret-down"></span>
+                </a>
+                <ul class="am-dropdown-content">
+                    <li><a href="<{:url('invoice/add')}>"><span class="am-icon-fax"></span> 申请发票</a></li>
+                    <li><a href="<{:url('invoice/index')}>"><span class="am-icon-keyboard-o"></span> 我的发票</a></li>
+                    <li><a href="<{:url('sitemanagement/password')}>"><span class="am-icon-key"></span> 修改密码</a></li>
+                </ul>
+            </li>
+            <li><a href="<{:url('adminlogin/logout')}>"><span class="am-icon-power-off"></span>退出</a></li>
+        </ul>
+    </div>
+</header>

@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<title><{$info.NewsTitle}> - 营销商学院 - <{$Config.WebSiteTitle|default=''}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+	<link rel="stylesheet" href="__STATIC__/home/css/style.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/index.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/aos.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/swiper.min.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/wap.css" media="screen and (max-width:640px)">
+</head>
+<body>
+<{include file="public/header" /}>
+	<section id="inside-banner">
+		<div class="inside-banner" style="background: url(__STATIC__/home/images/contact-banner.jpg) no-repeat center top;">
+			<div class="inside-content wrap clearfix">
+				<div class="inside-title" aos="fade-up">
+					<h3>媒介学院</h3>
+					<p class="en">Media College</p>
+				</div>
+				<div class="inside-info clearfix" aos="fade-up">
+					<div class="show-news">
+						<h2 class="show-title"><{$info.NewsTitle}></h2>
+						<div class="show-time">发布者：媒介联盟 发布时间：<{$info.NewsTime|date="Y-m-d",###}></div>
+						<div class="show-text">
+							<{$info.NewsContent}>
+						</div>
+					</div>
+					<div class="PervNext">
+						<p>上一篇：<{$shang}></p>
+						<p>下一篇：<{$xia}></p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	 <{include file="public/footer" /}>
+	<script>
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000,
+			once:true
+		});
+	</script>
+
+</body>
+</html>

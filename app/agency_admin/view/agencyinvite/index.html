@@ -1,0 +1,141 @@
+<{include file="public/header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">邀请码管理</strong>
+       </div>
+    </div>
+	<hr>
+	<div class="am-g">
+		<div class="am-u-sm-12">
+			<!--检索开始---> 
+			
+			   <div class="am-margin-bottom-xs am-margin-top"> 
+ 				  <div class="am-form-group am-margin-bottom-0"> 
+				   <label class="am-form-label am-u-sm-1" for="search_media">邀请码：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+					<input name="keyword" id="keyword" type="text" placeholder="请输邀请码" autocomplete="off" style="height: 32px" /> 
+				   </div> 
+				    <label class="am-form-label am-u-sm-1" for="search_media">推广者：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+					<input name="InviteName" id="InviteName" type="text" placeholder="请输入推广者名字" autocomplete="off" style="height: 32px" /> 
+				   </div> 
+				   <div class="am-u-sm-6 ">
+					<button type="button" id="SearchBut" class="am-btn am-btn-sm am-btn-primary">搜索</button>
+					<a href="<{:url('agencyinvite/add')}>" id="SearchBut" class="am-btn am-btn-sm am-btn-primary">添加邀请码</a>
+				   </div> 
+ 				</div> 
+			   </div>
+			 
+			   <!--检索结束--->
+		</div>
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+				</div>
+			  <div class="clear"></div>
+			</div>
+		   </div>
+		</div>
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script type="text/html" id="DataOperation">
+	<a class="am-btn am-btn-success am-radius am-btn-xs" lay-event="enable">启用</a>
+	<a class="am-btn am-btn-primary am-radius am-btn-xs" lay-event="forbidden">禁用</a>
+	<!--<a class="am-btn  am-radius am-btn-xs am-btn-warning" lay-event="del">删除</a>--->
+</script>
+<script>
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var InviteName = $("#InviteName").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getinvitelist')}>'
+            ,where:{keyword:keyword,InviteName:InviteName}
+        });
+    });
+    layui.use(['table','form'], function(){
+        var table = layui.table,form = layui.form;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('getinvitelist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '邀请码'
+            ,cols: [[
+                {field:'InviteCode', title:'邀请码',align:'center'}
+                ,{field:'InviteName', title:'推广者',align:'center'}
+                ,{field:'InviteGeneralizeUrl', title:'推广链接',align:'center',width:200}
+				,{field:'ewm', title:'下载海报',align:'center',width:120}
+				,{field:'InvitePerformance', title:'明细',align:'center'}
+				,{field:'InviteMoney', title:'充值',align:'center'}
+                ,{field:'InviteTime', title:'添加时间',align:'center',width:160}
+                ,{field:'InviteState', title:'状态',align:'center'}
+                ,{fixed: 'right', title:'操作',align:'center', toolbar: '#DataOperation', width:110}
+            ]]		
+            ,limit:20
+            ,page:{
+				layout: ['prev', 'page', 'next'] //自定义分页布局 ,'limit',  'skip'
+                ,groups: 7 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+			}
+        });
+        //监听工具条
+        table.on('tool(DataList)',function(obj) {
+            var data = obj.data;
+            //console.log(data);
+            if(obj.event === 'del'){
+                var InviteID=data.InviteID;
+                $.post('<{:url('del')}>',{InviteID:InviteID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            }
+            //禁用
+            else if(obj.event==='forbidden'){
+                var InviteID=data.InviteID;
+                $.post('<{:url('forbidden')}>',{InviteID:InviteID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            }
+            //启用
+            else if(obj.event==='enable'){
+                var InviteID=data.InviteID;
+                $.post('<{:url('enable')}>',{InviteID:InviteID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            }
+        });
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,127 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+    .layui-form-radio{ padding-right: 0; float: left;}
+    .layui-form-radio i{margin-right:3px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>修改</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('edit')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" value="<{$Info.MemberName}>" readonly class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发票类型</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <{volist name="InvoiceType" id="val"}>
+            <input type="radio" name="InvoiceType" value="<{$val.TypeID}>" title="<{$val.TypeName}>" <{if condition="$Info.InvoiceType.Old eq $val.TypeID"}>checked<{/if}>>
+            <{/volist}>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发票明细</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <{volist name="InvoiceDetail" id="val"}>
+            <input type="radio" name="InvoiceDetail" value="<{$val.TypeID}>" title="<{$val.TypeName}>" <{if condition="$Info.InvoiceDetail.Old eq $val.TypeID"}>checked<{/if}>>
+            <{/volist}>
+            <input type="radio" name="InvoiceDetail" value="999" title="其他" <{if condition="$Info.InvoiceDetail.Old eq 999"}>checked<{/if}>>
+            <input type="text" name="InvoiceOtherContent" value="<{$Info.InvoiceOtherContent}>" class="layui-input" style="float: left; width: 150px; padding: 0; margin: 0; height: 24px;margin-left: 5px; margin-top: 1px; "/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发票金额</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceMoney" value="<{$Info.InvoiceMoney}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发票抬头</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceTitle" value="<{$Info.InvoiceTitle}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">纳税人识别码</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceCode" value="<{$Info.InvoiceCode}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货人姓名</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceName" value="<{$Info.InvoiceName}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货人手机</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceMobile" value="<{$Info.InvoiceMobile}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">收货人地址</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceAddress" value="<{$Info.InvoiceAddress}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">补充说明</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="InvoiceContent" style="height: 120px;" class="layui-input"><{$Info.InvoiceContent}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">审核状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="InvoiceState" value="0" title="申请中" <{if condition="$Info.InvoiceState eq 0"}>checked<{/if}>>
+            <input type="radio" name="InvoiceState" value="1" title="申请失败" <{if condition="$Info.InvoiceState eq 1"}>checked<{/if}>>
+            <input type="radio" name="InvoiceState" value="2" title="已寄出" <{if condition="$Info.InvoiceState eq 2"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">快递名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="InvoiceExpress">
+                <option value="0">快递名称选择</option>
+                <{volist name="InvoiceExpress" id="val"}>
+                <option value="<{$val.TypeID}>" <{if condition="$Info.InvoiceExpress eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">快递编号</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InvoiceNumber" value="<{$Info.InvoiceNumber}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">申请时间</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" value="<{$Info.InvoiceTime}>" readonly class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="InvoiceID" value="<{$Info.InvoiceID}>">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

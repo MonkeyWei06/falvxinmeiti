@@ -1,0 +1,368 @@
+<{include file="public/member_header" /}>
+<{include file="public/member_main" /}>
+<div class="main-content">
+	<script type="text/javascript" src="__STATIC__/lib/jquery-1.10.2.js"></script>
+	<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" media="all" />
+	<link rel="stylesheet" href="__STATIC__/lib/layui/style.css" media="all" />
+	<script src="__STATIC__/lib/layui/layui.js" charset="utf-8"></script>
+	<style>
+		.cancel{width:120px;height: 40px;line-height: 30px;background:#6CF;font-size: 16px;color: #fff;}
+		.submit{margin-right:15px;width:120px;height: 40px;line-height: 30px;background: #FF9900;font-size: 16px;color: #fff;}
+		#bg{background-color:#666;position:absolute;z-index:9999;left:0;top:0;display:none;width:100%;height:100%;opacity:0.5;filter: alpha(opacity=50);-moz-opacity: 0.5;}
+		#preview_box{display:none;position:absolute;width:500px;left:50%;height:90px;z-index:99999;background-color:#fff;border:1px #ddd solid;padding:1px;padding:20px;}
+		#preview_box div{font-size:16px; text-align:center;margin-bottom:15px;}
+		.upbtn{position: relative;overflow: hidden;margin-right: 4px;display:inline-block;*display:inline;padding:4px 10px 4px;font-size:14px;line-height:18px;*line-height:20px;color:#fff;text-align:center;vertical-align:middle;background-color:#5bb75b;border:1px solid #cccccc;border-color:#e6e6e6 #e6e6e6 #bfbfbf;border-bottom-color:#b3b3b3;-webkit-border-radius:4px;-moz-border-radius:4px;border-radius:4px;margin-left:10px;}
+		.upbtn input {position: absolute;top: 0; height:39px;width:419px;left: 0;margin: 0;border: solid transparent;opacity: 0;filter:alpha(opacity=0); cursor: pointer;}
+		.progress { position:relative; margin-left:530px; margin-top:-28px; width:200px;padding: 1px; border-radius:3px; display:none}
+		.bar {background-color: green; display:inline-block; width:0%; height:20px; border-radius: 3px;}
+		.delimg{display:inline-block;*display:inline;margin-left:20px; color:#090; cursor:pointer}
+		.files,.showimg{margin-left:310px;display:none;position:relative; }
+		.percent{display:none; position:absolute;margin-top:-10px;}
+		.up_tips{position:absolute;}
+		.forbidden{background:#ccc !important;}
+		.selectedMedia{background:#eee;overflow:hidden; width: 99%;margin-bottom: 6px;}
+		.selectedItem{float:left;min-width:20px;padding:5px 20px 5px 8px;margin:5px 4px;color:#fff;position:relative;background-color:#F90;border-radius:5px}
+		.delectItem{position:absolute;top:5px;right:8px;width:10px;height:10px;cursor:pointer}
+		.fav_btn_group{display: inline-block;background-color: #009688;padding: 8px;margin: 0 -4px;}
+		.hide{display: none}
+		.searchbar{height: 60px !important;}
+		.searchbar h2{ height: 38px; line-height: 38px; margin-top: -1px;}
+		.bai{background-image: url("/static/lib/layui/images/face/100.png");height: 16px;width: 15px;margin-top: 5px;margin: 0 auto;}
+		.lv{background-image: url("/static/lib/layui/images/face/99.png");height: 16px;width: 15px;margin-top: 6px;margin: 0 auto;}
+		.layui-table-cell{display:table-cell;height:auto;vertical-align:middle;white-space:normal;padding:0;line-height: 20px}
+		.ClassStyle1{ display: block;width: 30px; height: 30px; cursor: pointer; background: url(/static/home/images/222.jpg) no-repeat center; margin: 0 auto;}
+		.ClassStyle2{ display: block;width: 30px; height: 30px; cursor: pointer; background: url(/static/home/images/111.jpg) no-repeat center;margin: 0 auto;}
+	</style>
+	<div id="main2" style="display:block">
+		<div class="main-div">
+			<div class="head"> <strong>价格查询</strong> / <small>Price Search</small> </div>
+			<div class="body">
+				<!--head-->
+				<div class="orderby-box">
+					<{$html}>
+				</div>
+				<div style="clear:both;height:0px;"></div>
+                <div class="searchbar search2 clearfix">
+                    <input type="hidden" name="search-type" id="search-type" value="searchlist-btn">
+                    <button type="button" style="margin-right: 30px;" class="layui-btn  current collectlist">收藏夹</button>
+                    <input type="text" class="text" name="media_name" placeholder="输入媒体名称查找"  id="key" style="width: 150px">
+                    <button id="searchbtn" class="btn submit1"  style="line-height: 30px; height: 30px; padding: 0;">搜 索</button>
+                    <button type="button" style="margin-right: 10px;" class="layui-btn  current  layui-btn-warm mediasearch">查看全部</button>
+                    <!--<a href="javascript:void(0);">导出列表</a>-->
+                    <!-- <div class="search2" style="display: inline-block;margin-right: 30px;">
+                        <input value="全部媒体查看" class="btn submit1 mediasearch" type="button" style="line-height: 35px; height: 35px; padding: 0; margin-top: -8px; width: 130px;">
+                        <label id="search_result"></label>&nbsp;
+                    </div> -->
+                </div>
+				<!--search end-->
+				<!--body-->
+				<input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result">
+					<table class="layui-hide" id="showing" lay-filter="showing"></table>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div style="height: 100px;" id="heig"></div>
+	<!--main-->
+	<div id="yixuan" class="nextpage" style="">
+		<ul id="selectedMedia" class="selectedMedia"></ul>
+		<div id="checkbox"></div>
+		已选媒体：<span id="yixuantr"></span>金额：
+		<b><span style="color:#FF9900; font-size:16px;" id="totalmoney2">0</span></b>
+		元（账户余额：<b id="money_b"><{$Money}></b> 元）
+		<input type="button" value=" 清 空 " onclick="clearall()" class="btn btn1" />
+		<input value="上一步 编辑内容" onclick="perpage()" type="button" class="btn btn2" style="vertical-align: middle;line-height: 26px;">
+		<input id="submit_order" value=" 提交订单 " type="button" class="btn btn3" />
+		<input name="totalmoney" type="hidden" id="totalmoney" style="border:0px;" value="0" readonly="readonly"/>
+		<input type="hidden" id='yixuanhidden' name='yixuanhidden'/>
+		<input type="hidden" id='TempArticleID' name='TempArticleID' value="<{$TempArticleID}>"/>
+	</div>
+</div>
+<form id="sb" action="<{:url('index')}>" method="POST">
+<input type="hidden" id="title" value="<{$title}>" name="title" style="width: 500px" >
+<input type="hidden" name="beizhu"  value="<{$beizhu}>" id="beizhu" style="width: 500px" >
+<input type="hidden" name="article_customer"  value="<{$article_customer}>" id="article_customer" style="width: 500px" >
+<textarea id="content_desc" name="editorValue" style="height: 400px;display: none;"><{$editorValue}></textarea>
+</form>
+<script>
+</script>
+<!--表格相关-->
+<script>
+    //展示中
+    layui.use(['table','form'], function(){
+        var table = layui.table,form = layui.form;
+        //第一个实例
+        table.render({
+            elem: '#showing'
+            ,url: '<{:url('/member/media/getlist')}>'
+            //接口的其他参数
+            ,where:{is_freeze: '0'}
+            ,page: true //开启分页
+            ,limit:20
+            ,cols: [[ //表头
+                {field:'check',  width: '5%', title: '<p class="bai" data="all" id="123" onclick="checka(123)"></p>'}
+                ,{field: 'pdlx',align:'center', title: '频道类型', width:'10%'}
+                ,{field: 'MediaTitle',align:'center', title: '媒体名称', width:'11%',templet:'#media_nameTpl'}
+                ,{field: 'price', align:'center',title: '价格', width:'6%'}
+                ,{field: 'publish_rate', align:'center',title: '出稿率', width:'8%',templet:'#contributionrate_nameTpl'}
+                ,{field: 'dnqz', align:'center',title: '电脑权重', width: '6%',templet:'#pc_weightTpl'}
+                ,{field: 'ydqz',align:'center', title: '移动权重', width: '6%',templet:'#m_weightTpl'}
+                ,{field: 'xwy',align:'center', title: '新闻源', width: '12%',templet:'#resourceTpl'}
+                ,{field: 'link_type',align:'center', title: '链接情况', width: '12%',templet:'#linkTypeTpl'}
+                ,{field: 'MediaContent',align:'center', title: '备注', width: '20%'}
+                ,{field: 'mediaid_checks',align:'center', title: '收藏', width: '5%',templet:'#pc_mediagetTpl'}
+            ]]
+        });
+    });
+    //筛选
+    $('#key').blur(function(){
+        var key = $("#key").val();
+        var where = $("#where").val();
+        var arr = where.split(',');
+        var id=$(this).parent().attr('id');
+        var data=$(this).attr('data');
+        var str = '';
+        for(var i=0;i < arr.length;i++){
+            if(arr[i]){
+                var arr2 = arr[i].split('_');
+                if(arr2[0] != id){
+                    str+=arr[i]+',';
+                }
+            }
+        }
+        var string=id+'_'+data+',';
+        if(id==undefined && data==undefined){
+            var string='';
+        }
+        $("#where").val(str+''+string);
+        var where = $("#where").val();
+        layui.table.reload('showing', {
+            url: "<{:url("media/getlist")}>",
+            page:1
+            //接口的其他参数
+            ,where:{ where:where,media_name:key}
+            //,height: 300
+        });
+    })
+    $('.sx').click(function () {
+        $(this).addClass("on").siblings().removeClass("on");
+        var key = $("#key").val();
+        var where = $("#where").val();
+        var arr = where.split(',');
+        var id=$(this).parent().attr('id');
+        var data=$(this).attr('data');
+        var str = '';
+        for(var i=0;i < arr.length;i++){
+            if(arr[i]){
+                var arr2 = arr[i].split('_');
+                if(arr2[0] != id){
+                    str+=arr[i]+',';
+                }
+            }
+        }
+        var string=id+'_'+data+',';
+        if(id==undefined && data==undefined){
+            var string='';
+        }
+        $("#where").val(str+''+string);
+        var where = $("#where").val();
+        layui.table.reload('showing', {
+            url: "<{:url("media/getlist")}>",
+            page:1
+            //接口的其他参数
+            ,where:{ where:where,key:key}
+            //,height: 300
+        });
+    });
+    //收藏夹
+    $('.collectlist').click(function () {
+        $('#collect').val('list');
+        $(this).addClass("on").siblings().removeClass("on");
+        var key = $("#key").val();
+        var where = $("#where").val();
+        var arr = where.split(',');
+        var id=$(this).parent().attr('id');
+        var data=$(this).attr('data');
+        var str = '';
+        for(var i=0;i < arr.length;i++){
+            if(arr[i])
+            {
+                var arr2 = arr[i].split('_');
+                if(arr2[0] != id){
+                    str+=arr[i]+',';
+                }
+            }
+        }
+        var string=id+'_'+data+',';
+        if(id==undefined && data==undefined){
+            var string='';
+        }
+        $("#where").val(str+''+string);
+        var where = $("#where").val();
+        where=where.replace(/undefined/g,'');
+        where=where.replace(/-,/g,'');
+        layui.table.reload('showing', {
+            url: "<{:url("media/getlist")}>"
+            //接口的其他参数
+            ,where:{ where:where,key:key,collect:'list'}
+            //,height: 300
+        });
+    });
+    //查看全部媒体
+    $('.mediasearch').click(function () {
+        $('.orderby-box dl .sx').removeClass('on');
+        $('.orderby-box dl .bx').addClass('on');
+        $('#key').val('');
+        $('#where').val('');
+        $('#collect').val('');
+        layui.table.reload('showing', {
+            url: "<{:url("media/getlist")}>"
+            ,where:{where:'',media_name:'',collect:''}
+        });
+    });
+    //搜索按钮
+    $("#searchbtn").click(function(data){
+        var media_name=$("#key").val();
+        layui.table.reload('showing', {
+            url: '<{:url('media/getlist')}>'
+            ,where:{media_name:media_name}
+        });
+    });
+    //收藏
+    function CollectMedia(MediaID){
+        $.ajax({
+            type:"POST",
+            url:"<{:url('media/collect')}>",
+            data:{MediaID:MediaID},
+            dataType:"json",
+            cache:false,
+            success:function(Result){
+                if(Result.code==1){
+                    layer.msg(Result.msg);
+                    return false;
+                }else if(Result.code==2){
+                    //layer.msg(Result.msg);
+                    $('.Media'+MediaID).removeClass('ClassStyle2');
+                    $('.Media'+MediaID).addClass('ClassStyle1');
+                    return false;
+                }else{
+                    //layer.msg(Result.msg);
+                    //$('.Media'+MediaID).html('收藏成功');
+                    $('.Media'+MediaID).removeClass('ClassStyle1');
+                    $('.Media'+MediaID).addClass('ClassStyle2');
+                    return false;
+                }
+            }
+        });
+    }
+    //清除选择
+    function clearall() {
+            $(".selectedItem").each(function(){
+                var id = $(this).attr('data')
+				$('#'+id).prop('class','bai')
+                var pic = parseFloat($(this).attr('pic'));
+				$(this).remove();
+      	  	});
+			$(".lv").each(function(){
+				$(this).prop('class','bai')
+			});
+        $('#totalmoney2').html(0)
+    }
+    //选中一种媒体
+   function checka(obj) {
+       var cla = $('#'+obj).attr('class')
+       var data = $('#'+obj).attr('data')
+	   var type ;
+	   var type2 ;
+       var money2 = 0;
+	   var money = parseFloat($('#totalmoney2').html());
+	   if(cla == 'bai')
+	   {
+           $('#'+obj).prop('class','lv')
+           type = 'bai';type2 = 'lv';
+	   }else{
+           $('#'+obj).prop('class','bai')
+           type = 'lv'; type2 = 'bai';
+	   }
+       if(data == 'all')
+	   {
+           $("."+type).each(function(){
+              $(this).prop('class',type2)
+               var id = $(this).attr('id');
+               var pic = $(this).attr('pic');
+			   if(type2 == 'bai')
+			   {
+                   $('#d'+id).remove();
+                   money2-=pic;
+			   }else{
+                  var mtmc = $(this).attr('name');
+                  var str = '<li class="selectedItem" pic="'+pic+'"  data="'+id+'" id="d'+id+'"><span>'+mtmc+'</span><i class="delectItem" onclick="delectItem('+id+')">x</i></li>';
+                   $("#selectedMedia").append(str);
+                   money2+=parseFloat(pic);
+              }
+           });
+	   }else{
+	       var id = obj;
+           var pic = $('#'+id).attr('pic');
+           if(type2 == 'bai')
+           {
+               $('#d'+id).remove();
+               money2-=pic;
+           }else{
+               var mtmc = $('#'+id).attr('name');
+               var str = '<li class="selectedItem" data="'+id+'" id="d'+id+'"><span>'+mtmc+'</span><i class="delectItem" onclick="delectItem('+id+')">x</i></li>';
+               $("#selectedMedia").append(str);
+               money2+=parseFloat(pic);
+           }
+	   }
+       $('#totalmoney2').html(money+money2)
+   }
+   //删除一种媒体
+    function delectItem(id) {
+        var money = parseFloat($('#totalmoney2').html());
+        $('#d'+id).remove();
+        $('#'+id).prop('class','bai');
+        var money2 = parseFloat($('#'+id).attr('pic'));
+        $('#totalmoney2').html(money-money2)
+    }
+     //提交订单
+    $('#submit_order').click(function () {
+        var tan = layer.load(0, {shade: false}); //0代表加载的风格，支持0-2
+        $(this).attr({"disabled":"disabled"});
+        var str = '';
+        $(".selectedItem").each(function(){
+            str += $(this).attr('data')+',';
+        });
+        var title = $('#title').val();
+        var content_desc = $('#content_desc').val();
+        var beizhu = $('#beizhu').val();
+		var beizhu = $('#beizhu').val();
+        var TempArticleID = $('#TempArticleID').val();
+        $.ajax({
+            type: "POST",
+            url: "<{:url('sborder')}>",
+            contentType: 'application/x-www-form-urlencoded;charset=utf-8',
+            data: {str:str,title:title,editorValue:content_desc,beizhu:beizhu,TempArticleID:TempArticleID},
+            dataType: "json",
+            success: function(data){
+                layer.close(tan);
+                $('#submit_order').removeAttr("disabled");
+               if(data == 1)
+               {
+                   alert('提交成功');
+                   window.location.replace("<{:url('order/index')}>");
+               }else{
+                   alert(data);
+               }
+            }
+        });
+    });
+</script>
+</div>
+<!-- /.main-container -->
+<{include file="public/member_footer" /}>
+<!-- basic scripts -->
+</body>
+</html>

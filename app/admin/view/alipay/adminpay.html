@@ -1,0 +1,42 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>平台<{$MenuName}>信息</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('adminpay')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付宝APPID</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayAPPID" value="<{$Info.AliPayAPPID}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">支付宝公钥</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="AliPayPublicKey"  style="height: 120px;" class="layui-input"><{$Info.AliPayPublicKey}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">商户私钥</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="AliPayPrivateKey" style="height: 120px;"  class="layui-input"><{$Info.AliPayPrivateKey}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="AliPayState" <{if condition="$Info.AliPayState == 1"}> checked <{/if}> value="1" title="已启用" checked>
+            <input type="radio" name="AliPayState" <{if condition="$Info.AliPayState == 0"}> checked <{/if}> value="0"  title="未启用" >
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

@@ -1,0 +1,136 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>添加</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('add')}>"  enctype="multipart/form-data" method="post" onsubmit="return MemberAddSaveInfoCheck();">
+    <div class="layui-form-item">
+        <label class="layui-form-label">上传文件</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="file" name="MemberPicPath" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="MemberTypeID">
+                <option value="">类型选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">发布媒体</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="MemberTypeID">
+                <option value="">类型选择</option>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberName" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">标题/描述</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="BalanceTitle" style="height: 120px;" class="layui-input"></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">作者</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberTrueName" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">来源</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">预览网址</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">平台价</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">一级代理价</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">二级代理价</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员价</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">封面</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="file" name="MemberPicPath" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 403px;padding-top:150px;">文章详情</label>
+        <div class="layui-input-inline inputTextWidth" style="width: 80%;">
+            <textarea id="EditContent" name="AboutContent" style="width: 100%; height: 400px;"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">支付状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="MemberState" value="1" title="已支付" checked>
+            <input type="radio" name="MemberState" value="0" title="未支付">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">审核进度</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="MemberState" value="0" title="待审核" checked>
+            <input type="radio" name="MemberState" value="1" title="发布中">
+            <input type="radio" name="MemberState" value="2" title="已发布">
+            <input type="radio" name="MemberState" value="3" title="已退搞">
+            <input type="radio" name="MemberState" value="4" title="已取消">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery,upload = layui.upload;
+    });
+</script>

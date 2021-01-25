@@ -1,0 +1,72 @@
+<{include file="public/header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		 <div class="am-cf am-padding am-padding-bottom-0">
+			<div class="am-fl am-cf am-btn-group">
+			  <a href="<{:url('feedback/add')}>" class="am-btn am-btn-primary am-btn-sm">添加反馈</a>
+			  <a href="<{:url('feedback/messagelist')}>" class="am-btn am-btn-default am-btn-sm">问题反馈</a> 
+			  </div>
+		  </div>
+		<hr>
+
+		<div class="page-content">
+		  <div class="page-content-area" style="margin-left: 3%;" >
+			<form class="form-horizontal" role="form" id="userInfo" name="userInfo" method="post">
+				<!-- #section:elements.form -->
+				<div class="form-group">
+					<label class="col-sm-3 control-label no-padding-right" for="form-input-readonly">反馈内容： </label>
+					<div class="col-sm-9">
+						<textarea  id="form-input-readonly" placeholder="请填写要反馈的内容，尽可能的描述清楚问题"  class="am-u-sm-9"></textarea>
+					</div>
+				</div>
+				<div class="clearfix form-actions">
+					<div class="am-u-sm-9">
+					<br>
+						<button class="am-btn am-btn-primary am-btn-sm" type="button" id="commit">
+							<i class="ace-icon fa fa-check bigger-110"></i>
+							立即提交
+						</button>
+						<button class="am-btn am-btn-danger am-btn-sm" type="reset">
+							<i class="ace-icon fa fa-undo bigger-110"></i>
+							重置
+						</button>
+					</div>
+				</div>
+			</form>
+		  </div>
+		</div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/footer" /}>
+<script>
+$('#commit').click(function () {
+    var  MessageContent = $('#form-input-readonly').val();
+    if(!MessageContent)
+    {
+        alert('请填写反馈内容');return false;
+    }
+    $.ajax({
+        type: "POST",
+        url: "<{:url('add')}>",
+        data: {MessageContent:MessageContent},
+        success:function(Result) {
+            if (Result == 1) {
+                alert('提交成功');
+                    window.location.href="<{:url('messagelist')}>";
+            } else {
+                alert(Result);
+            }
+        }
+    });
+})
+</script>
+</body>
+</html>

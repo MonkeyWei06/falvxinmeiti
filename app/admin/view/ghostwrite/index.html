@@ -1,0 +1,80 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 80px;">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="请输入关键字" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="40" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th width="50" class="listtitle">ID</th>
+                <th class="listtitle">字数</th>
+                <th class="listtitle">标题</th>
+                <th class="listtitle">份数</th>
+                <th class="listtitle">总价</th>
+                <th class="listtitle">支付状态</th>
+                <th class="listtitle">状态</th>
+                <th width="150" class="listtitle">时间</th>
+                <th width="70" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td align="center">
+                    <input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="" />
+                </td>
+                <td align="center">1</td>
+                <td align="center">100</td>
+                <td align="center">测试标题</td>
+                <td align="center">10</td>
+                <td align="center">100</td>
+                <td align="center">已支付</td>
+                <td align="center">
+                    <input type="checkbox"  name="MemberState" lay-skin="switch"  lay-filter="State" lay-text="已审|未审">
+                </td>
+                <td align="center">2018-09-25 09:30:20</td>
+                <td align="center">
+                    <div class="layui-btn-group">
+                        <a class="layui-btn layui-btn-mini" href="<{:url('edit')}>"><i class="layui-icon"></i>查看</a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

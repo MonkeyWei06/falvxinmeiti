@@ -1,0 +1,38 @@
+<{include file="public/admin_header" /}>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>修改文章</legend>
+</fieldset>
+<!---->
+<form class="layui-form layui-form-pane" action="<{:url('editsave')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">文章标题</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="article_title" size="40" value="<{$Info.article_title}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">内容</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea id="editorValue" name="editorValue" class="am-u-md-7" ><{$Info.article_content}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">备注</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text"  name="beizhu" size="40" value="<{$Info.article_remarks}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="id" value="<{$Info.article_id}>"/>
+        <button class="layui-btn" type="submit">保存修改</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+var ue = new UE.ui.Editor({initialFrameHeight:400});
+        ue.render("editorValue");
+		
+        ue.ready(function() {
+           ue.placeholder("稿件上传的3种方式：①上传文档 ②直接粘贴到内容栏进行编辑,内容里如果有图片请通过编辑器重新上传  ③用来源发稿的直接把来源链接放在内容栏.稿件一经发布，基本无法撤回和修改，一定要预览核对无误再提交哦！署名、作者名、免责声明等特殊内容不保证！与平台原有媒体信息和备注相矛盾的备注无效!");
+         });
+</script>

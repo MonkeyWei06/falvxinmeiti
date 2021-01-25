@@ -1,0 +1,38 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}></legend>
+</fieldset>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="40" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th width="100" class="listtitle">活动名称</th>
+                <th class="listtitle" width="100">类型</th>
+                <th class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr>
+                <td align="center">
+                    <input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$act.aid}>" />
+                </td>
+                <td align="center"><{$act.title}></td>
+                <td align="center"><{if condition="$act.type eq 1"}>每日<{else}>长期<{/if}></td>
+                <td align="center">
+ 				<a href="<{:url('listall',['aid'=>$act['aid']])}>">查看奖项</a>
+				| <a href="<{:url('add')}>">添加奖项</a>
+				</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

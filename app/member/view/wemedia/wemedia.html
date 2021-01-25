@@ -1,0 +1,446 @@
+<{include file="public/member_header" /}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<style>
+	.media_name_url{position:relative;display:inline-block;}
+	.media_name_url:hover .refresh_span{display:block;}
+	.media_name_url .refresh_span{position:absolute;bottom:-35px;display:none;left:0;width:150px;line-height:35px;background:#ffffff;padding-left:10px;border:1px solid #eee; z-index:1111;}
+	.media_name_url .refresh_span .refresh_btn{cursor:pointer;margin-left:5px;color:#0e90d2;}
+	.layui-table-cell{overflow: inherit!important;}
+</style>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">自媒体价格</strong>
+        </div>
+    </div>
+	<hr>
+	<div class="am-g">
+            <div class="am-u-sm-12">
+                <div class="filter" id="filter">
+                    <div class="filter-item filter-clear">
+                       <div class="filter-label">平台：</div>
+							<ul class="filter-list filter-clear" id="MediaWebNameID">
+								<li class="filter-option sx active" data="0">所有</li>
+								<{volist name="MediaWebNameID" id="val"}>
+								<li class="filter-option sx" data="<{$val.TypeID}>"><{$val.TypeName}></li>
+								<{/volist}>                            
+							</ul>
+						</div>
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">行业分类：</div>
+                        <ul class="filter-list filter-clear" id="MediaIndustryID">
+						 <li class="filter-option sx active" data="0">所有</li>
+						<{volist name="MediaIndustryID" id="val"}>
+						<li class="filter-option sx" data="<{$val.TypeID}>"><{$val.TypeName}></li>
+						<{/volist}>
+                      </ul>
+                    </div>
+                    <div class="filter-item filter-clear">
+                       <div class="filter-label">地区：</div>
+                        <ul class="filter-list filter-clear" id="MediaCityID">
+                            <li class="filter-option sx active" data="0">所有</li>
+							<{volist name="MediaCityID" id="val"}>
+							<li class="filter-option sx" data="<{$val.TypeID}>"><{$val.TypeName}></li>
+							<{/volist}>
+						</ul>
+                    </div>
+
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">账号认证：</div>
+                        <ul class="filter-list filter-clear" id="account_auth">
+                            <li class="filter-option sx active" data="0">所有</li>
+							<{volist name="auth" id="val"}>
+                            <li class="filter-option sx" data="<{$key}>"><{$val}></li>
+							<{/volist}>
+                         </ul>
+                    </div>
+
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">参考粉丝数：</div>
+                        <ul class="filter-list filter-clear" id="fans_num">
+                            <li class="filter-option sx active" data="0">所有</li>
+							<{volist name="fennumid" id="val"}>
+								<li class="filter-option sx" data="<{$key}>"><{$val}></li>
+							<{/volist}>
+                        </ul>
+                    </div>
+
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">参考阅读数：</div>
+                        <ul class="filter-list filter-clear" id="read_num">
+                            <li class="filter-option sx active" data="0">所有</li>
+							<{volist name="MediaRedID" id="val"}>
+							<li class="filter-option sx" data="<{$key}>"><{$val}></li>
+ 							<{/volist}>
+						</ul>
+                    </div>
+
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">价格筛选：</div>
+						<ul class="filter-list filter-clear" id="MediaPrice">
+                            <li class="filter-option sx active" data=0>所有</li>
+							<{volist name="pricenum" id="val"}>
+							<li class="filter-option sx" data="<{$key}>"><{$val}></li>
+							<{/volist}>
+                        </ul>
+                    </div>
+
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">可发视频：</div>
+                        <ul class="filter-list filter-clear" id="account_video">
+                            <li class="filter-option sx active" data=0>不限</li>
+							<{volist name="can_video" id="val"}>
+                            <li class="filter-option sx" data="<{$key}>"><{$val}></li>
+							<{/volist}>
+                         </ul>
+                    </div>
+
+                    <div class="filter-item filter-clear">
+                        <div class="filter-label">周末可发：</div>
+                        <ul class="filter-list filter-clear" id="account_publish">
+                            <li class="filter-option sx active" data="0">不限</li>
+							<{volist name="weekend_publish" id="val"}>
+                            <li class="filter-option sx" data="<{$key}>"><{$val}></li>
+							<{/volist}>
+                        </ul>
+                    </div>
+					<!--<div class="filter-item filter-clear">
+						<div class="filter-label">春节可发：</div>
+						<ul class="filter-list filter-clear" id="yearstate">
+							<li class="filter-option sx active" data="0">不限</li>
+							<li class="filter-option sx" data="1" style="color: red">春节可发<img style="vertical-align: top; margin-left: 2px;" src="__STATIC__/img/icon_new.gif"></li>
+						</ul>
+					</div>--->
+					<div class="filter-item filter-clear">
+                        <div class="filter-label">活动媒体：</div>
+                        <ul class="filter-list filter-clear" id="activity">
+                            <li class="filter-option   sx active " data="0">不限</li>
+                             <li class="filter-option sx " data="11" data-title="优质账号极速发布随时修改删除">极速出稿<img style="vertical-align: top; margin-left: 2px;" src="__STATIC__/assets/i/miaochu.png"></li>
+                            <li class="filter-option sx" data="22" data-title="优质账号发布首页推荐保证阅读量和评论数">首页推荐<img style="vertical-align: top; margin-left: 2px;" src="__STATIC__/assets/i/miaochu.png"></li>
+							<li class="filter-option  sx" data="33" data-title="黄V头条签约媒体">黄V头条签约媒体<img style="vertical-align: top; margin-left: 2px;" src="__STATIC__/assets/i/icon_hot.gif"></li>
+                          </ul>
+                    </div>
+					<div class="filter-item filter-clear">
+                        <div class="filter-label">排序：</div>
+                        <ul class="filter-list filter-clear" id="OrderWay">
+							<li class="filter-option sx active" data="">默认</li>
+							<li class="filter-option sx" id="priceor" data="1">价格<i class="am-icon-sort"></i></li>
+							<li class="filter-option sx" id="fensior" data="2" >粉丝<i class="am-icon-sort"></i></li>
+						</ul>
+                    </div>
+                </div>
+				<!--检索开始---> 
+				   <div class="am-margin-bottom-xs am-margin-top"> 
+					<div class="am-u-sm-6"> 
+					<button type="button" style="margin-right: 10px;" class="am-btn am-btn-primary am-btn-sm mediasearch">查看全部</button>
+					<button type="button" class="am-btn am-btn-default am-btn-sm todayjia">今日新增</button> 
+					 <a href="<{:url('resourcemt/add')}>" class="am-btn am-btn-secondary am-btn-sm">自媒体入驻</a> 
+					 <a id='exportbutton' onclick="ExportExcel('<{:url('wemedia/exportexcel')}>');" href="javascript: void (0)" class="am-btn am-btn-success am-btn-sm">导出</a>
+					 <button type="button" class="am-btn am-btn-warning am-btn-sm collectlist">收藏夹</button> 
+					</div> 
+					<div class="am-u-md-5"> 
+					 <form class="am-form am-form-horizontal"> 
+					  <div class="am-form-group am-margin-bottom-0">
+					   <label class="am-form-label am-u-sm-3" for="search_media">备注：</label> 
+					   <div class="am-u-sm-7 am-padding-horizontal-xs"> 
+						<input name="MediaContent" id="keybz" type="text" placeholder="请输入备注" autocomplete="off" style="height: 32px" /> 
+					   </div>
+					   <label class="am-form-label am-u-sm-3" for="search_media">媒体名称：</label> 
+					   <div class="am-u-sm-7 am-padding-horizontal-xs"> 
+						<input name="media_name" id="keyw" type="text" placeholder="请输入媒体名称" autocomplete="off" style="height: 32px" /> 
+					   </div> 
+					   <div class="am-u-sm-2 "> 
+						<button type="button" id="searchbtn" class="am-btn am-btn-sm am-btn-primary">搜索</button> 
+					   </div> 
+					  </div> 
+					 </form> 
+					</div> 
+				   </div> 
+				   <!--检索结束---> 
+				<input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+            </div>
+			
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<input type="hidden" id="todayjia" value="" /> 
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<table class="layui-hide" id="showing" lay-filter="showing"></table>
+				</div>
+			  <div class="clear"></div>
+			</div>
+			<div style="height: 100px;" id="heig"></div>
+		   </div>
+		</div>
+
+</div>
+<{include file="public/member_footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+  function ExportExcel(Url){
+        var where=$('#where').val();
+        var collect=$('#collect').val();
+        var key=$('#keyw').val();
+		var keybz=$('#keybz').val();		
+        var UrlStr=Url+'?where='+where+'&collect='+collect+'&media_name='+key+'&MediaContent='+keybz;
+        location.href=UrlStr
+    }
+    //展示中
+    layui.use(['table','form'], function(){
+        var table = layui.table,form = layui.form;
+        table.render({
+            elem: '#showing'
+            ,url: "<{:url('wemedia/getlist')}>"
+            //接口的其他参数
+            ,where:{is_freeze: '0'}
+            ,page: true //开启分页
+            ,limit:20
+            ,cols: [[ //表头
+				{field: 'TypeName2',align:'center', title: '平台', width:'86'}
+                ,{field: 'MediaTitle',align:'center', title: '媒体名称', width: '204'}
+                ,{field: 'TypeName3', align:'center',title: '行业分类', width:'120'}
+                ,{field: 'price', align:'center',title: '价格', width:'80'}
+                ,{field: 'TypeName4',align:'center', title: '地区', width: '100'}
+                ,{field: 'TypeName5',align:'center', title: '粉丝数', width: '100'}
+                ,{field: 'TypeName6',align:'center', title: '阅读数', width: '100'}
+                ,{field: 'MediaContent',align:'center', title: '备注', width: '267'}
+				,{field: 'mediaid_checks',align:'center', title: '收藏', width: '60',templet:'#pc_mediagetTpl'}
+            ]]
+        });
+    });
+    //筛选
+    $('#keyw').blur(function(){
+        var key = $("#keyw").val();
+		var keybz = $("#keybz").val();
+        var where = $("#where").val();
+        var arr = where.split(',');
+        var id=$(this).parent().attr('id');
+        var data=$(this).attr('data');
+        var str = '';
+        for(var i=0;i < arr.length;i++){
+            if(arr[i]){
+                var arr2 = arr[i].split('-');
+                if(arr2[0] != id){
+                    str+=arr[i]+',';
+                }
+            }
+        }
+        var string=id+'-'+data+',';
+        if(id==undefined && data==undefined){
+            var string='';
+        }
+        $("#where").val(str+''+string);
+        var where = $("#where").val();
+        layui.table.reload('showing', {
+            url: "<{:url("wemedia/getlist")}>",
+            page:1
+            //接口的其他参数
+            ,where:{ where:where,media_name:key,MediaContent:keybz}
+            //,height: 300
+        });
+    })
+    $('.sx').click(function () {
+        $(this).addClass("active").siblings().removeClass("active");
+        var key = $("#keyw").val();
+		var keybz = $("#keybz").val();
+        var where = $("#where").val();
+        var arr = where.split(',');
+        var id=$(this).parent().attr('id');
+        var data=$(this).attr('data');
+		if(id === 'OrderWay'){
+			var icon = $(this).children('i');
+			if(icon.length === 1){
+				var cName = icon[0].className;
+				if(cName === 'am-icon-sort-desc' || cName === 'am-icon-sort'){
+					icon[0].className = 'am-icon-sort-asc';
+				   data=data;
+				}else if(cName === 'am-icon-sort-asc'){
+					icon[0].className = 'am-icon-sort-desc';
+					data=(data+1);
+				}
+			}else{
+			  data=(data+0);
+			}
+			$(this).siblings().children('i').attr("class", "am-icon-sort");
+		}else{
+		   data=(data);
+		}
+        var str = '';
+        for(var i=0;i < arr.length;i++){
+            if(arr[i]){
+                var arr2 = arr[i].split('-');
+                if(arr2[0] != id){
+                    str+=arr[i]+',';
+                }
+            }
+        }
+        var string=id+'-'+data+',';
+        if(id==undefined && data==undefined){
+            var string='';
+        }
+        $("#where").val(str+''+string);
+        var where = $("#where").val();
+        layui.table.reload('showing', {
+            url: "<{:url("wemedia/getlist")}>",
+            page:1
+            //接口的其他参数
+            ,where:{ where:where,media_name:key,MediaContent:keybz}
+            //,height: 300
+        });
+    });
+     //查看全部媒体
+    $('.mediasearch').click(function () {
+        $('.orderby-box dl .sx').removeClass('on');
+        $('.orderby-box dl .bx').addClass('on');
+        $('#keyw').val('');
+		$("#keybz").val('');
+        $('#where').val('');
+        $('#collect').val('');
+        layui.table.reload('showing', {
+            url: "<{:url('wemedia/getlist')}>"
+            ,where:{where:'',media_name:'',collect:''}
+        });
+    });
+    //搜索按钮
+    $("#searchbtn").click(function(data){
+        var media_name=$("#keyw").val();
+		var MediaContent=$("#keybz").val();
+        layui.table.reload('showing', {
+            url: "<{:url('wemedia/getlist')}>"
+            ,where:{media_name:media_name,MediaContent:MediaContent}
+        });
+    });
+	    //收藏
+    function CollectMedia(MediaID){
+        $.ajax({
+            type:"POST",
+            url:"<{:url('wemedia/collect')}>",
+            data:{MediaID:MediaID},
+            dataType:"json",
+            cache:false,
+            success:function(Result){
+                if(Result.code==1){
+                    layer.msg(Result.msg);
+                    return false;
+                }else if(Result.code==2){
+                    //layer.msg(Result.msg);
+                    $('.Media'+MediaID).removeClass('ClassStyle2');
+                    $('.Media'+MediaID).addClass('ClassStyle1');
+                    return false;
+                }else{
+                    //layer.msg(Result.msg);
+                    //$('.Media'+MediaID).html('收藏成功');
+                    $('.Media'+MediaID).removeClass('ClassStyle1');
+                    $('.Media'+MediaID).addClass('ClassStyle2');
+                    return false;
+                }
+            }
+        });
+    }
+	 //收藏夹
+    $('.collectlist').click(function () {
+        $('#collect').val('list');
+        $(this).addClass("on").siblings().removeClass("on");
+        var key = $("#keyw").val();
+		var keybz = $("#keybz").val();
+        var where = $("#where").val();
+        var arr = where.split(',');
+        var id=$(this).parent().attr('id');
+        var data=$(this).attr('data');
+        var str = '';
+        for(var i=0;i < arr.length;i++){
+            if(arr[i])
+            {
+                var arr2 = arr[i].split('-');
+                if(arr2[0] != id){
+                    str+=arr[i]+',';
+                }
+            }
+        }
+        var string=id+'-'+data+',';
+        if(id==undefined && data==undefined){
+            var string='';
+        }
+        $("#where").val(str+''+string);
+        var where = $("#where").val();
+        where=where.replace(/undefined/g,'');
+        where=where.replace(/-,/g,'');
+        layui.table.reload('showing', {
+            url: "<{:url('wemedia/getlist')}>"
+            //接口的其他参数
+            ,where:{ where:where,media_name: key,MediaContent:keybz,collect:'list'}
+            //,height: 300
+        });
+    });
+	//今日新增
+$('.todayjia').click(function() {
+    $('#todayjia').val('list');
+    $(this).addClass("on").siblings().removeClass("on");
+    var key = $("#keyw").val();
+	var keybz = $("#keybz").val();
+    var where = $("#where").val();
+    var arr = where.split(',');
+    var id = $(this).parent().attr('id');
+    var data = $(this).attr('data');
+    var str = '';
+    for (var i = 0; i < arr.length; i++) {
+        if (arr[i]) {
+            var arr2 = arr[i].split('_');
+            if (arr2[0] != id) {
+                str += arr[i] + ',';
+            }
+        }
+    }
+    var string = id + '_' + data + ',';
+    if (id == undefined && data == undefined) {
+        var string = '';
+    }
+    $("#where").val(str + '' + string);
+    var where = $("#where").val();
+    where = where.replace(/undefined/g, '');
+    where = where.replace(/-,/g, '');
+    layui.table.reload('showing', {
+        url: "<{:url('wemedia/getlist')}>"
+        //接口的其他参数
+        ,
+        where: {
+            where: where,
+            media_name: key,
+			MediaContent: keybz,
+            collect: 'todayjia'
+        }
+    });
+});
+function update_case_link(id){
+	$.ajax({
+        type: "POST",
+        url: "<{:url('wemedia/caselinks')}>",
+        data: {
+            id: id
+        },
+        dataType: "json",
+        cache: false,
+        success: function(Result) {
+            if (Result.code == 200) {
+                alert(Result.msg);
+            } else {
+                alert(Result.msg);
+                return false;
+            }
+        }
+    });
+	 return false;
+}
+</script>
+</body>
+</html>

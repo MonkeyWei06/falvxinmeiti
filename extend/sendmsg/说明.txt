@@ -1,0 +1,2 @@
+1.修改Config.php文件中的用户名、密码、签名部分为您在乐信的用户名账号密码
+2.在应用里面可调用SendUtility.php内的Send($AimMobiles, $Content)方法

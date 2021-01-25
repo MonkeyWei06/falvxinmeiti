@@ -1,0 +1,136 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>修改</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('edit')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型选择</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="MediaWebNameID">
+                <option value="0">频道类型选择</option>
+                <{volist name="MediaWebNameID" id="val"}>
+                <option value="<{$val.TypeID}>" <{if condition="!empty($Info.MediaWebNameID.Old) && $Info.MediaWebNameID.Old eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+            <select name="MediaIndustryID">
+                <option value="0">综合门户媒体</option>
+                <{volist name="MediaIndustryID" id="val"}>
+                <option value="<{$val.TypeID}>" <{if condition="!empty($Info.MediaIndustryID.Old) && $Info.MediaIndustryID.Old eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+            <select name="MediaCityID">
+                <option value="0">覆盖区域选择</option>
+                <{volist name="MediaCityID" id="val"}>
+                <option value="<{$val.TypeID}>" <{if condition="!empty($Info.MediaCityID.Old) && $Info.MediaCityID.Old eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">类型选择选择</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="fans_num">
+			<option value="0">粉丝数</option>
+				<{volist name="fennumid" id="val"}>
+                <option value="<{$key}>" <{if condition="!empty($Info.fans_num) && $Info.fans_num eq $key"}>selected<{/if}>><{$val}></option>
+                <{/volist}>
+            </select>
+            
+            <select name="read_num">
+                <option value="0">阅读数</option>
+                <{volist name="MediaRedID" id="val"}>
+                <option value="<{$key}>" <{if condition="!empty($Info.read_num) && $Info.read_num eq $key"}>selected<{/if}>><{$val}></option>
+                <{/volist}>
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">媒体名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaTitle" value="<{$Info.MediaTitle}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">入口链接</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaInUrl" value="<{$Info.MediaInUrl}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">请以 http:// 开头</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">案例链接</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaCaseUrl" value="<{$Info.MediaCaseUrl}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">请以 http:// 开头</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">平台价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaWebPrice" value="<{$Info.MediaWebPrice}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">游客会员价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaMemberPrice1" value="<{$Info.MediaMemberPrice1}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">大侠会员价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaMemberPrice2" value="<{$Info.MediaMemberPrice2}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">掌门会员价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaMemberPrice3" value="<{$Info.MediaMemberPrice3}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">盟主会员价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MediaMemberPrice4" value="<{$Info.MediaMemberPrice4}>" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">备注说明</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="MediaContent" style="height: 120px;" class="layui-input"><{$Info.MediaContent}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="MediaState" value="1" title="已启用" <{if condition="$Info.MediaState eq 1"}>checked<{/if}>>
+            <input type="radio" name="MediaState" value="0" title="未启用" <{if condition="$Info.MediaState eq 0"}>checked<{/if}>>
+			<input type="radio" name="MediaState" value="3" title="审核未通过" <{if condition="$Info.MediaState eq 3"}>checked<{/if}>>
+        </div>
+		 <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">审核说明</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="MediaStatedec" style="height: 120px;" class="layui-input"><{$Info.MediaStatedec}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="MediaID" value="<{$Info.MediaID}>">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

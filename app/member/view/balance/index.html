@@ -1,0 +1,114 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">财务报表</strong>
+            </div>
+        </div>
+        <hr>
+		
+        <div class="am-g">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <form id="search_form" class="am-form am-form-horizontal" action="<{:url('balance/index')}>" method="get">
+                    <div class="am-form-group">
+                        <label for="finance_type" class="am-u-sm-4 am-u-md-1 am-form-label am-padding-horizontal-0">交易类型:</label>
+                        <div class="am-u-sm-8 am-u-md-3">
+                            <select id="finance_type" name="finance_type">
+                                <option value="" <{if condition="$finance_type eq ''"}> selected<{/if}>>全部</option>
+                                <option value="3" <{if condition="$finance_type eq 3"}> selected<{/if}>>订单退款</option>
+                                <option value="4" <{if condition="$finance_type eq 4"}> selected<{/if}>>订单消费</option>
+								<option value="2" <{if condition="$finance_type eq 2"}> selected<{/if}>>平台充值</option>
+                            </select>
+                        </div>
+						<div class="am-u-sm-8 am-u-md-2">
+						<button id="preview" type="submit" class="am-btn am-btn-primary">查询</button>
+						</div>
+						
+                        <div class="am-hide-sm-only am-u-md-6">
+
+						平台充值：<{$zfb_money}>
+						
+						已消费:<{$order_money}>元
+						
+						</div>
+
+                    </div>
+                </form>
+            </div>
+        </div>
+		
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <div id="list_wrapper" class="dataTables_wrapper no-footer">				
+				<table id="list" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="list_info">
+                    <thead>
+					<tr role="row">
+					<th class="sorting_disabled am-hide-sm-only" rowspan="1" colspan="1" style="width: 308px;">订单号</th>
+					<th class="sorting_disabled am-hide-sm-only" rowspan="1" colspan="1" style="width: 209px;">交易时间</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 167px;">交易说明</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 92px;">交易金额</th>
+ 					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 92px;">交易状态</th>
+					</tr>
+					</thead>
+
+                    <tbody>
+					<{volist name="BalanceMemberData" id="v"}>
+					<tr role="row" class="odd">
+					<td class=" am-hide-sm-only"><{$v.BalanceNumber}></td>
+					<td class=" am-hide-sm-only"><{$v.BalanceTime|date="Y-m-d H:i:s",###}></td>
+					<td class=" quart_td"><{$v.BalanceTitle}></td>
+					<td class=" quart_td">
+					<{if condition="$v['BalanceType'] eq 1"}>
+					<span class="text_green">
+					 + <{$v['BalanceCount']}></span>
+					<{else /}>
+					<span class="text_red">
+					 - <{$v['BalanceCount']}>
+					<{/if}>
+					</span>					
+					</td>
+ 					<td class=" quart_td">
+					<{if condition="$v['BalanceGroup'] eq 2"}>
+						<{if condition="$v['BalancePayState'] eq 0 and $v['BalanceType'] eq 1"}>
+							<span class="text_red">未付款 <a href="<{:url('member/alipay',['id'=>$v['BalanceID']])}>">去支付</a></span>
+						<{else /}>
+							<{if condition="$v['BalanceType'] eq 2 and $v['BalanceGroup'] eq 2"}>
+							<span class="text_red">扣除</span>
+							<{else}>
+							<span class="text_green">已付款</span>
+							<{/if}>
+						<{/if}>
+					<{else /}>
+						<span class="text_green">已完成</span>
+					<{/if}>
+					</td>
+					</tr>
+					<{/volist}>
+					</tbody>
+				</table>
+					<div class="bottom">
+					
+					    <div style="float:right;margin-right:100px;"> <{$BalanceMemberData->render()}></div>
+
+					</div>
+				<div class="clear"></div>
+				</div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+  <!-- content end -->
+</div>
+<{include file="public/member_footer" /}>
+ 
+</body>
+</html>

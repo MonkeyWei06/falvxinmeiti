@@ -1,0 +1,178 @@
+<{include file="public/admin_header" /}>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}></legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="<{:url('website')}>" enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteName" value="<{$WebSite.WebSiteName|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点标题</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteTitle" value="<{$WebSite.WebSiteTitle|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+	 <div class="layui-form-item">
+        <label class="layui-form-label">网址</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="web_site" value="<{$WebSite.web_site|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点关键字</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteKeyword" value="<{$WebSite.WebSiteKeyword|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">站点描述</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteDescription" value="<{$WebSite.WebSiteDescription|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <!--<div class="layui-form-item">
+        <label class="layui-form-label">联系人</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteContact" value="<{$WebSite.WebSiteContact|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteCompanyName" value="<{$WebSite.WebSiteCompanyName|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">咨询热线</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSitePhone" value="<{$WebSite.WebSitePhone|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">售后电话</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteAfterSalePhone" value="<{$WebSite.WebSiteAfterSalePhone|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司地址</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteAddress" value="<{$WebSite.WebSiteAddress|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">服务QQ</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteQQ" value="<{$WebSite.WebSiteQQ|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司邮箱</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="WebSiteEmail" value="<{$WebSite.WebSiteEmail|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+	<div class="layui-form-item">
+        <label class="layui-form-label">secret_id</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="secret_id" value="<{$WebSite.secret_id|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+	<div class="layui-form-item">
+        <label class="layui-form-label">secret_key</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="secret_key" value="<{$WebSite.secret_key|default=''}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+	<div class="layui-form-item">
+        <label class="layui-form-label">抽奖活动</label>
+        <div class="layui-input-inline inputTextWidth">
+		<input name="is_draw" type="radio" value="1" <{if condition="$WebSite.is_draw eq 1"}> checked="checked" <{/if}> />关闭
+		<input name="is_draw" type="radio" value="2" <{if condition="$WebSite.is_draw eq 2"}> checked="checked" <{/if}> />开启
+        </div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">官方公众号</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="WebSiteWXGZH" value="<{$WebSite.WebSiteWXGZH|default=''}>" size="40" class="layui-input"/>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">头部LOGO</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="file" name="WebSiteLogo" class=" layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            <{if condition="!empty($WebSite['WebSiteLogo']) && $WebSite['WebSiteLogo'] neq ''"}>
+            <!--预览-->
+            <!--<a href="<{$FileSeat.$WebSite.WebSiteLogo}>" target="_blank">-->
+                <img class="imgScaleStyle" src="<{$FileSeat.$WebSite.WebSiteLogo}>" />
+            <!--</a>-->
+            <{/if}>
+            尺寸：233*63像素
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height:100px;padding-top:30px;">站点版权信息</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="WebSiteCopyright" rows="5" cols="80" style="height:100px;" class="layui-input"><{$WebSite.WebSiteCopyright|default=''}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            如需换行请加标签：&lt;br&gt;
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height:403px;padding-top:200px;">媒体注意事项</label>
+        <div class="layui-input-inline inputTextWidth" style="height: 300px;">
+            <textarea id="content_notes" name="WebSiteNotes" style="height: 300px;width: 850px"><{$WebSite.WebSiteNotes|default=''}></textarea>
+        </div>
+    </div>
+	 <div class="layui-form-item">
+        <label class="layui-form-label" style="height:403px;padding-top:200px;">自媒体注意事项</label>
+        <div class="layui-input-inline " style="height: 300px;">
+            <textarea id="WebSitemmedia" name="WebSitemmedia" style="height: 300px;width: 850px"><{$WebSite.WebSitemmedia|default=''}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height:403px;padding-top:200px;">用户协议</label>
+        <div class="layui-input-inline " style="height: 300px;">
+            <textarea id="content_agreement" name="WebSiteUserAgreement"><{$WebSite.WebSiteUserAgreement|default=''}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height:404px;padding-top:200px;">站点地图</label>
+        <div class="layui-input-inline inputTextWidth" style="height: 300px;">
+            <script type="text/javascript" src="http://api.map.baidu.com/api?v=3.0&ak=aePqWAPkPWptQsb8YBvwLkKaUwqLH3cu"></script>
+            <input type="text" id="WebSiteCoordinate" name="WebSiteCoordinate" value="<{$WebSite.WebSiteCoordinate|default=''}>" placeholder="请拖动地图标注，来获取位置坐标。" size="40" class="layui-input"/>
+            <div id="container" style="height: 375px;width: 850px; margin-top: 1px;"></div>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn" type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    UE.getEditor('content_notes');
+	UE.getEditor('WebSitemmedia');
+    UE.getEditor('content_agreement');
+</script>
+<script type="text/javascript">
+    var map = new BMap.Map("container");          // 创建地图实例
+    var point = new BMap.Point(<{$WebSite.WebSiteCoordinate|default='113.688782,34.7677'}>);  // 创建点坐标
+    map.centerAndZoom(point, 12);                 // 初始化地图，设置中心点坐标和地图级别
+    var top_left_navigation = new BMap.NavigationControl();  //左上角，添加默认缩放平移控件
+    map.addControl(top_left_navigation);
+    var marker = new BMap.Marker(point);// 创建标注
+    map.addOverlay(marker);              // 将标注添加到地图中
+    marker.enableDragging();             // 不可拖拽
+    // 开启事件监听
+    marker.addEventListener("dragend", function (e) {
+        var x = e.point.lng; //经度
+        var y = e.point.lat; //纬度
+        document.getElementById('WebSiteCoordinate').value= x + "," + y;
+    });
+</script>

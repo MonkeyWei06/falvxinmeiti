@@ -1,0 +1,26 @@
+{include file="pageheader.htm"}
+{insert_scripts files="../js/utils.js,listtable.js"}
+<div class="list-div" id="listDiv">
+<form name="theForm" method="post" action="exchange_draw.php?act=list">
+  <table width="100%">
+  <tbody>
+ <tr>
+    <td class="label">活动标题 :</td>
+    <td><input type="text" name="title" value="{$act.title}"/></td>
+  </tr>
+  <tr>
+    <td class="label">活动介绍 :</td>
+    <td><textarea name="content" rows="5" cols="40">{$act.content}</textarea></td>
+  </tr>
+ 
+  <tr>
+    <td colspan="2" align="center">
+	 <input type="hidden" value="{$act.aid}" name="aid" />
+      <input type="submit" value="{$lang.button_submit}" class="button" />
+    <input type="reset" value="{$lang.button_reset}" class="button" />
+    </td>
+  </tr>
+</tbody></table>
+</form>
+</div>
+{include file="pagefooter.htm"}

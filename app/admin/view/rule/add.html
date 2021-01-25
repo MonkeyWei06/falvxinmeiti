@@ -1,0 +1,60 @@
+<{include file="public/admin_header" /}>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>添加分类</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="<{:url('rule/add')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="title" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">栏目节点</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="name" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级节点</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="parentid">
+                <option value="0">一级分类</option>
+                <{volist name="ParentTypeList" id="val"}>
+                <option value="<{$val.id}>_<{$val.node}>_<{$val.path}>"><{$val.title}></option>
+                <{/volist}>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">项目组</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="type" value="<{$Model}>" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="sort" size="40" value="0" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item " >
+        <label class="layui-form-label">是否显示</label>
+        <div class="layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="isshow" value="1" title="已显示" checked>
+            <input type="radio" name="isshow" value="0" title="未显示">
+        </div>
+    </div>
+    <div class="layui-form-item" >
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="status" value="1" title="已启用" checked>
+            <input type="radio" name="status" value="0" title="已禁用">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn" type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

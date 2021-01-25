@@ -1,0 +1,282 @@
+<{include file="public/header" /}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf am-btn-group">
+          <a class="am-btn am-btn-primary am-btn-sm">价格批量更新</a>
+		  </div>
+      <hr>
+    </div>
+	 
+<div class="am-g">
+  <div class="am-u-sm-12">
+    <div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+		<input type="hidden" value="{$membertype}" id="membertype">
+		<form class="layui-form" id="MyForm" method="post">
+      <table id="my_article" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="my_article_info">
+        <thead>
+          <tr role="row">
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 60px;">序列</th>
+            <th class="sorting_disabled quart_td td100" rowspan="1" colspan="1" style="width: 100px;"><span class="am-hide-sm-only" style="display: inline !important;">价格</span>区间</th>
+            <th class="sorting_disabled quart_td td50" rowspan="1" colspan="1" style="width: 50px;"><span class="am-hide-sm-only" style="display: inline !important;">游客</span>会员</th>
+            <th class="sorting_disabled quart_td td50" rowspan="1" colspan="1" style="width: 50px;"><span class="am-hide-sm-only" style="display: inline !important;">大侠</span>会员</th>
+            <th class="orting_disabled quart_td td50" rowspan="1" colspan="1" style="width: 50px;">掌门</th>
+            <th class="orting_disabled quart_td td50" rowspan="1" colspan="1" style="width: 50px;">盟主</th>
+			<th class="orting_disabled quart_td td50" rowspan="1" colspan="1" style="width: 50px;">操作</th>
+          </tr>
+        </thead>
+         <tbody id="RowContent">
+		 <{volist name='models' id='model'}>
+          <tr role="row" class="odd">
+            <td class="am-hide-sm-only"><{$i}></td>
+            <td class="quart_td td250">
+			<input type="number" min="1" name="BeginPrice[]" value="<{$model.price_start}>" class="inputstyle"/>
+              -
+            <input type="number" min="1" name="EndPrice[]" value="<{$model.price_end}>" class="inputstyle"/></td>
+            <td class=" quart_td td50">
+			<input type="number" name="MediaMemberPrice1[]" value="<{$model.price_one}>" class="inputstyle"/>
+			</td>
+            <td class=" quart_td td50">
+			<input type="number" name="MediaMemberPrice2[]" value="<{$model.price_two}>" class="inputstyle"/>
+			</td>
+            <td class=" quart_td td50">
+			<input type="number" name="MediaMemberPrice3[]" value="<{$model.price_three}>" class="inputstyle"/></td>
+			<td class=" quart_td td50"> 
+			<input type="number" name="MediaMemberPrice4[]" value="<{$model.price_four}>" class="inputstyle"/></td>
+            <td class=" quart_td td50"><button class="am-btn am-btn-default am-btn-sm"  type="button">删除</button></td>
+          </tr>
+		   <{/volist}>
+        </tbody>
+      </table>
+	  <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+            <div class="layui-form-item" style="float: left;">
+                <input type="hidden" id="RowEnd" value="<{$i|default='1'}>"/>
+                <input type="hidden" id="gx" name="gx" value="0"/>
+                <button class="am-btn am-btn-primary am-btn-sm"  type="button" onclick="AddRow();">追加</button>
+                <button class="am-btn am-btn-primary am-btn-sm"  type="button" onclick="SubmitData('<{:url('priceadd')}>',0);">提交保存</button>
+                <button class="am-btn am-btn-primary am-btn-sm"  type="button" onclick="SubmitData('<{:url('priceadd')}>',1);">提交并更新</button>
+            </div>
+            <div class="clear"></div>
+        </div>
+		<div class="liuchengtu">
+			<div class="con">
+				<span id="close-lct"></span>
+				<img src="__STATIC__/admin/images/liuchengtu.png" alt="">
+			</div>
+		</div>
+	  </form>
+      <div class="clear"></div>
+	  <style type="text/css">
+    .inputstyle{border: 2px solid #e6e6e6; background-color: #fff; border-radius: 2px; height: 22px; width: 100px;}
+    .btnstyle{display: inline-block;
+        padding: 2px 10px;
+        background-color: #41b2fe;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;}
+    .liuchengtu{
+        background-color: rgba(0,0,0,0.7);
+        width: 100%;
+        position: absolute;
+        top:0;
+        display: none;
+    }
+    .liuchengtu .con{
+        width: 578px;
+        height: 450px;
+        position: relative;
+        margin:0 auto;
+        margin-top: 120px;
+    }
+    .liuchengtu #close-lct{
+        position: absolute;
+        display: block;
+        width: 30px;
+        height: 30px;
+        right: 10px;
+        top:3px;
+        cursor: pointer;
+    }
+</style>
+		
+    </div>
+  </div>
+</div>
+</div>
+<{include file="public/footer"}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script type="text/javascript">
+    function AddRow(){
+        var RowEnd=$('#RowEnd').val();
+         if(RowEnd>0){
+            var BeginPrice=$('input[name="BeginPrice[]"]:last').val();
+            var EndPrice=$('input[name="EndPrice[]"]:last').val();
+            if(BeginPrice=="" || EndPrice=="" || BeginPrice==undefined || EndPrice==undefined){
+               alert('请先完善信息后再进行追加');
+                return false;
+            }
+        }
+        var membertype = $('#mem');
+        var Content='<tr>' +
+            '<td class=" am-hide-sm-only">'+(RowEnd*1+1)+'</td>'+
+            '                <td class="quart_td td250">' +
+            '                    <input type="number" min="1" name="BeginPrice[]" onblur="BeginPriceCheck(this);" class="inputstyle"/>' +
+            '                    -' +
+            '                    <input type="number" min="1" name="EndPrice[]" onblur="EndPriceCheck(this);" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td class="quart_td td100">' +
+            '                    <input type="number" name="MediaMemberPrice1[]" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td class="quart_td td100">' +
+            '                    <input type="number" name="MediaMemberPrice2[]" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td class="quart_td td100">' +
+            '                    <input type="number" name="MediaMemberPrice3[]" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td class="quart_td td100">' +
+            '                    <input type="number" name="MediaMemberPrice4[]" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td class="quart_td td100">' +
+            '                    <button class="am-btn am-btn-danger am-btn-sm"  type="button" onclick="DelRow(this);">删除</button>' +
+            '                </td>' +
+            '            </tr>';
+        $('#RowContent').append(Content);
+        var RowEnd=$('#RowEnd').val();
+        $('#RowEnd').val();
+    }
+    function DelRow(Obj) {
+        var JQObj=$(Obj);
+        JQObj.parent().parent().remove();
+        var Count=$('input[name="BeginPrice[]"]').length;
+        if(Count==0){
+            $('#RowEnd').val(0);
+        }
+    }
+    function SubmitData(Url,type) {
+        var Count=$('input[name="BeginPrice[]"]').length;
+        $('#gx').val(type);
+        if(Count<1){
+            alert('请添加您要批量更新的数据');
+            return false;
+        }
+        var BeginPrice=$('input[name="BeginPrice[]"]:last').val();
+        var EndPrice=$('input[name="EndPrice[]"]:last').val();
+        //alert(BeginPrice+'--'+EndPrice);
+        if(BeginPrice=="" || EndPrice=="" || BeginPrice==undefined || EndPrice==undefined){
+            alert('请先完善信息后再进行提交保存');
+            return false;
+        }
+        $('#MyForm').attr('action',Url);
+        $('#MyForm').submit();
+    }
+    function BeginPriceCheck(Obj) {
+        var JQObj=$(Obj);
+        var BeginPrice=JQObj.val();
+        if(BeginPrice==""){
+            BeginPrice=0;
+            JQObj.val(0);
+        }
+        var LastPrice=JQObj.parent().parent().prev().find('td input[name="EndPrice[]"]').val();
+        if(LastPrice!=undefined){
+            BeginPrice=BeginPrice*1;
+            LastPrice=LastPrice*1;
+            if(BeginPrice<=LastPrice){
+                //layer.msg('您的起始金额输入有误');
+                var Sum=(LastPrice+1).toFixed(0);
+                JQObj.val(Sum);
+                return false;
+            }
+        }
+        var NextPrice=JQObj.next('input[name="EndPrice[]"]').val();
+        BeginPrice=BeginPrice*1;
+        NextPrice=NextPrice*1;
+        if(NextPrice!="" && BeginPrice>NextPrice){
+            //layer.msg('您的起始金额输入有误');
+            var Sum=(LastPrice-1).toFixed(0);
+            JQObj.val(Sum);
+            return false;
+        }
+    }
+    function EndPriceCheck(Obj) {
+        var JQObj=$(Obj);
+        var EndPrice=JQObj.val();
+        var LastPrice=JQObj.prev('input[name="BeginPrice[]"]').val();
+        EndPrice=EndPrice*1;
+        LastPrice=LastPrice*1;
+        if(EndPrice<=LastPrice){
+            //layer.msg('您的终止金额输入有误');
+            var Sum=(LastPrice+50).toFixed(0);
+            JQObj.val(Sum);
+            return false;
+        }
+    }
+</script>
+<script src="__STATIC__/admin/js/jquery.cookie.js"></script>
+<script>
+    jQuery.cookie = function(name, value, options) {
+        if (typeof value != 'undefined') {
+            options = options || {};
+            if (value === null) {
+                value = '';
+                options = $.extend({}, options);
+                options.expires = -1;
+            }
+            var expires = '';
+            if (options.expires && (typeof options.expires == 'number' || options.expires.toUTCString)) {
+                var date;
+                if (typeof options.expires == 'number') {
+                    date = new Date();
+                    date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));//day * 24hour  60min  60sc  1000haomiao
+                } else {
+                    date = options.expires;
+                }
+                expires = '; expires=' + date.toUTCString();
+            }
+            var path = options.path ? '; path=' + (options.path) : '';
+            var domain = options.domain ? '; domain=' + (options.domain) : '';
+            var secure = options.secure ? '; secure' : '';
+            document.cookie = [name, '=', encodeURIComponent(value), expires, path, domain, secure].join('');
+        } else {
+            var cookieValue = null;
+            if (document.cookie && document.cookie != '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = jQuery.trim(cookies[i]);
+                    if (cookie.substring(0, name.length + 1) == (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+    };
+    //var pa=jQuery.noConflict();
+    $(document).ready(function(){
+        var panda =$(".liuchengtu");
+        panda.children(".con").click(function(){
+           panda.fadeOut(600);
+            $.cookie('closediv','close',{ expires: 1});
+        });
+        var hc = $.cookie('closediv');
+        if(hc=="close")
+        {
+           // panda.hide()
+        }else{
+            panda.show()
+        } 
+    });
+</script>
+</body>
+</html>

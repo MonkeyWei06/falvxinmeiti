@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="Cache-Control" content="no-siteapp" />
+  <meta name="apple-mobile-web-app-title" content="Amaze UI" />
+  <link rel="stylesheet" href="__STATIC__/assets/css/amazeui.min.css"/>
+  <link rel="stylesheet" href="__STATIC__/assets/css/admin.css">
+  <script type="text/javascript" src="__STATIC__/lib/jquery-1.10.2.js"></script>
+  <script type="text/javascript" src="__STATIC__/lib/ueditor/ueditor.config.js"></script>
+  <script type="text/javascript" src="__STATIC__/lib/ueditor/ueditor.all.js"></script>
+      <link rel="stylesheet" href="__STATIC__/lib/ace_admin/css/bootstrap.min.css" />
+    <!--[if lt IE 9]>
+	<script src="http://libs.baidu.com/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://cdn.staticfile.org/modernizr/2.8.3/modernizr.js"></script>
+	<script src="__STATIC__/assets/js/amazeui.ie8polyfill.min.js"></script>
+	<![endif]-->	
+	<script src="__STATIC__/assets/js/amazeui.min.js"></script>
+	<script src="__STATIC__/assets/js/app.js"></script>
+   <!--[if lte IE 8]>
+    <style>
+        .fileinput-button {
+            position: relative;
+            display: inline-block;
+            overflow: hidden;
+        }
+        .fileinput-button input{
+            position:absolute;
+            right: 0px;
+            top: 0px;
+            opacity: 0;
+            -ms-filter: 'alpha(opacity=0)';
+            font-size: 100px;
+        }
+    </style>
+    <![endif]-->
+</head>
+<body>
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div style="text-align: center;">
+          申请改稿
+		  </div>
+      </div>
+    <div class="page-content" style="height:500px;overflow-y: scroll;">
+      <div class="page-content-area" style="margin-left: 3%;" >
+      <form class="am-form" id="MyForm" method="post" action="">
+        <div class="am-g am-margin-top">
+           <div class="am-u-sm-12 am-u-md-11">
+            改稿费用：<input id="price" type="number" name="price" required="" min="0" autocomplete="off" placeholder="可填任意金额，不填则默认为0" style="width:350px;">
+           </div>
+		   <div style="color: red">(*仅限已完成订单可以提交改稿，未处理的订单建议删除重发)</div>
+        </div>
+        <div class="am-g" style="margin-top: 10px;">
+          <div class="am-u-sm-12 am-u-md-1 am-md-text-right">内容：</div>
+          <textarea id="content" name="content" style="float:left;width:80%;"></textarea>
+        </div>
+        </div>
+        <div class="am-g">
+          <div class="am-u-sm-12 am-u-md-1 am-md-text-right" style="margin-top: 10px;">备 注：</div>
+          <div class="am-u-sm-12 am-u-md-11" style="margin-top: 10px;">
+		   <p>1.改稿费用会计入订单支付的总价格</p>
+           <p>2.已完成的订单才能改稿，编辑拒绝你的修改要求后改稿费用会退回您的账户</p>
+			<p>3.文章订单被拒稿后，改稿费用会一并退回您的账户</p>
+			 <input type="hidden" name="id" value="<{$id}>" id="id" style="width:350px;">
+          </div>
+        </div>
+		<div class="am-form-group">
+			<label class="am-u-sm-3 am-form-label am-padding-horizontal-0"></label>
+			<div style="float:;">
+				<button id="submitForm" type="button" class="am-btn am-btn-warning am-btn-block" onClick="submitbut();">保存并提交</button>
+			</div>
+		</div>
+      </form>
+    </div>
+	</div>
+	<script src="__STATIC__/lib/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+    var ue = new UE.ui.Editor({initialFrameHeight:200,initialFrameWidth:500});
+    ue.render("content");
+    function submitbut() {
+       var price=$('#price').val();
+       var content=UE.getEditor('content').getContent();
+	   var id=$('#id').val();
+       if(price==""){
+          layer.msg("请填写改稿金额");
+          return false;
+		}
+		$.ajax({
+		  type: 'POST',
+		  url: "<{:url('change_editsave')}>",//发送请求
+		  data: {id:id,price:price,content:content},
+		  success: function(result) {
+			  if(result.code==200){
+				 layer.msg(result.msg,{icon:1,time:3000},function() {
+					parent.layer.close(1);
+				});
+			  }else{
+				layer.msg(result.msg,{icon:2,time:3000},function() {
+					 //parent.layer.close(1);
+				});
+			  }
+			}
+		});
+		return false;
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,65 @@
+  <script type="text/javascript" src="/static/lib/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="/static/lib/layui/css/layui.css" />
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<style type="text/css">
+    .admin-main {margin: 15px;}
+</style>
+<div class="admin-main">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">调整金额</label>
+            <div class="layui-input-block" style="min-height: 46px;">
+                <input type="number" name="Money" lay-verify="required" autocomplete="off" placeholder="请输入调整金额" class="layui-input" style="width:80%">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">调整原因</label>
+            <div class="layui-input-block" style="min-height: 46px;">
+                <input type="text" name="Content" lay-verify="required" placeholder="请输入调整原因" autocomplete="off" value="代充值" class="layui-input" style="width:80%">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" id="MemberID" value="<{$MemberID}>">
+                <button class="layui-btn" lay-submit="" lay-filter="SubmitBut">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<{include file="public/footer" /}>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form,layer = layui.layer;
+        //监听提交
+        form.on('submit(SubmitBut)', function(data){
+            //console.log(data);
+            SaveMemberInfo(data.field);
+            return false;
+        });
+    });
+    function SaveMemberInfo(Data) {
+        if(Data.Money==undefined || Data.Password==""  || Data.Password=="0"){
+            layer.msg('请输入您要扣除的金额');
+            return false;
+        }
+        var MemberID=$('#MemberID').val();
+        $.ajax({
+            url:'<{:url('modify_wallet')}>',
+            type:'POST',
+            dataType:'json',
+            data:{MemberID:MemberID,Money:Data.Money,Content:Data.Content},
+            cache:false,
+            success:function(Result){
+                if(Result=='0'){
+                    layer.msg('充值成功',{time:1000},function () {
+                        layer.closeAll();
+                        parent.location.reload();
+                    });
+                    return false;
+                }else{
+                }
+            }
+        });
+    }
+</script>

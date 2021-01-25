@@ -1,0 +1,37 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}></legend>
+</fieldset>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+		<table class="layui-table">
+		  <tbody>
+		 <tr>
+			<td class="label">奖项名称 :</td>
+			<td><input type="text" name="title" <{if condition="$actList"}> value="<{$actList.title}>" <{/if}>/></td>
+		  </tr>
+		  <tr>
+			<td class="label">红包数 :</td>
+			<td><input type="text" name="num" <{if condition="$actList"}> value=" <{$actList.num}>" <{/if}>/></td>
+		  </tr>
+		 <tr>
+			<td class="label">中奖概率 :</td>
+			<td><input type="text" name="randnum" <{if condition="$actList"}> value=" <{$actList.randnum}>" <{/if}>/>%</td>
+		  </tr>
+		  <tr>
+			<td align="center">
+				<input type="submit" value="添 加" class="layui-btn" />
+				<input type="hidden" value="3" name="aid"/>
+			</td>
+			<td align="center">
+				<input type="reset" value="重 置" class="layui-btn" />
+			</td>
+		  </tr>
+		</tbody></table>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

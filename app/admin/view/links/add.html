@@ -1,0 +1,48 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 28px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>添加</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('add')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">链接名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="NewsTitle" size="40" class="layui-input"/>
+        </div>
+    </div>
+	<div class="layui-form-item">
+        <label class="layui-form-label">链接地址</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="NewsContent" size="40" class="layui-input"/>带http://
+        </div>
+    </div>
+    <div class="layui-form-item" >
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="NewsState" value="1" title="已启用" checked>
+            <input type="radio" name="NewsState" value="0" title="已禁用">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <!--<div class="layui-form-item" >-->
+        <!--<label class="layui-form-label">是否推荐</label>-->
+        <!--<div class="layui-form layui-input-inline inputTextWidth radiofile">-->
+            <!--<input type="radio" name="NewsRecommendState" value="1" title="已推荐">-->
+            <!--<input type="radio" name="NewsRecommendState" value="0" title="未推荐" checked>-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <input type="hidden" id="NewsTypeID" name="NewsTypeID">
+        <input type="hidden" id="NewsTypePath" name="NewsTypePath">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery,upload = layui.upload;
+    });
+</script>

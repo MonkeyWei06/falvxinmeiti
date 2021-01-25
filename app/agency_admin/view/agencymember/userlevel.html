@@ -1,0 +1,64 @@
+  <script type="text/javascript" src="/static/lib/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="/static/lib/layui/css/layui.css" />
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<style type="text/css">
+    .admin-main {margin: 15px;}
+</style>
+<div class="admin-main">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">会员等级</label>
+            <div class="layui-input-inline">
+                <select name="MemberPriceType">
+                    <option value="">会员等级选择</option>
+                    <{volist name="GetMemberPriceTypeList" id="val"}>
+                    <option value="<{$val.TypeID}>"  <{if condition="!empty($Info.MemberPriceType) && $Info.MemberPriceType eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                    <{/volist}>
+                </select>
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" id="MemberID" value="<{$MemberID}>">
+                <button class="layui-btn" lay-submit="" lay-filter="SubmitBut">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<{include file="public/footer" /}>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form,layer = layui.layer;
+        //监听提交
+        form.on('submit(SubmitBut)', function(data){
+            //console.log(data);
+            SaveMemberInfo(data.field);
+            return false;
+        });
+    });
+    function SaveMemberInfo(Data) {
+        if(Data.MemberPriceType==undefined || Data.MemberPriceType==""  || Data.MemberPriceType=="0"){
+            layer.msg('请选择会员价格类型');
+            return false;
+        }
+        var MemberID=$('#MemberID').val();
+        $.ajax({
+            url:'<{:url('userlevel')}>',
+            type:'POST',
+            dataType:'json',
+            data:{MemberID:MemberID,MemberPriceType:Data.MemberPriceType},
+            cache:false,
+            success:function(Result){
+                if(Result=='0'){
+                    layer.msg('设置成功',{time:1000},function () {
+                        layer.closeAll();
+                        parent.location.reload();
+                    });
+                    return false;
+                }else{
+                }
+            }
+        });
+    }
+</script>

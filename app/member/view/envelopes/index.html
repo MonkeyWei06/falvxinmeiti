@@ -1,0 +1,187 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">我的红包</strong>
+            </div>
+			<div class="am-fl am-cf">
+                <button id="getMoney" class="am-btn am-btn-secondary am-btn-xs am-margin-left">申请提现</button>
+            </div>
+			<div class="am-fl am-cf get_money_notice">
+                <span class="am-icon-question-circle" style="font-size: 20px;color: #0e90d2;margin-left: 10px;cursor: pointer"></span>
+                <div class="get_money_pop">收益免手续费提现,最低提现100或100的倍数<span class="pop_arrow"></span></div>
+            </div>
+        </div>
+        <hr>
+        <div class="am-g">
+            <div class="am-u-sm-12 am-u-sm-centered">
+                <form id="search_form" class="am-form am-form-horizontal" action="<{:url('withdrawal/index')}>" method="post">
+                    <div class="am-form-group">        
+					<label for="order_num" class="am-u-sm-3 am-u-md-1 am-form-label am-padding-horizontal-0">订单号:</label>
+						<div class="am-u-sm-6 am-u-md-3">
+                            <input type="text" id="order_num" name="order_num" value="<{$OrderNumber}>" class="am-form-field" autocomplete="off">
+                        </div>
+						<div class="am-u-sm-3 am-u-md-8">
+                            <button type="submit" id="search_btn" class="am-btn am-btn-primary">搜索</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+		
+        <div class="am-g">
+            <div class="am-u-sm-12">
+                <div id="list_wrapper" class="dataTables_wrapper no-footer">				
+				<table id="list" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="list_info">
+                    <thead>
+					<tr role="row">
+					<th class="sorting_disabled am-hide-sm-only" rowspan="1" colspan="1" style="width: 260px;">订单号</th>
+					<th class="sorting_disabled am-hide-sm-only" rowspan="1" colspan="1" style="width: 180px;">红包金额</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 160px;">来源</th>
+ 					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 200px;">备注</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 180px;">获取时间</th>
+					</tr>
+					</thead>
+
+                    <tbody>
+					<{volist name="MemberData" id="v"}>
+					<tr role="row" class="odd">
+					<td class=" am-hide-sm-only"><{$v.OrderNumber}></td>
+					<td class=" am-hide-sm-only"><{$v.Money}></td>
+					<td class=" quart_td"><{$v.parent_memberID}></td>
+ 					<td class=" quart_td">
+						<{$v['Remarks']}>					
+					</td>
+					<td class=" quart_td">
+					<{$v.Time|date="Y-m-d H:i:s",###}>			
+					</td>
+					</tr>
+					<{/volist}>
+					</tbody>
+				</table>
+					<div class="bottom">
+					
+					    <div style="float:right;margin-right:100px;"> <{$MemberData->render()}></div>
+
+					</div>
+				<div class="clear"></div>
+				</div>
+            </div>
+        </div>
+        <hr>
+    </div>
+</div>
+<div id="check_url" data-url="/member.php/withdrawal/balance.html" style="display: none;"></div>
+<div id="apply_url" data-url="/member.php/withdrawal/add.html" style="display: none;"></div>
+  <!-- content end -->
+  <div class="am-modal am-modal-alert" tabindex="-1" id="my-alert">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd">
+            "loading..."
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+</div>
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-confirm">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd"><h3 style="margin: 10px 0 20px;">温馨提示</h3></div>
+        <div class="am-modal-bd" style="overflow: hidden">
+            <div class="am-form-group">
+                <form id="dia_form" class="am-form am-form-horizontal" data-am-validator>
+                    <div class="am-form-group">
+                        <p class="text_red">每周只可申请提现一次，周一申请，则对应下周一完成提现，周末申请提现，则顺延一个星期后周一完成提现。</p>
+                        <p>当前可提现金额: <span id="total_money" style="color: #f00">00.00</span>元</p>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-4 am-form-label am-padding-right-0">真实姓名:</label>
+                        <div class="am-u-sm-6">
+                            <input type="text" id="your_name" value="" placeholder="请填写您的真实姓名" required autocomplete="off">
+                        </div>
+                        <div class="am-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-4 am-form-label am-padding-right-0">支付宝账号:</label>
+                        <div class="am-u-sm-6">
+                            <input type="text" id="your_account" value="" placeholder="邮箱或者手机号" required autocomplete="off">
+                        </div>
+                        <div class="am-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-4 am-form-label am-padding-right-0">提现金额:</label>
+                        <div class="am-u-sm-6">
+                            <input type="number" id="money" value="" placeholder="请输入提现金额" required autocomplete="off">
+                        </div>
+                        <div class="am-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-4 am-form-label am-padding-right-0">备注:</label>
+                        <div class="am-u-sm-6">
+                            <input type="text" id="mark" value="" placeholder="选填" autocomplete="off">
+                        </div>
+                        <div class="am-u-sm-2"></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+<{include file="public/member_footer" /}>
+ <script>
+//先查余额
+$("#getMoney").click(function () {
+    $.ajax({
+        type: "post",
+        url: $("#check_url").attr("data-url"),
+        success: function(result){
+            $("#total_money").html(result);
+            //弹框
+            $('#my-confirm').modal({
+                relatedTarget: this,
+                closeOnConfirm: true,
+                onConfirm: function(options) {
+                   var is_all_right = $("#dia_form").validator('isFormValid');                    
+                    if(is_all_right){
+						$.ajax({
+							type: "post",
+							url: $("#apply_url").attr("data-url"),
+							data: {
+								Realname: your_name.value,
+								Paycard: your_account.value,
+								Money: money.value,
+								Remarks: mark.value,
+ 							},
+							success: function (result) {                                        
+								$("#my-alert").find(".am-modal-bd").html(result.msg).end().modal('open');
+								$("#my-alert .am-modal-btn").click(function(){
+									if(result.code === 202){
+										window.location.href=result.data.url
+									}else{
+										location.reload()
+									}
+								})
+							}
+						});
+                    }
+                }
+            });
+        }
+    });
+});
+</script>
+</body>
+</html>

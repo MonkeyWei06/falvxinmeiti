@@ -1,0 +1,36 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>问题反馈回复</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('edit')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">回复内容</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="MessageReplyContent" style="height: 120px;" class="layui-input"><{$Info.MessageReplyContent}></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">回复时间</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MessageReplyTime" value="<{if condition="$Info.MessageReplyTime gt 0"}><{$Info.MessageReplyTime|date="Y-m-d H:i:s",###}><{/if}>" onclick="WdatePicker({dateFmt:'yyyy-MM-dd HH:mm:ss'});" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">回复状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="MessageState" value="1" title="已回复" <{if condition="$Info.MessageState eq 1"}>checked<{/if}>>
+            <input type="radio" name="MessageState" value="0" title="未回复" <{if condition="$Info.MessageState eq 0"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="MessageID" value="<{$Info.MessageID}>">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

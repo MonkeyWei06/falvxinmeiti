@@ -1,0 +1,38 @@
+<header>
+		<div class="top">
+			<div class="wrap clearfix">
+				<div class="welcome fl">欢迎您来到<{$Config.WebSiteName|default=''}>！</div>
+				<a class="tel fr" href=""><{$Config.WebSitePhone|default=''}></a>
+			</div>
+		</div>
+		<div class="header-main wrap clearfix">
+			<h1 class="logo fl">
+			 <{if condition="!empty($Config['WebSiteLogo'])"}>
+            <img src="<{$path}><{$Config['WebSiteLogo']}>" width="181" height="54" alt="<{$Config.WebSiteName|default=''}>">
+            <{/if}>
+			</h1>
+			<figure class="fl"><img src="__STATIC__/agency/home/images/slogan.png" alt=""></figure>
+			<div class="login-reg fr">
+			 <{if condition="!empty($SessionAgencyMemberID) && !empty($SessionAgencyMemberName)"}>
+            <a href="<{:url('/admin')}>" target="_blank">代理商管理</a>
+            <{/if}>
+			 <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+			<a href="<{:url('/member.php/index')}>">会员中心</a>
+			<a href="<{:url('/member.php/login/loginout')}>">安全退出</a>
+			<{else}>
+			<a href="<{:url('/member.php/reg')}>" >注册</a>
+			<a href="<{:url('/member.php/login')}>">登录</a>
+			<{/if}>
+			</div>
+		</div>
+		<nav>
+			<ul class="wrap clearfix">
+				<li <{if $act=="index"}>class="active"<{/if}>><a href="<{:url('/')}>">首页</a></li>
+				<li <{if $act=="jiage"}>class="active"<{/if}>><a href="<{:url('jiage')}>">媒体资源</a></li>
+				<li <{if $act=="wemedia"}>class="active"<{/if}>><a href="<{:url('wemedia')}>">自媒体资源</a></li>
+				<li <{if $act=="writer"}>class="active"<{/if}>><a href="<{:url('writer')}>">软文撰写</a></li>
+				<li <{if $act=="join"}>class="active"<{/if}>><a href="<{:url('join')}>">合作加盟</a></li>				
+				<li <{if $act=="about"}>class="active"<{/if}>><a href="<{:url('about')}>">关于我们</a></li>
+			</ul>
+		</nav>
+	</header>

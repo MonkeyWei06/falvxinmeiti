@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<title>营销学院 -<{$Config.WebSiteCompanyName}></title>
+	<meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+	<meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+	<link rel="stylesheet" href="__STATIC__/home/css/style.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/index.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/aos.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/swiper.min.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/wap.css" media="screen and (max-width:640px)">
+</head>
+<body>
+<{include file="public/header" /}>
+	<section id="inside-banner">
+		<div class="inside-banner" style="background: url(__STATIC__/home/images/contact-banner.jpg) no-repeat center top;">
+			<div class="inside-content wrap clearfix">
+				<div class="inside-title" aos="fade-up">
+					<h3>营销学院</h3>
+					<p class="en">Media College</p>
+				</div>
+				<div class="inside-info clearfix" aos="fade-up">
+					<ul class="index-news-list clearfix">
+					 <{volist name="list" id="vo"}>
+						<li class="clearfix" aos="fade-up">
+							<a href="<{:url('newsview',['id'=>$vo.NewsID])}>">
+								<figure class="fl"><{if condition="$vo.NewsPicPath != ''"}><img src="/uploads/<{$vo.NewsPicPath}>" alt=""><{else}><img src="__STATIC__/home/images/index26.jpg" alt=""><{/if}></figure>
+								<article class="info fl">
+									<div class="title"><{$vo.NewsTitle}></div>
+									<div class="text"><{:msubstr($vo.NewsAbstract,0,60)}></div>
+								</article>
+								<div class="time fr">
+ 									<span class="more"></span>
+								</div>
+							</a>
+						</li>
+						<{/volist}>
+					</ul>
+					<div class="page clearfix">
+						<{$page}>
+		            </div>
+				</div>
+			</div>
+		</div>
+	</section>
+ <{include file="public/footer" /}>
+	<script>
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000,
+			once:true
+		});
+	</script>
+
+</body>
+</html>

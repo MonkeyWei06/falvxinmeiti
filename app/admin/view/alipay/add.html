@@ -1,0 +1,99 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>添加</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('add')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayMemberName" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付宝APPID</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayAPPID" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">支付宝公钥</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="AliPayPublicKey" style="height: 120px;" class="layui-input"></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">商户私钥</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="AliPayPrivateKey" style="height: 120px;" class="layui-input"></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开户银行</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayBankName" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">开户网点</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayBankWD" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">银行卡号</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayBankNum" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">持卡人</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AliPayBankPeople" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付宝收款码：</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="file" value="选择图片" name="image" id="image" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">微信收款码：</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="file" value="选择图片" name="image2" id="image2" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">收款方式</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="AliPayType" value="1" title="APPID支付" checked>
+            <input type="radio" name="AliPayType" value="2" title="银行卡/支付宝收款码/微信收款码" >
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="AliPayState" value="1" title="已启用" checked>
+            <input type="radio" name="AliPayState" value="0" title="未启用" >
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

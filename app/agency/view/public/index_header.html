@@ -1,0 +1,67 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><{$Config.WebSiteTitle|default=''}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+    <link href="/favicon.ico"  rel="shortcut icon" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/lib/swiper/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/lib/aos/aos.css">
+    <script src="__STATIC__/lib/jquery-1.10.2.js"></script>
+    <script src="__STATIC__/lib/swiper/swiper.min.js"></script>
+    <script src="__STATIC__/lib/aos/aos.js"></script>
+    <script src="__STATIC__/lib/layer/layer.js"></script>
+    <link rel="stylesheet" type="text/css" href="__STATIC__/agency/home/css/css.css"/>
+</head>
+<body>
+<div class="max top">
+    <div class="box"> <span class="left">您好 <{$SessionMemberName|default=''}>，欢迎光临，<{$Config.WebSiteName|default=''}>！</span>
+        <div class="right">
+            <p><span>咨询热线：</span><strong><{$Config.WebSitePhone|default=''}></strong></p>
+            <{if condition="!empty($SessionAgencyMemberID) && !empty($SessionAgencyMemberName)"}>
+            <a href="<{:url('/admin')}>" target="_blank" style="width: 90px;">代理商管理</a>
+            <{/if}>
+            <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+            <a href="/member.php/index" target="_blank" style="width: 90px;">会员中心</a>
+            <a href="/member.php/login/loginout" target="_blank" style="width: 90px;">安全退出</a>
+            <{else}>
+            <a href="/member.php/login/index?act=reg" target="_blank">注册</a>
+            <a href="/member.php/login" target="_blank" class="login">登录</a>
+            <{/if}>
+        </div>
+    </div>
+</div>
+<div class="max header">
+    <div class="box">
+        <a href="<{:url('/')}>" class="left logo">
+            <{if condition="!empty($Config['WebSiteLogo'])"}>
+            <img src="<{$Config['WebSiteLogo']}>" width="181" height="54">
+            <{/if}>
+            <img src="__STATIC__/agency/home/images/slogan.png">
+        </a>
+        <div class="right nav">
+            <ul>
+                <li><a href="<{:url('/')}>">首页</a></li>
+                <li><a href="<{:url('jiage')}>">媒体价格</a></li>
+                <li><a href="jacascript::void(0);" onclick="OpenWin();">微信</a></li>
+                <li><a href="jacascript::void(0);" onclick="OpenWin();">微博</a></li>
+                <li><a href="<{:url('about')}>">关于我们</a></li>
+                <div class="denglu">
+                    <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+                    <a href="<{:url('/member.php/index')}>" style="width: 90px;">会员中心</a>
+                    <a href="<{:url('/member.php/login/loginout')}>" class="login">安全退出</a>
+                    <{else}>
+                    <a href="<{:url('/member.php/reg')}>" >注册</a>
+                    <a href="<{:url('/member.php/login')}>" class="login">登录</a>
+                    <{/if}>
+                </div>
+            </ul>
+            <div class="close"></div>
+        </div>
+        <div class="nav_menu"></div>
+    </div>
+</div>

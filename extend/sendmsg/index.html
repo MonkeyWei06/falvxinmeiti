@@ -1,0 +1,112 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title></title>
+<script language="javascript" type="text/javascript" src="./js/jquery-3.2.1.min.js"></script>
+<script language="javascript" type="text/javascript">
+// <![CDATA[
+
+function btnCode_onclick() {
+	var AimMobiles = $.trim($("#txtAimMobiles").val());
+	var Data = {"AimMobiles" : AimMobiles};
+
+	$.ajax({
+		type	:	"POST",
+		url		:	"./Code.php",
+		data	:	Data,
+		async	:	false,
+		success	:	function(RtnString) {
+			$("#txtContent").val(RtnString);
+		}
+		});
+}
+
+function btnSend_onclick() {
+	var AimMobiles = $.trim($("#txtAimMobiles").val());
+	var Content = $.trim($("#txtContent").val());
+	var Data = {"AimMobiles" : AimMobiles, "Content" : Content};
+
+	$.ajax({
+		type	:	"POST",
+		url		:	"./Send.php",
+		data	:	Data,
+		async	:	false,
+		success	:	function(RtnString) {
+			$("#txtResult").val(RtnString);
+		}
+		});
+}
+
+function btnDetect_onclick() {
+	var code = $.trim($("#txtVerifyCode").val());
+	if (code == "") return;
+	
+	var Data = {"Code" : code};
+
+	$.ajax({
+		type	:	"POST",
+		url		:	"./Detect.php",
+		data	:	Data,
+		async	:	false,
+		success	:	function(RtnString) {
+			$("#txtDetect").val(RtnString);
+		}
+		});
+}
+
+function btnQuery_onclick() {
+	$.ajax({
+		type	:	"POST",
+		url		:	"./Query.php",
+		async	:	false,
+		success	:	function(RtnString) {
+			$("#txtResult").val(RtnString);
+		}
+		});
+}
+
+// ]]>
+</script>
+</head>
+<body>
+    <div>
+    
+        <table style="width:100%;">
+            <tr>
+                <td style="width:200px;" align="right">手机号</td>
+                <td><input name="txtAimMobiles" type="text" value="号码1,号码2" id="txtAimMobiles" style="width:400px; height:24px;" /></td>
+            </tr>
+            <tr>
+                <td style="width:200px;" align="right">短信内容</td>
+                <td><input name="txtContent" type="text" id="txtContent" style="width:400px; height:24px;" /></td>
+            </tr>
+            <tr>
+                <td style="width:200px;" align="right">结果</td>
+                <td><input name="txtResult" type="text" id="txtResult" style="width:400px; height:24px;" /></td>
+            </tr>
+            <tr>
+                <td style="width:200px;" align="right">验证码</td>
+                <td><input name="txtVerifyCode" type="text" id="txtVerifyCode" style="width:400px; height:24px;" /></td>
+            </tr>
+            <tr>
+                <td style="width:200px;" align="right">结果</td>
+                <td><input name="txtDetect" type="text" id="txtDetect" style="width:400px; height:24px;" /></td>
+            </tr>
+            <tr>
+                <td style="width:200px;" align="right"></td>
+                <td>
+                    <input type="submit" name="btnCode" value="验证码" id="btnCode" style="width:120px; height:32px;" onclick="return btnCode_onclick()" />
+                    
+                    <input type="submit" name="btnOK" value="发送" id="btnOK" style="width:120px; height:32px;" onclick="return btnSend_onclick()" />
+
+                    <input type="submit" name="btnDetect" value="检查" id="btnDetect" style="width:120px; height:32px;" onclick="return btnDetect_onclick()" />
+
+                    <input type="submit" name="btnQuery" value="余额" id="btnQuery" style="width:120px; height:32px;" onclick="return btnQuery_onclick()" />
+                </td>
+            </tr>
+        </table>
+    
+    </div>
+</body>
+</html>

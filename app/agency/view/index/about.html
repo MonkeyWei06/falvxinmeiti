@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<title>关于我们-<{$Config.WebSiteCompanyName}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/style.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/index.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/swiper.min.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/aos.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/wap.css" media="screen and (max-width:640px)">
+</head>
+<body>
+	 <{include file="public/header" /}>
+	<section id="inside-banner">
+		<div class="inside-banner" style="background: url(__STATIC__/agency/home/images/contact-banner.jpg) no-repeat center top;">
+			<div class="inside-content wrap clearfix">
+				<div class="inside-title" aos="fade-up">
+					<h3>关于我们</h3>
+					<p class="en">ABOUT US</p>
+				</div>
+				<div class="inside-info clearfix" aos="fade-up">
+					<{$Config.WebSiteAbout|default=''}>
+				</div>
+			</div>
+		</div>
+	</section>
+ <{include file="public/footer" /}>
+	<script>
+		//banner图滚动
+		var swiper = new Swiper('.swiper-container', {
+		    spaceBetween: 30,
+		    centeredSlides: true,
+		    autoplay: {
+		      delay: 5000,
+		      disableOnInteraction: false,
+		    },
+		    pagination: {
+		      el: '.swiper-pagination',
+		      clickable: true,
+		    },
+		    navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		    },
+		});
+
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000,
+			once:true
+		});
+
+		$(".back-to-top a").click(function () {
+		    //点击back-to-top页面滚动到顶部
+		    $("html,body").stop().animate({ scrollTop: 0 }, 1000);
+		});
+	</script>
+</body>
+</html>

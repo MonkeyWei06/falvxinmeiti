@@ -1,0 +1,68 @@
+<{include file="public/admin_header" /}>
+<body>
+<div id="dcWrap">
+ <{include file="public/admin_left" /}>
+ <div id="dcMain">
+  <!-- 当前位置 -->
+  <div id="urHere">
+   <a href="<{:url('/admin')}>">系统管理中心</a>
+   <b>></b>
+   <strong><{$MenuName}>管理</strong>
+  </div>
+  <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+   <h3><a href="<{:url('index')}>" class="actionBtn"><{$MenuName}>列表</a>添加<{$MenuName}></h3>
+   <form action="<{:url('add')}>" method="post">
+    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+     <tr>
+      <td width="90" align="right">充值/消费标题</td>
+      <td>
+       <input type="text" name="BalanceTitle" size="60" class="inpMain"/>
+      </td>
+     </tr>
+     <tr>
+      <td width="90" align="right">充值/消费类型</td>
+      <td>
+       <label><input type="radio" name="BalanceType" value="1" checked>充值</label>
+       &nbsp;&nbsp;&nbsp;&nbsp;
+       <label><input type="radio" name="BalanceType" value="2">消费</label>
+      </td>
+     </tr>
+     <tr>
+      <td width="90" align="right">充值/消费数量</td>
+      <td>
+       <input type="text" name="BalanceCount" size="30" class="inpMain"/>
+      </td>
+     </tr>
+     <tr>
+      <td width="90" align="right">充值/消费会员</td>
+      <td>
+       <input type="text" id="MemberName" size="30" class="inpMain"/>
+       <input class="btn" type="button" onclick="GetMemberList('<{:url('ajax/GetMemberList')}>');" value="获取会员" />
+       <div id="MemberList"></div>
+      </td>
+     </tr>
+     <tr>
+      <td width="90" align="right"><{$MenuName}>排序</td>
+      <td>
+       <input type="text" name="BalanceSort" value="0" class="inpMain" />
+      </td>
+     </tr>
+     <tr>
+      <td width="90" align="right"><{$MenuName}>状态</td>
+      <td>
+       <label><input type="radio" name="BalanceState" value="1" checked>启用</label>
+       &nbsp;&nbsp;&nbsp;&nbsp;
+       <label><input type="radio" name="BalanceState" value="0">禁用</label>
+      </td>
+     </tr>
+     <tr>
+      <td></td>
+      <td>
+       <input class="btn" type="submit" value="提交" />
+      </td>
+     </tr>
+    </table>
+   </form>
+  </div>
+ </div>
+ <{include file="public/admin_footer" /}>

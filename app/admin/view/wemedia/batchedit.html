@@ -1,0 +1,178 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .inputstyle{ width:100px;border: 1px solid #e6e6e6; background-color: #fff; border-radius: 2px; height: 22px;}
+    .btnstyle{display: inline-block;
+        padding: 2px 10px;
+        background-color: #41b2fe;
+        color: #fff;
+        white-space: nowrap;
+        text-align: center;
+        font-size: 14px;
+        border: none;
+        border-radius: 2px;
+        cursor: pointer;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>价格批量更新</legend>
+</fieldset>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table" id="TableContent">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">序列</th>
+                <th class="listtitle">价格区间</th>
+                <th class="listtitle">游客会员</th>
+                <th class="listtitle">大侠会员</th>
+                <th class="listtitle">掌门会员</th>
+                <th class="listtitle">盟主会员</th>
+                <th width="80" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody id="RowContent">
+<{volist name="List" id="val"}>
+            <tr>
+                <td align="center">
+                    <{$i}>
+                </td>
+                <td align="center">
+                    <input type="number" min="1" name="BeginPrice[]" value="<{$val.price_start}>" onblur="BeginPriceCheck(this);" class="inputstyle"/>
+                    -
+                    <input type="number" min="1" name="EndPrice[]" value="<{$val.price_end}>" onblur="EndPriceCheck(this);" class="inputstyle"/>
+                </td>
+                <td align="center">
+                    <input type="number" name="MediaMemberPrice1[]" value="<{$val.price_one}>" min="1" class="inputstyle"/>
+                </td>
+                <td align="center">
+                    <input type="number" name="MediaMemberPrice2[]" value="<{$val.price_two}>" min="1" class="inputstyle"/>
+                </td>
+                <td align="center">
+                    <input type="number" name="MediaMemberPrice3[]" value="<{$val.price_three}>" min="1" class="inputstyle"/>
+                </td>
+                <td align="center">
+                    <input type="number" name="MediaMemberPrice4[]" value="<{$val.price_four}>" min="1" class="inputstyle"/>
+                </td>
+                <td align="center">
+                    <button class="btnstyle"  type="button" onclick="DelRow(this);">删除</button>
+                </td>
+            </tr>
+<{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <input type="hidden" id="RowEnd" value="<{$i|default='1'}>"/>
+            <button class="layui-btn"  type="button" onclick="AddRow();">追加</button>
+            <button class="layui-btn"  type="button" onclick="SubmitData('<{:url('batchedit')}>');">保存价格</button>
+            <button class="layui-btn"  type="button" onclick="SubmitData('<{:url('updateprice')}>');">更新媒体</button>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>
+<script type="text/javascript">
+    function AddRow(){
+        var RowEnd=$('#RowEnd').val();
+        if(RowEnd>0){
+            var BeginPrice=$('input[name="BeginPrice[]"]:last').val();
+            var EndPrice=$('input[name="EndPrice[]"]:last').val();
+            //alert(BeginPrice+'--'+EndPrice);
+            if(BeginPrice=="" || EndPrice=="" || BeginPrice==undefined || EndPrice==undefined){
+                layer.msg('请先完善信息后再进行追加');
+                return false;
+            }
+        }
+        var Content='<tr>' +
+            '<td align="center">'+(RowEnd*1+1)+'</td>'+
+            '                <td align="center">' +
+            '                    <input type="number" min="1" name="BeginPrice[]" onblur="BeginPriceCheck(this);" class="inputstyle"/>' +
+            '                    -' +
+            '                    <input type="number" min="1" name="EndPrice[]" onblur="EndPriceCheck(this);" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td align="center">' +
+            '                    <input type="number" name="MediaMemberPrice1[]" min="1" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td align="center">' +
+            '                    <input type="number" name="MediaMemberPrice2[]" min="1" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td align="center">' +
+            '                    <input type="number" name="MediaMemberPrice3[]" min="1" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td align="center">' +
+            '                    <input type="number" name="MediaMemberPrice4[]" min="1" class="inputstyle"/>' +
+            '                </td>' +
+            '                <td align="center">' +
+            '                    <button class="btnstyle"  type="button" onclick="DelRow(this);">删除</button>' +
+            '                </td>' +
+            '            </tr>';
+        $('#RowContent').append(Content);
+        var RowEnd=$('#RowEnd').val();
+        $('#RowEnd').val(RowEnd*1+1);
+    }
+    function DelRow(Obj) {
+        var JQObj=$(Obj);
+        JQObj.parent().parent().remove();
+        var Count=$('input[name="BeginPrice[]"]').length;
+        if(Count==0){
+            $('#RowEnd').val(0);
+        }
+    }
+    function SubmitData(Url) {
+        var Count=$('input[name="BeginPrice[]"]').length;
+        if(Count<1){
+            layer.msg('请添加您要批量更新的数据');
+            return false;
+        }
+        var BeginPrice=$('input[name="BeginPrice[]"]:last').val();
+        var EndPrice=$('input[name="EndPrice[]"]:last').val();
+        //alert(BeginPrice+'--'+EndPrice);
+        if(BeginPrice=="" || EndPrice=="" || BeginPrice==undefined || EndPrice==undefined){
+            layer.msg('请先完善信息后再进行提交保存');
+            return false;
+        }
+        $('#MyForm').attr('action',Url);
+        $('#MyForm').submit();
+    }
+    function BeginPriceCheck(Obj) {
+        var JQObj=$(Obj);
+        var BeginPrice=JQObj.val();
+        if(BeginPrice==""){
+            BeginPrice=0;
+            JQObj.val(0);
+        }
+        var LastPrice=JQObj.parent().parent().prev().find('td input[name="EndPrice[]"]').val();
+        if(LastPrice!=undefined){
+            BeginPrice=BeginPrice*1;
+            LastPrice=LastPrice*1;
+            if(BeginPrice<=LastPrice){
+                //layer.msg('您的起始金额输入有误');
+                var Sum=(LastPrice+1).toFixed(0);
+                JQObj.val(Sum);
+                return false;
+            }
+        }
+        var NextPrice=JQObj.next('input[name="EndPrice[]"]').val();
+        BeginPrice=BeginPrice*1;
+        NextPrice=NextPrice*1;
+        if(NextPrice!="" && BeginPrice>NextPrice){
+            //layer.msg('您的起始金额输入有误');
+            var Sum=(LastPrice-1).toFixed(0);
+            JQObj.val(Sum);
+            return false;
+        }
+    }
+    function EndPriceCheck(Obj) {
+        var JQObj=$(Obj);
+        var EndPrice=JQObj.val();
+        var LastPrice=JQObj.prev('input[name="BeginPrice[]"]').val();
+        EndPrice=EndPrice*1;
+        LastPrice=LastPrice*1;
+        if(EndPrice<=LastPrice){
+            //layer.msg('您的终止金额输入有误');
+            var Sum=(LastPrice+50).toFixed(0);
+            JQObj.val(Sum);
+            return false;
+        }
+    }
+</script>

@@ -1,0 +1,79 @@
+<{include file="public/admin_header" /}>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>栏目分类添加</legend>
+</fieldset>
+<form class="layui-form layui-form-pane" action="<{:url('add')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="TypeName" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">副名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="TypeViceName" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">分类单位</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="TypeUnit" size="40" class="layui-input"/>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级节点</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="TypePID">
+                <option value="0">一级分类</option>
+                <{volist name="ParentTypeList" id="val"}>
+                <option value="<{$val.TypeID}>_<{$val.TypeNode}>_<{$val.TypePath}>"><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+        </div>
+    </div>
+    <!--<div class="layui-form-item inputTextWidth" pane>-->
+        <!--<label class="layui-form-label">图片1</label>-->
+        <!--<div class="layui-input-inline">-->
+            <!--<input type="file" name="TypePicPath[]" style="padding: 5px;">-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item inputTextWidth" pane>-->
+        <!--<label class="layui-form-label">图片2</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="file" name="TypePicPath[]" style="padding: 5px;">-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="TypeSort" value="0" size="40" class="layui-input"/>
+        </div>
+    </div>
+     <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">首页置顶</label>-->
+        <!--<div class="layui-input-inline" style="background-color:#FFF;border:1px solid #eee;width:50%;height:36px;">-->
+            <!--<input type="radio" name="TypeHomeTop" value="1" title="是" lay-skin="primary" />-->
+            <!--<input type="radio" name="TypeHomeTop" value="0" title="否" lay-skin="primary" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item inputTextWidth" pane>-->
+        <!--<label class="layui-form-label">是否禁用</label>-->
+        <!--<div class="layui-input-inline">-->
+            <!--<input type="radio" name="TypeState" value="1" title="已启用" checked>-->
+            <!--<input type="radio" name="TypeState" value="0" title="已禁用">-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <button class="layui-btn" style="margin-left:100px;" type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+    });
+</script>

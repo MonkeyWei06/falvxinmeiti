@@ -1,0 +1,117 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}></legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get" id='searchform'>
+            <div class="layui-form-item">
+                <div class="layui-form layui-input-inline  radiofile" style="background: #ffffff;width: 528px;">
+                    <input type="radio" name="state" value="" title="全部稿件"  <{if condition="isset($UrlParam['state']) && $UrlParam['state'] === ''"}> checked<{/if}>>
+                    <input type="radio" name="state" value="0" title="未处理"  <{if condition="isset($UrlParam['state']) && $UrlParam['state'] === '0'"}> checked<{/if}>>
+                    <input type="radio" name="state" value="1" title="改稿中"  <{if condition="isset($UrlParam['state']) && $UrlParam['state'] === '1'"}> checked<{/if}>>
+                    <input type="radio" name="state" value="2" title="已完成"  <{if condition="isset($UrlParam['state']) && $UrlParam['state'] === '2'"}> checked<{/if}>>
+                    <input type="radio" name="state" value="3" title="已拒改"  <{if condition="isset($UrlParam['state']) && $UrlParam['state'] === '3'"}> checked<{/if}>>
+                </div>
+                <label class="layui-form-label" style="width: 80px;">稿件标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" placeholder="稿件标题" value="<{$UrlParam.title|default=''}>" class="layui-input" />
+                </div>
+                
+                <label class="layui-form-label" style="width: 80px;">订单编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="ordernum" placeholder="订单编号" value="<{$UrlParam.ordernum|default=''}>" class="layui-input" />
+                </div>
+				 <label class="layui-form-label" style="width: 80px;">会员账户</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mphone" placeholder="会员账户" value="<{$UrlParam.mphone|default=''}>" class="layui-input" />
+                </div>				
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th class="listtitle">订单号</th>
+				<th class="listtitle">用户名</th>
+				<th width="120" class="listtitle">媒体名称</th>
+                <th class="listtitle">文章标题</th>
+                <th class="listtitle">媒体名称</th>
+                <th class="listtitle">改稿费</th>
+                <th class="listtitle">状态</th>
+                <th class="listtitle">反馈</th>
+				<th width="100" class="listtitle">时间</th>
+                <th width="100" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="list" id="val"}>
+            <tr>
+                <td align="center"><{$val.ordernum}></td>
+				<td align="center"><{$val.MemberName}></td>
+				<td align="center"><{$val.media_name}></td>
+                <td align="center"><{$val.articletitle}></td>
+                <td align="center"><{$val.media_name}></td>
+                <td align="center"><{$val.price}></td>
+                <td align="center">
+				 <{if condition="$val['state'] eq 0"}>
+				<span style="color:red">待处理</span>
+				<{/if}>
+				<{if condition="$val['state'] eq 1"}>
+				<span style="color:red">处理中</span>
+				<{/if}>
+				<{if condition="$val['state'] eq 2"}>
+				<span style="color:green">已完成</span>
+				<{/if}>
+				<{if condition="$val['state'] eq 3"}>
+				已拒绝
+				<{/if}>
+				
+				</td>
+                <td align="center"><{$val.state_text|default=""}></td>
+                <td align="center"><{$val.addtime|date="Y-m-d H:i:s",###}></td>
+				
+                <td align="center">
+					 <p><a href="/index/lookg/id/<{$val.id}>"  target="_blank"  class="layui-btn layui-btn-mini layui-btn-danger">查看要求</a></p>
+                      <p style="margin: 15px;"><a class="layui-btn layui-btn-mini layui-btn-green" href="javascript:OpenWinchangedc('<{:url('edit',array('id'=>$val['id']))}>');">处理</a></p>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$list->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+<{include file="public/admin_footer"}>
+<script type="text/javascript">
+	layui.use(['form'], function(){
+       var form = layui.form,$ = layui.jquery;
+	    $('#searchform .radiofile').click(function(){
+            $('#searchform').submit()
+        });
+	});
+	function OpenWinchangedc(Url) {
+        layer.open({
+            title:'内容查看',
+            type: 2,
+            area: ['700px', '550px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content:Url,
+            end: function(){
+                location.reload()
+            }
+        });
+    }
+</script>

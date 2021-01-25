@@ -1,0 +1,104 @@
+<{include file="public/member_header" /}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+  <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding">
+        <div class="am-fl am-cf"> </div>
+      </div>
+
+      <ul class="am-avg-sm-1 am-avg-md-4 am-margin am-padding am-text-center admin-content-list ">
+        <li><a href="<{:url('article/index')}>" class="am-text-success"><span class="am-icon-btn am-icon-pencil-square-o"></span><br/>媒体发布</a></li>
+        <li><a href="<{:url('wearticle/index')}>" class="am-text-warning"><span class="am-icon-btn am-icon-file-video-o"></span><br/>自媒体发布</a></li>
+        <li><a href="<{:url('order/index')}>" class="am-text-danger"><span class="am-icon-btn am-icon-recycle"></span><br/>稿件订单</a></li>
+        <li><a href="<{:url('balance/index')}>" class="am-text-secondary"><span class="am-icon-btn am-icon-credit-card-alt"></span><br/>消费明细</a></li>
+      </ul> 
+
+      <div class="am-g">
+        <div class="am-u-md-6">
+          <div class="am-panel am-panel-default">
+            <div class="am-panel-hd am-cf" data-am-collapse="{target: '#collapse-panel'}">个人信息</div>
+            <div class="am-panel-bd am-collapse am-in" id="collapse-panel-1">
+              <ul class="am-list admin-content-file">
+			   <strong class="username"><span class="am-icon-user"></span> 您好：<{$Think.session.MemberName}></strong>
+			   用户级别:<em><{$Membertype}></em><b style="cursor:pointer" onclick="javascript:window.open('<{:url('../index/join')}>');">（如何提升等级?）</b>
+				  <div class="unit">
+                   <a class="btn am-btn-warning" href="<{:url('member/recharge')}>">在线充值</a>
+				     <em>余额：¥<{$info.MemberBalanceCount}></em> 
+                   </div>
+                 
+				<{if condition="!empty($Config.WebSitePhone)"}>
+                <li>
+                  <strong><span class="am-icon-phone"></span> 电话咨询：<{$Config.WebSitePhone}></strong>
+                </li>
+				<{/if}>
+               <{if condition="!empty($Config.WebSiteQQ)"}>
+                <li>
+                  <strong><span class="am-icon-qq"></span> 客服QQ：<{$Config.WebSiteQQ}></strong> 
+                   
+                </li>
+				<{/if}>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+		<div class="am-u-md-6">
+		  <div class="am-panel am-panel-default">
+			<div class="bigBox">
+				<div class="boxs">
+					<div class="tabs" id="tabs">
+						<div class="active">发稿流程</div>
+						<div>收稿流程</div>
+						<div>注意事项</div>
+					</div>
+					<div class="process" id="process">
+						<div class="img"><img src="/static/img/process_fagao.png" class="am-img-responsive"></div>
+						<div class="img" style="display: none;"><img src="/static/img/process_shougao.png" class="am-img-responsive"></div>
+						<div class="img" style="display:none;">
+							<p>1、所有充值款如需提现必须扣除余额的10%手续费后方可提现（支付宝所收取的手续费以及本平台提供的服务费），收益部分免费提现。</p>
+							<p>2、所有发布出的链接默认时效为保证一个月，如有备注保证时效的媒体按照媒体备注为准，违规违法稿件一经发现会立马删除且扣除编辑发布成功的收益！</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		 </div>
+	</div>
+  </div>
+ <div class="am-u-md-12">
+	  <div class="am-panel am-panel-warning">
+		<div class="am-panel-hd am-cf">每日优惠<span class="am-icon-chevron-down am-fr"></span></div>
+		<div id="collapse-panel-4" class="am-panel-bd am-collapse am-in" style="">
+		  <ul class="am-list admin-content-task">
+		   <{volist name="list" id="v"}>                              
+			<li>
+			  
+			  <div class="admin-task-bd">
+				<{if condition="$v.NewsTypeID eq 1"}><span style="color:#d3232e;">【媒体】</span><{else}><span style="color:#5eb95e;">【自媒体】</span><{/if}><{$v.NewsAbstract}> <div class="admin-task-meta"> Posted on <{$v.NewsTime|date="Y-m-d",###}></div>
+			  </div>
+			</li>
+			<{/volist}>
+		  </ul>
+		</div>
+	  </div>
+	</div>
+  <!-- content end -->
+</div>
+<{include file="public/member_footer" /}>
+<script src="__STATIC__/home/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script>
+/*
+layer.open({
+	title:'媒介联盟通知',
+	type: 1,
+	skin: 'demo-class', //加上边框
+	area: ['500px', '500px'], //宽高
+	content: '<div style="display: block;position: absolute;width: 100%;height: 100%;"><p style="font-size: 1.6rem;color:#333; margin:10px;">亲爱的<span class="am-text-warning" style="color:#cf3f40;"><{$Think.session.MemberName}></span>,您好！</p><p style="font-size: 1.5rem;line-height:2.7;color:#333;margin: 20px;">1、<span class="am-text-warning" style="color:#cf3f40;">【国庆可发】</span>媒体属性设置功能上线，广大媒体主可根据自身情况在<span class="am-text-warning" style="color:#cf3f40;">"我的资源"</span>栏目批量设置国庆可发的媒体（仅限新闻媒体）。<br>套餐媒体资源搜索方式：<br>1、关键词媒体名称搜索（即媒体名称中含视频关键字）或备注搜索。<br>3、今日新增媒体，可点击媒体列表中<span class="am-text-warning" style="color:#cf3f40;">“今日新增”</span>媒体按钮排序！</p><p class="am-margin-top-md" style="font-size: 1.4rem;text-align: right;padding-right: 16px;color:#333;"><br>祝大家中秋愉快！<br><br>2020-09-25 14:08:05</p></div>'
+});*/
+</script>
+</body>
+</html>

@@ -1,0 +1,72 @@
+<style type="text/css">
+    .admin-main {margin: 15px;}
+</style>
+<script type="text/javascript" src="/static/lib/jquery-1.10.2.js"></script>
+<link rel="stylesheet" href="/static/lib/layui/css/layui.css" />
+<script type="text/javascript" src="/static/lib/layui/layui.js"></script>
+<div class="admin-main">
+    <form class="layui-form">
+        <div class="layui-form-item">
+            <label class="layui-form-label">修改密码</label>
+            <div class="layui-input-block" style="min-height: 46px;">
+                <input type="Password" name="Password" lay-verify="required" autocomplete="off" placeholder="请输入修改密码" class="layui-input" style="width:80%">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <label class="layui-form-label">确认密码</label>
+            <div class="layui-input-block" style="min-height: 46px;">
+                <input type="Password" name="AffirmPassword" lay-verify="required" placeholder="请输入确认密码" autocomplete="off" class="layui-input" style="width:80%">
+            </div>
+        </div>
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <input type="hidden" id="MemberID" value="<{$MemberID}>">
+                <input type="hidden" id="MemberName" value="<{$MemberName}>">
+                <button class="layui-btn" lay-submit="" lay-filter="SubmitBut">立即提交</button>
+                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+            </div>
+        </div>
+    </form>
+</div>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form,layer = layui.layer;
+        //监听提交
+        form.on('submit(SubmitBut)', function(data){
+            //console.log(data);
+            SaveMemberInfo(data.field);
+            return false;
+        });
+    });
+    function SaveMemberInfo(Data) {
+        if(Data.Password==undefined || Data.Password==""){
+            layer.msg('修改密码不能为空');
+            return false;
+        }
+        if(Data.AffirmPassword==undefined || Data.AffirmPassword==""){
+            layer.msg('确认密码不能为空');
+            return false;
+        }
+        if(Data.Password !=Data.AffirmPassword){
+            layer.msg('您两次密码输入不一致');
+            return false;
+        }
+        var MemberID=$('#MemberID').val();
+        var MemberName=$('#MemberName').val();
+        $.ajax({
+            url:"<{:url('modify_pwd')}>",
+            type:'POST',
+            dataType:'json',
+            data:{MemberID:MemberID,MemberName:MemberName,MemberPwd:Data.Password},
+            cache:false,
+            success:function(Result)
+            {
+				 layer.msg('修改成功',{time:1000},function () {
+                        layer.closeAll();
+                        parent.location.reload();
+                    });
+                return false;
+            }
+        });
+    }
+</script>

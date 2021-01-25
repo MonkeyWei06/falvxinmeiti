@@ -1,0 +1,59 @@
+<{include file="public/header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		 <div class="am-cf am-padding am-padding-bottom-0">
+			<div class="am-fl am-cf am-btn-group">
+			  <a href="<{:url('feedback/add')}>" class="am-btn am-btn-default am-btn-sm">添加反馈</a>
+			  <a href="<{:url('feedback/messagelist')}>" class="am-btn am-btn-primary am-btn-sm">问题反馈</a> 
+			  </div>
+		  </div>
+		<hr>
+		 <div class="am-g">
+            <div class="am-u-sm-12">
+                <div id="list_wrapper" class="dataTables_wrapper no-footer">				
+				<table id="list" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="list_info">
+                    <thead>
+					<tr role="row">
+					 <th>反馈内容</th>
+                     <th>反馈时间</th>
+                     <th>回复内容</th>
+                     <th>回复时间</th>
+					</tr>
+					</thead>
+                    <tbody>
+					 <{volist name="list" id="v"}>
+						<tr>
+							<td width="20%" ><{$v.MessageContent}></td>
+							<td width="10%"><{$v.MessageTime}></td>
+							<td width="20%"><{$v.MessageReplyContent}></td>
+							<td width="10%">
+								<{if condition="$v.MessageReplyTime"}>
+								<{$v.MessageReplyTime}>
+								<{/if}>
+							</td>
+						</tr>
+						<{/volist}>
+					</tbody>
+				</table>
+					<div class="bottom">
+					
+					    <div style="float:right;margin-right:100px;"> <{$list->render()}></div>
+
+					</div>
+				<div class="clear"></div>
+				</div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/footer" /}>
+</body>
+</html>

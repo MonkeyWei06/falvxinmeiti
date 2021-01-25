@@ -1,0 +1,68 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		 <div class="am-cf am-padding am-padding-bottom-0">
+			  <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">我的奖品</strong>
+				</div>
+		  </div>
+		<hr>
+
+		 <div class="am-g">
+            <div class="am-u-sm-12">
+                <div id="list_wrapper" class="dataTables_wrapper no-footer">				
+				<table id="list" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="list_info">
+                    <thead>
+					<tr role="row">
+					<th>订单号</th>
+					<th>中奖金额</th>
+					<th>中奖状态</th>
+					<th>抽奖说明</th>
+					<th>抽奖时间</th>
+					</tr>
+					</thead>
+                    <tbody>
+					 <{volist name="List" id="v"}>
+						<tr>
+							<td><{$v.order_sn}></td>
+							<td>
+								<span style="color:green">
+								 + <{$v['money']}></span>                                       
+								</span>
+							</td>
+							<td>
+							<{if condition="$v['issend'] eq 0"}>
+								<span style="color:red">未发放</span>
+							<{else /}>
+								已发放
+							<{/if}>
+							</td>
+							<td><{$v.class_name}></td>
+							<td><{$v.createtime|date="Y-m-d H:i:s",###}></td>
+						</tr>
+						<{/volist}>
+					</tbody>
+				</table>
+					<div class="bottom">
+					
+					    <div style="float:right;margin-right:100px;"> <{$List->render()}></div>
+
+					</div>
+				<div class="clear"></div>
+				</div>
+            </div>
+        </div>
+        <hr>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/member_footer" /}>
+</body>
+</html>

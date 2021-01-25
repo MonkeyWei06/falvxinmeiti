@@ -1,0 +1,11 @@
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+  <script type="text/javascript" src="__STATIC__/lib/ueditor/ueditor.config.js"></script>
+  <script type="text/javascript" src="__STATIC__/lib/ueditor/ueditor.all.js"></script>
+<script>
+ //流程切换
+    $("#tabs>div").on("click",function(){
+        var index=$(this).index();
+        $(this).addClass("active").siblings().removeClass("active");
+        $("#process").children(".img:eq("+index+")").show().siblings().hide();
+    });
+</script>

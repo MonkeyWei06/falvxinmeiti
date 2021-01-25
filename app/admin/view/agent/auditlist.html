@@ -1,0 +1,94 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 80px;">会员类型</label>
+                <div class="layui-input-inline" style="width: 130px;">
+                    <select name="MemberTypeID" id="MemberTypeID" style="height:30px;width:30%;">
+                        <option value="">类型选择</option>
+                        <{volist name="GetMemberTypeList" id="val"}>
+                        <option value="<{$val.TypeID}>" <{if condition="!empty($UrlParam.MemberTypeID) && $UrlParam.MemberTypeID eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                        <{/volist}>
+                    </select>
+                </div>
+                <label class="layui-form-label" style="width: 80px;">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="请输入关键字" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th width="60" class="listtitle">ID</th>
+                <th class="listtitle">名称</th>
+                <th class="listtitle">类型</th>
+                <th class="listtitle">余额</th>
+                <th class="listtitle">姓名</th>
+                <th class="listtitle">电话</th>
+                <th class="listtitle">审核状态</th>
+                <th class="listtitle">申请时间</th>
+                <th width="120" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List" id="val"}>
+            <tr>
+                <td align="center"><input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.MemberID}>" /></td>
+                <td align="center"><{$val.MemberID}></td>
+                <td align="center"><{$val.MemberName}></td>
+                <td align="center"><{$val.MemberTypeID.New}></td>
+                <td align="center"><{$val.MemberBalanceCount}></td>
+                <td align="center"><{$val.MemberTrueName}></td>
+                <td align="center"><{$val.MemberMobile}></td>
+                <td align="center">
+                    <{if condition="$val['AgentAuditState'] eq 0"}>审核不通过<{/if}>
+                    <{if condition="$val['AgentAuditState'] eq 2"}>待审核<{/if}>
+                </td>
+                <!-- <td align="center">
+                    <input type="checkbox" <{if condition="$val['AgentAuditState'] eq 1"}>checked<{/if}> name="AgentAuditState" lay-skin="switch" Url="<{:url('ajax/ListAuditStateChange')}>" TableName="Member" MainFieldID="MemberID" ChangeField="AgentAuditState" ID="<{$val.MemberID}>" lay-filter="State" lay-text="通过|审核">
+                </td> -->
+                <td align="center"><{$val.AgentApplyTime|date="Y-m-d",###}></td>
+                <td align="center">
+                    <div class="layui-btn-group">
+                        <a class="layui-btn layui-btn-mini" href="<{:url('edit',array('id'=>$val['MemberID']))}>"><i class="layui-icon"></i>编辑</a>
+                    </div>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$List->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

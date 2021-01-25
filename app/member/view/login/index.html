@@ -1,0 +1,120 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title><{$Config.WebSiteName|default=''}>会员登录/注册页面</title>
+	<meta name="keywords" content="<{$Config.WebSiteName|default=''}>会员登录/注册页面" />
+	<meta name="description" content="<{$Config.WebSiteName|default=''}>会员登录/注册页面" />
+    <link rel="stylesheet" href="__STATIC__/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="__STATIC__/home/css/reset.css"/>
+    <style>
+        
+    </style>
+</head>
+<body class="login_bg">
+<div class="main">
+    <div class="unit">
+        <div class="fl_div">
+			<{if condition="!empty($Config['WebSiteLogo'])"}>
+				<img src="<{$path}><{$Config['WebSiteLogo']}>" class="login-logo">
+				<{else}>
+				<{$Config.WebSiteName|default=''}>
+			<{/if}>
+            <div class="line"></div>
+            <div class="call_tel">
+                <div class="text">注册咨询热线</div>
+                <div class="tel"><{$Config.WebSitePhone|default=''}></div>
+            </div>
+            <ul>
+                <li><a href="/">返回首页</a></li>
+                 <li><a href="/index.php/index/contact.html" >联系我们</a></li>
+            </ul>
+        </div>
+        <form class="loginForm" method="post" action="<{:url('check')}>" name="login">
+            <div class="titleUnit" id="titleUnit">
+                <div class="unite current" ><h3 class="title">用户名登录</h3></div>
+            </div>
+            <div class="inputBox input">
+                <input type="text" placeholder="请输入用户名" name="MemberName" id="MemberName"/>
+            </div>
+            <div class="inputBox">
+                <input type="password" placeholder="请输入密码" id="MemberPwd" name="MemberPwd"/>
+				<i class="am-icon-eye-slash" onclick="showhide();" id="eye" style="cursor:pointer;position: absolute;right: 0;top: 0;align-items: center;display: flex;justify-content: center; width: 50px;height: 48px;"></i>
+            </div>
+            <div class="inputBox yanzCode">
+                <input type="text" placeholder="请输入验证码" id="code" name="code"/>
+                <a href="javascript:void(0);"><img id="captcha_img" src="<{:url('Captchashow/VerificationCode')}>" width="110" height="37" onclick="this.src='<{:url('Captchashow/VerificationCode')}>?'+Math.random();"/></a>
+            </div>
+            <div class="errorTip" style="display:none;" id="errorTip">
+                <div class="tips">
+                    <img src="/static/home/images/error.png"/>
+                    <span></span>
+                </div>
+            </div>
+            <a class="submit" id="login" href="javascript:void(0);">登录</a>
+            <div class="bottom">
+                <div class="fll"><span>没有账户？</span><a href="/member.php/login/index?act=reg">去注册</a></div>
+                <div class="fll"><a href="<{:url('login/repwd')}>">忘记密码?</a></div>
+            </div>
+          </form>
+    </div>
+</div>
+<script src="__STATIC__/home/js/jquery-1.10.2.js"></script>
+	<script src="__STATIC__/home/js/jquery.SuperSlide.2.1.js"></script>
+<script type="text/javascript">
+		window.jQuery || document.write("<script src='__STATIC__/lib/ace_admin/js/jquery.min.js'>"+"<"+"/script>");
+	</script>
+	<!-- <![endif]-->
+	<!--[if IE]>
+	<script type="text/javascript">
+		window.jQuery || document.write("<script src='__STATIC__/lib/ace_admin/js/jquery1x.min.js'>"+"<"+"/script>");
+	</script>
+	<![endif]-->
+	<script type="text/javascript">
+		if('ontouchstart' in document.documentElement) document.write("<script src='__STATIC__/lib/ace_admin/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+	</script>
+	<script src="__STATIC__/home/js/layer/layer.js"></script>
+	<script type="text/javascript">
+	$(document).on("keydown", function (e) {
+        if(e.keyCode === 13){
+            $("#login").trigger("click");
+        }
+    });
+	 $('#login').click(function () {
+        var obj = $("form[name='login']").serialize();
+        $.ajax({
+            type: "POST",
+            url: "<{:url('check')}>",
+            data: obj,
+            dataType:'json',
+            cache:false,
+            success:function(Result) {
+                if (Result.code == '0') {
+                    layer.msg(Result.msg,{time:2000},function () {
+                        window.location.href = "<{:url('index/index')}>";
+                    });
+                } else {
+                    layer.msg(Result.msg);
+					$("#captcha_img").trigger("click");
+                }
+            }
+        });
+    });
+	jQuery(".txtScroll-top").slide({mainCell:".bd ul",autoPage:true,effect:"top",autoPlay:true});
+
+	var eye = document.getElementById("eye");
+    var pwd = document.getElementById("MemberPwd");
+	function showhide(){
+		if (pwd.type == "password") {
+			pwd.type = "text";
+			eye.className='am-icon-eye'
+		}else {
+			pwd.type = "password";
+			eye.className='am-icon-eye-slash'
+		}
+	}
+	</script>
+</body>
+</html>

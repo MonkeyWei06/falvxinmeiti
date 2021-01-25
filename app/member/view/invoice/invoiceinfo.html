@@ -1,0 +1,120 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		 <div class="am-cf am-padding am-padding-bottom-0">
+			<div class="am-fl am-cf am-btn-group">
+			  <a href="<{:url('invoice/add')}>" class="am-btn am-btn-default am-btn-sm">申请发票</a>
+			  <a href="<{:url('invoice/index')}>" class="am-btn am-btn-primary am-btn-sm">发票列表</a> 
+			  </div>
+		  </div>
+		<hr>
+
+		 <div class="am-g">
+            <div class="am-u-sm-12">
+                <div id="list_wrapper" class="dataTables_wrapper no-footer">	
+
+				<form class="am-form am-form-horizontal" novalidate="novalidate" method="post">
+                    <fieldset>
+                        <div class="am-form-group"><label class="am-u-sm-4 am-form-label"></label><div class="am-u-sm-8"><span style="color: #f00;">特别提醒：票面显示为6个点</span></div></div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-3 am-form-label">发票类型： </label>
+                        <div class="am-u-sm-9">
+
+						<{volist name="InvoiceType" id="val"}>
+                                <label for="type1" class="am-radio-inline">
+								<input class="v_type" type="radio"  <{if condition="$key eq 1"}>checked<{/if}> value="<{$val.TypeID}>" name="InvoiceType"> <{$val.TypeName}>
+								</label>
+                       <{/volist}>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="check_title" class="am-u-sm-3 am-form-label">发票抬头： </label>
+                        <div class="am-u-sm-4">
+                            <{$Info.InvoiceTitle}>
+                         </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="reg_num" class="am-u-sm-3 am-form-label">税务登记证号： </label>
+                        <div class="am-u-sm-4">
+                           <{$Info.InvoiceCode}>
+                        </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>                          
+                    
+                    <div class="am-form-group">
+                        <label for="check_detail" class="am-u-sm-3 am-form-label">发票明细： </label>
+                        <div class="am-u-sm-4">
+
+							 <{volist name="InvoiceDetail" id="val"}>
+                                <label><input type="radio" name="InvoiceDetail" <{if condition="$key eq 0"}>checked<{/if}> value="<{$val.TypeID}>" title="<{$val.TypeName}>" ><{$val.TypeName}></label>
+                                <{/volist}>
+                                <label><input type="radio" name="InvoiceDetail" value="999" title="<{$val.TypeName}>" >其他</label>
+                        </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="check_money" class="am-u-sm-3 am-form-label">发票金额： </label>
+                        <div class="am-u-sm-9">
+                          <{$Info.InvoiceMoney}>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="your_name" class="am-u-sm-3 am-form-label">收件姓名： </label>
+                        <div class="am-u-sm-4">
+                            <{$Info.InvoiceName}>
+                        </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="your_phone" class="am-u-sm-3 am-form-label">联系电话： </label>
+                        <div class="am-u-sm-4">
+                           <{$Info.InvoiceMobile}>
+                        </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="your_addr" class="am-u-sm-3 am-form-label">收件地址： </label>
+                        <div class="am-u-sm-4">
+                            <{$Info.InvoiceAddress}>
+                        </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>
+
+					<div class="am-form-group">
+                        <label for="your_addr" class="am-u-sm-3 am-form-label">补充说明： </label>
+                        <div class="am-u-sm-4">
+                           <{$Info.InvoiceContent}>
+                        </div>
+                        <div class="m-u-sm-2"></div>
+                    </div>
+
+                    <div class="am-form-group">
+                        <label class="am-u-sm-3 am-form-label"></label>
+                        <div class="am-u-sm-4">
+                            <button id="sure_btn" type="button" class="am-btn am-btn-primary am-radius am-btn-block" onclick="history.back(-1);">返回</button>
+                        </div>
+                        <div class="m-u-sm-3"></div>
+                    </div>
+                    </fieldset>
+                </form>
+ 
+				
+				<div class="clear"></div>
+				</div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/member_footer" /}>
+ 
+</body>
+</html>

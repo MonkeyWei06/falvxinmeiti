@@ -1,0 +1,47 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}></legend>
+</fieldset>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="40" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+				<th width="200" class="listtitle">单号</th>
+                <th width="200" class="listtitle">奖项名称</th>
+                <th width="200" class="listtitle">用户昵称</th>
+				<th width="200" class="listtitle">是否中奖</th>
+                <th class="listtitle">时间</th>
+            </tr>
+            </thead>
+            <tbody>
+			 <{volist name="actList" id="val"}>
+            <tr>
+                <td align="center">
+                    <input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.lid}>" />
+                </td>
+				<td align="center"><{$val.order_sn}></td>
+                <td align="center"><{$val.class_name}></td>
+                <td align="center"><{$val.MemberName}></td>
+                <td align="center"><{if condition="$val.issend eq 1"}>中<{else}>否<{/if}></td>
+				<td align="center"><{$val.createtime|date='Y-m-d H:i:s',###}></td>
+            </tr>
+			 <{/volist}>
+            </tbody>
+        </table>
+
+		 <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$actList->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+
+</form>
+<{include file="public/admin_footer"}>

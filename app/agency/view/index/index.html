@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<title><{$Config.WebSiteName|default=''}>-<{$Config.WebSiteCompanyName}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/style.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/index.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/swiper.min.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/aos.css">
+	<link rel="stylesheet" href="__STATIC__/agency/home/css/wap.css" media="screen and (max-width:640px)">
+</head>
+<body>
+	<{include file="public/header" /}>
+	<section id="banner">
+		<div class="banner">
+			<div class="swiper-container">
+			    <div class="swiper-wrapper">
+
+				 <{if condition="empty($list)"}>
+
+			      <div class="swiper-slide" style="background:url(__STATIC__/agency/home/images/banner1.jpg) no-repeat center center;"></div>
+
+			      <div class="swiper-slide" style="background:url(__STATIC__/agency/home/images/banner2.jpg) no-repeat center center;"></div>
+				   <{else}>
+				  <{volist name="list" id="vo"}>
+				  <div class="swiper-slide" style="background:url(<{$vo.pictures_path}>) no-repeat center center;"></div>
+				  <{/volist}>
+				  <{/if}>
+			    </div>
+			    <!-- Add Pagination -->
+			    <div class="swiper-pagination"></div>
+			</div>
+			<div class="banner-text" aos="fade-right">
+				 <{if condition="empty($list)"}>
+				<p class="c1">一站式软文自助发稿平台</p>
+				<p class="c2">全网覆盖一站式发布&emsp;多年行业经验&emsp;整合最优质资源</p>
+				<p class="c3">一个账号让您的推广内容引爆全网，上头条！</p>
+				<{/if}>				
+			</div>
+		</div>
+	</section>
+	<section id="media-resources">
+		<div class="media-resources">
+			<div class="wrap clearfix">
+				<div class="index-title" aos="fade-up">
+					<p class="en">Media<span>Resources</span></p>
+					<h3>媒体资源</h3>
+				</div>
+				<div class="subtitle" aos="fade-up" aos-delay="250">拥有6万多家媒体资源，致力打造中国一流媒体营销平台</div>
+				<ul class="media-list clearfix" aos="fade-up" aos-delay="450">
+					 <li><img src="__STATIC__/agency/home/images/zy1.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy2.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy3.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy4.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy5.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy6.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy7.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy8.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy9.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy10.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy11.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy12.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy13.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy14.jpg"></li>
+					  <li><img src="__STATIC__/agency/home/images/zy15.jpg"></li>
+				</ul>
+			</div>
+		</div>
+	</section>
+	<section id="our-advantages">
+		<div class="our-advantages wrap clearfix">
+			<div class="index-title" aos="fade-up">
+				<p class="en">Our<span>Advantages</span></p>
+				<h3>我们的优势</h3>
+			</div>
+			<ul class="advantages-con clearfix">
+				<li aos="fade-right" aos-delay="250">
+					<figure><img src="__STATIC__/agency/home/images/index03.png" alt=""></figure>
+					<p class="en">Diamond service</p>
+					<p class="title">钻石服务</p>
+					<p class="subtitle">一对一专属客户经理</p>
+					<p class="text">为企业提供各种形式的新闻报道，发布在权威的网络媒体上，提高公众对企业产品或服务的认知度，塑造良好品牌形象，并提高销售转化率的营销服务。</p>
+				</li>
+				<li aos="fade-right" aos-delay="450">
+					<figure><img src="__STATIC__/agency/home/images/index04.png" alt=""></figure>
+					<p class="en">Straight line article</p>
+					<p class="title">直线发稿</p>
+					<p class="subtitle">千家媒体直线发稿</p>
+					<p class="text">软文之家拥有两千家直编资源， 用户提交需求后，当天即可发布！一步到位，为您个人和公司节约了大量的时间和金钱！</p>
+				</li>
+				<li aos="fade-right" aos-delay="650">
+					<figure><img src="__STATIC__/agency/home/images/index05.png" alt=""></figure>
+					<p class="en">Massive media resources </p>
+					<p class="title">海量媒体资源</p>
+					<p class="subtitle">3万多家媒体资源</p>
+					<p class="text">软文之家提供上万个媒体的海量精准数据，涵盖网络媒体、微信微博、视频、报纸杂志、贴吧论坛、问答百科等类型，是中国媒体发布行业的领跑者。</p>
+				</li>
+			</ul>
+		</div>
+	</section>
+	<section id="successful-case">
+		<div class="successful-case">
+			<div class="wrap clearfix">
+				<div class="index-title" aos="fade-up">
+					<p class="en">Successful<span>Case</span></p>
+					<h3>成功案例</h3>
+				</div>
+				<div class="case-con" aos="fade-up" aos-delay="250">
+					<div class="swiper-container">
+						<div class="swiper-wrapper">
+							<div class="swiper-slide">
+								<figure><img src="__STATIC__/agency/home/images/case-pic1.jpg" alt=""></figure>
+								<div class="title">平安企业宣传新闻</div>
+								<div class="text">记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉记者从中国平安保险集团获悉，截至今年6月末，中国平安支持国家铁路建设资金已达20</div>
+								<div class="web-site clearfix">
+									<a href="http://finance.qq.com/a/20171003/008329.htm" target="_blank">腾讯财经</a><a href="http://news.xinhuanet.com/2017-10/03/c_1121759698.htm" target="_blank">新华网</a><a href="http://news.sina.com.cn/o/2017-10-03/doc-ifymmiwm4285205.shtml" target="_blank">新浪网</a><a href="http://news.ifeng.com/a/20171003/52289285_0.shtml" target="_blank">凤凰网</a><a href="http://insurance.hexun.com/2017-10-03/191109552.html" target="_blank">和讯网</a><a href="http://www.nbd.com.cn/articles/2017-10-03/1152011.html" target="_blank">每日经济</a><a href="http://economy.southcn.com/e/2017-10/03/content_177961432.htm" target="_blank">南方网</a><a href="http://news.eastday.com/eastday/13news/auto/news/finance/20171003/u7ai7133278.html" target="_blank">东方网</a><a href="http://news.cqnews.net/html/2017-10/03/content_43048065.htm" target="_blank">华龙网</a><a href="http://stock.10jqka.com.cn/20171003/c600687844.shtml" target="_blank">同花顺财</a><a href="http://www.howbuy.com/news/2017-10-03/5535633.html" target="_blank">财经新闻</a><a href="http://ex.cssn.cn/ddzg/ddzg_ldjs/ddzg_sh/201710/t20171003_3660059.shtml" target="_blank">中国社科网</a>
+								</div>
+							</div>
+							<div class="swiper-slide">
+								<figure><img src="__STATIC__/agency/home/images/index06.jpg" alt=""></figure>
+								<div class="title">平安企业宣传新闻</div>
+								<div class="text">记者从中国平安保险集团获悉，截至今年6月末，中国平安支持国家铁路建设资金已达200亿元，其中投资京沪高铁项目63亿元</div>
+								<div class="web-site clearfix">
+									<a href="http://finance.qq.com/a/20171003/008329.htm" target="_blank">腾讯财经</a><a href="http://news.xinhuanet.com/2017-10/03/c_1121759698.htm" target="_blank">新华网</a><a href="http://news.sina.com.cn/o/2017-10-03/doc-ifymmiwm4285205.shtml" target="_blank">新浪网</a><a href="http://news.ifeng.com/a/20171003/52289285_0.shtml" target="_blank">凤凰网</a><a href="http://insurance.hexun.com/2017-10-03/191109552.html" target="_blank">和讯网</a><a href="http://www.nbd.com.cn/articles/2017-10-03/1152011.html" target="_blank">每日经济</a><a href="http://economy.southcn.com/e/2017-10/03/content_177961432.htm" target="_blank">南方网</a><a href="http://news.eastday.com/eastday/13news/auto/news/finance/20171003/u7ai7133278.html" target="_blank">东方网</a><a href="http://news.cqnews.net/html/2017-10/03/content_43048065.htm" target="_blank">华龙网</a><a href="http://stock.10jqka.com.cn/20171003/c600687844.shtml" target="_blank">同花顺财</a><a href="http://www.howbuy.com/news/2017-10-03/5535633.html" target="_blank">财经新闻</a><a href="http://ex.cssn.cn/ddzg/ddzg_ldjs/ddzg_sh/201710/t20171003_3660059.shtml" target="_blank">中国社科网</a>
+								</div>
+							</div>
+							<div class="swiper-slide">
+								<figure><img src="__STATIC__/agency/home/images/index06.jpg" alt=""></figure>
+								<div class="title">平安企业宣传新闻</div>
+								<div class="text">记者从中国平安保险集团获悉，截至今年6月末，中国平安支持国家铁路建设资金已达200亿元，其中投资京沪高铁项目63亿元</div>
+								<div class="web-site clearfix">
+								<a href="http://finance.qq.com/a/20171003/008329.htm" target="_blank">腾讯财经</a><a href="http://news.xinhuanet.com/2017-10/03/c_1121759698.htm" target="_blank">新华网</a><a href="http://news.sina.com.cn/o/2017-10-03/doc-ifymmiwm4285205.shtml" target="_blank">新浪网</a><a href="http://news.ifeng.com/a/20171003/52289285_0.shtml" target="_blank">凤凰网</a><a href="http://insurance.hexun.com/2017-10-03/191109552.html" target="_blank">和讯网</a><a href="http://www.nbd.com.cn/articles/2017-10-03/1152011.html" target="_blank">每日经济</a><a href="http://economy.southcn.com/e/2017-10/03/content_177961432.htm" target="_blank">南方网</a><a href="http://news.eastday.com/eastday/13news/auto/news/finance/20171003/u7ai7133278.html" target="_blank">东方网</a><a href="http://news.cqnews.net/html/2017-10/03/content_43048065.htm" target="_blank">华龙网</a><a href="http://stock.10jqka.com.cn/20171003/c600687844.shtml" target="_blank">同花顺财</a><a href="http://www.howbuy.com/news/2017-10-03/5535633.html" target="_blank">财经新闻</a><a href="http://ex.cssn.cn/ddzg/ddzg_ldjs/ddzg_sh/201710/t20171003_3660059.shtml" target="_blank">中国社科网</a>
+
+								</div>
+							</div>
+						</div>
+						<!-- Add Pagination -->
+					    <div class="swiper-pagination"></div>
+					    <!-- Add Arrows -->
+					    <div class="swiper-button-next"></div>
+					    <div class="swiper-button-prev"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<section id="strategic-partners">
+		<div class="strategic-partners wrap clearfix">
+			<div class="index-title"  aos="fade-up">
+				<p class="en">Strategic<span>Partners</span></p>
+				<h3>战略合作伙伴</h3>
+			</div>
+			<div class="strategic-partners-con clearfix" aos="fade-up" aos-delay="250">
+				<figure><img src="__STATIC__/agency/home/images/hb1.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb2.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb3.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb4.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb5.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb6.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb7.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb8.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb9.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb10.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb11.jpg" alt=""></figure>
+				<figure><img src="__STATIC__/agency/home/images/hb12.jpg" alt=""></figure>
+			</div>
+		</div>
+	</section>	
+	<section id="reg-member">
+		<div class="reg-member" aos="fade-up">
+			<div class="wrap">
+				<div class="reg-member-con clearfix" aos="fade-left" aos-delay="250">
+					<p class="c1">全网覆盖看的见，品牌量变到质变</p>
+					<p class="c2">注册会员 尽享金牌会员优质服务</p>
+					<a href="<{:url('/member.php/reg')}>">立即注册</a>
+				</div>
+			</div>
+		</div>
+	</section>
+ <{include file="public/footer" /}>
+	<script>
+		//banner图滚动
+		var swiper = new Swiper('.swiper-container', {
+		    spaceBetween: 30,
+		    centeredSlides: true,
+		    autoplay: {
+		      delay: 5000,
+		      disableOnInteraction: false,
+		    },
+		    pagination: {
+		      el: '.swiper-pagination',
+		      clickable: true,
+		    },
+		    navigation: {
+		        nextEl: '.swiper-button-next',
+		        prevEl: '.swiper-button-prev',
+		    },
+		});
+
+		AOS.init({
+			easing: 'ease-out-back',
+			duration: 1000,
+			once:true
+		});
+
+		$(".back-to-top a").click(function () {
+		    //点击back-to-top页面滚动到顶部
+		    $("html,body").stop().animate({ scrollTop: 0 }, 1000);
+		});
+	</script>
+</body>
+</html>

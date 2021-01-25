@@ -1,0 +1,228 @@
+<{include file="public/header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+	  <div class="admin-content">
+		<div class="admin-content-body">
+		  <div class="am-cf am-padding am-padding-bottom-0">
+		   <div class="am-fl am-cf">
+			  <strong class="am-text-warning am-text-lg">添加代理</strong>
+		   </div>
+		</div>
+		<hr>
+		<div class="page-content">
+		  <div class="page-content-area" style="margin-left: 3%;" >
+			<form class="layui-form" id="form" action="<{:url('add')}>" method="post">
+				<div class="layui-form-item">
+					<label class="layui-form-label">邀请码</label>
+					<div class="layui-input-block">
+						<input type="text" name="MemberInviteCode" lay-verify="required" autocomplete="off" placeholder="请输入邀请码" class="layui-input" onblur="MemberInfoCheck3(this,'<{:url('ajax/MemberInfoCheck3')}>',7,<{$AgencyMemberID}>);">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">平台域名</label>
+					<div class="layui-input-block">
+						<input type="text" name="Domain" lay-verify="required" autocomplete="off" placeholder="请输入平台域名" class="layui-input" onblur="MemberInfoCheck(this,'<{:url('ajax/MemberInfoCheck')}>','Domain',5);"  >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">一级域名</label>
+					<div class="layui-input-block">
+						<input type="text" name="oneDomain" lay-verify="required" autocomplete="off" placeholder="绑定一级域名" class="layui-input" onblur="MemberInfoCheck(this,'<{:url('ajax/MemberInfoCheck')}>','oneDomain',5);"  >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">公司名称</label>
+					<div class="layui-input-block">
+						<input type="text" name="MemberCompanyName" lay-verify="required" autocomplete="off" placeholder="请输入公司名称" class="layui-input"  >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">代理商账户</label>
+					<div class="layui-input-block">
+						<input type="text" name="MemberName" lay-verify="required" autocomplete="off" placeholder="请输入代理商账户" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">会员价格</label>
+					<div class="layui-input-inline">
+						<select name="MemberPriceType">
+							<{volist name="MemberPriceType" id="val"}>
+							<option value="<{$val.TypeID}>"><{$val.TypeName}></option>
+							<{/volist}>
+						</select>
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">代理商密码</label>
+					<div class="layui-input-block">
+						<input type="Password" name="MemberPwd" lay-verify="required" placeholder="请输入代理商密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">确认密码</label>
+					<div class="layui-input-block">
+						<input type="Password" name="MemberAffirmPwd" lay-verify="required" placeholder="请输入确认密码" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">联系电话</label>
+					<div class="layui-input-block">
+						<input type="text" name="MemberMobile" lay-verify="required" placeholder="请输入联系电话" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">在线QQ</label>
+					<div class="layui-input-block">
+						<input type="text" name="MemberQQ" lay-verify="required" placeholder="请输入在线QQ" autocomplete="off" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">是否启用</label>
+					<div class="layui-input-block">
+						<input type="radio" name="MemberState"  value="1"  title="启用" checked >
+						<input type="radio" name="MemberState"  value="0"  title="禁用"   >
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="am-btn am-btn-sm am-btn-primary" lay-submit="" lay-filter="SubmitBut">立即提交</button>
+						<button type="reset" class="am-btn am-btn-sm am-btn-default">重置</button>
+					</div>
+				</div>
+			</form>
+		  </div>
+		</div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+        //监听提交
+        form.on('submit(SubmitBut)', function(data){
+            //console.log(data);
+            SaveMemberInfo(data.field);
+            return false;
+        });
+    });
+    //会员信息验证
+    function MemberInfoCheck(Obj,Url,FieldName,Seat,ID)
+    {
+        if(ID==undefined) ID='0';
+        if(Obj.value!="" && Obj.value!=undefined)
+        {
+            if(FieldName=='MemberMobile'){
+                var MobileMod=/^1[3456789]\d{9}$/;
+                if(!MobileMod.test(Obj.value)) {
+                    layer.msg("您的手机号格式有误");
+                    return false;
+                }
+            }else if(FieldName=='MemberEmail'){
+                var EmailMod=/^\w+@[\w\.]+\.[a-z]{2,9}$/i;
+                if(!EmailMod.test(Obj.value))
+                {
+                    layer.msg("您的邮箱格式有误");
+                    return false;
+                }
+            }else if(FieldName=='Domain'){
+                var EmailMod=/^[0-9a-zA-Z-]+$/i;
+                if(!EmailMod.test(Obj.value))
+                {
+                    layer.msg("域名设置有误");
+                    return false;
+                }
+            }
+            $.ajax({
+                type:'POST',
+                url:Url,
+                data:{'Val':Obj.value,'Field':FieldName,'ID':ID},
+                dataType:'json',
+                cache:false,
+                success:function(Result)
+                {
+                    //console.log(Result);
+                    if(Result.data.InfoState=='-1'){
+                        $('#Msg'+Seat+'State').text(0);
+                        return false;
+                    }
+                    if(Result.data.InfoState=='0')
+                    {
+                        //layer.msg("可以使用");
+                        $('#Msg'+Seat+'State').text(0);
+                        return false;
+                    }else{
+                        layer.msg("已被占用");
+                        $('#Msg'+Seat+'State').text(1);
+                        return false;
+                    }
+                }
+            })
+        }
+    }
+    //会员信息验证
+    function MemberInfoCheck2(Obj,Url,FieldName,Seat)
+    {
+        if(Obj.value!="" && Obj.value!=undefined)
+        {
+            $.ajax({
+                type:'POST',
+                url:Url,
+                data:{'Val':Obj.value,'Field':FieldName},
+                dataType:'json',
+                cache:false,
+                success:function(Result)
+                {
+                    if(Result.data.InfoState=='0')
+                    {
+                        //layer.msg("可以使用");
+                        $('#Msg'+Seat+'State').text(0);
+                        return false;
+                    }else{
+                        layer.msg("您所填写的一级代理商不存在");
+                        $('#Msg'+Seat+'State').text(1);
+                        return false;
+                    }
+                }
+            })
+        }
+    }
+    //邀请码验证
+    function MemberInfoCheck3(Obj,Url,Seat,memberid) {
+        if(Obj.value!="" && Obj.value!=undefined)
+        {
+            $.ajax({
+                type:'POST',
+                url:Url,
+                data:{'Val':Obj.value,memberid:memberid},
+                dataType:'json',
+                cache:false,
+                success:function(Result)
+                {
+                    if(Result.data.InfoState=='0')
+                    {
+                        $('#Msg'+Seat+'State').text(0);
+                        return false;
+                    }else{
+                        layer.msg("此邀请码不存在");
+                        $('#Msg'+Seat+'State').text(1);
+                        return false;
+                    }
+                }
+            })
+        }
+    }
+    function SaveMemberInfo(Data) {
+        $('#form').submit();
+    }
+</script>
+</body>
+</html>

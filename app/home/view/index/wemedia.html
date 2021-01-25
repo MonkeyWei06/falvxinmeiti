@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="viewport" content="width=device-width,minimum-scale=1,initial-scale=1">
+	<title><{if condition="$MediaWebName"}><{$MediaWebName}>-<{/if}><{if condition="$MediaIndustry"}><{$MediaIndustry}>-<{/if}>自媒体资源-<{$Config.WebSiteCompanyName}></title>
+	<meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+	<meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+	<link rel="stylesheet" href="__STATIC__/home/css/style.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/index.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/aos.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/swiper.min.css">
+	<link rel="stylesheet" href="__STATIC__/home/css/wap.css" media="screen and (max-width:640px)">
+</head>
+<body>
+	<{include file="public/header" /}>
+	<section id="inside-banner">
+		<div class="inside-banner" style="background: url(__STATIC__/home/images/meiti_banner.jpg) no-repeat center top #f6fbff;">
+			<div class="inside-meiti clearfix">
+				<div class="meiti-search">
+					<form class="am-form am-form-horizontal" action="<{:url('index/wemedia')}>">
+					<input type="text" name="key" id="key" class="inptext" placeholder="请输入媒体名称">
+					<input type="submit" value='' class="ipt_button fr" id="button">
+					</form>
+				</div>
+				<div class="meiti-search-condition">
+					<div class="condition clearfix">
+						<span class="leiming fl">平台：</span>
+						<ul class="clearfix">
+							<li <{if condition="empty($UrlParam['MediaWebNameID'])"}>class="active" data-value=""<{/if}>><a href="<{:url('wemedia',array_merge($UrlParam,['MediaWebNameID'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+							<{volist name="MediaWebNameID" id="val"}>
+							<li <{if condition="!empty($UrlParam['MediaWebNameID']) && $UrlParam['MediaWebNameID'] eq $val.TypeID"}>class="active" data-value="<{$val.TypeName}>"<{/if}> ><a href="<{:url('wemedia',array_merge($UrlParam,['MediaWebNameID'=>$val.TypeID,'page'=>'','collect'=>'']))}>"><{$val.TypeName}></a></li>
+							<{/volist}>
+						</ul>
+					</div>
+					<div class="condition clearfix">
+						<span class="leiming fl">行业分类：</span>
+						<ul class="clearfix">
+							 <li <{if condition="empty($UrlParam['MediaIndustryID'])"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['MediaIndustryID'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+							<{volist name="MediaIndustryID" id="val"}>
+							<li <{if condition="!empty($UrlParam['MediaIndustryID']) && $UrlParam['MediaIndustryID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['MediaIndustryID'=>$val.TypeID,'page'=>'','collect'=>'']))}>"><{$val.TypeName}></a></li>
+							<{/volist}>
+						</ul>
+					</div>
+					<div class="condition clearfix">
+						<span class="leiming fl">地区：</span>
+						<ul class="clearfix">
+							 <li <{if condition="empty($UrlParam['MediaCityID'])"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['MediaCityID'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+							<{volist name="MediaCityID" id="val"}>
+							<li <{if condition="!empty($UrlParam['MediaCityID']) && $UrlParam['MediaCityID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['MediaCityID'=>$val.TypeID,'page'=>'','collect'=>'']))}>"><{$val.TypeName}></a></li>
+							<{/volist}>
+						</ul>
+					</div>
+					<div class="condition clearfix">
+						<span class="leiming fl">粉丝数：</span>
+						<ul class="clearfix">
+							<li <{if condition="empty($UrlParam['fennumid'])"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['fennumid'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+							<{volist name="fennumid" id="val"}>
+							<li <{if condition="!empty($UrlParam['fennumid']) && $UrlParam['fennumid'] eq $key"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['fennumid'=>$key,'page'=>'','collect'=>'']))}>"><{$val}></a></li>
+							<{/volist}>
+						</ul>
+					</div>
+					<div class="condition clearfix">
+						<span class="leiming fl">阅读数：</span>
+						<ul class="clearfix">
+							 <li <{if condition="empty($UrlParam['MediaRedID'])"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['MediaRedID'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+							<{volist name="MediaRedID" id="val"}>
+							<li <{if condition="!empty($UrlParam['MediaRedID']) && $UrlParam['MediaRedID'] eq $key"}>class="active"<{/if}>><a  href="<{:url('wemedia',array_merge($UrlParam,['MediaRedID'=>$key,'page'=>'','collect'=>'']))}>"><{$val}></a></li>
+							<{/volist}>
+						</ul>
+					</div>
+					
+					<div class="condition clearfix">
+						<span class="leiming fl">其它筛选：</span>
+						<div class="selectBox zimeiti-selectBox clearfix">
+							<div class="unit" data-type="jgfl" id="jgfl">
+                            	<i><{if condition="!isset($UrlParam['pricenum'])"}>价格筛选<{else}><{:ArrayCheck($UrlParam['pricenum'],"PriceNum")}><{/if}></i>
+	                            <ul>
+	                            <li><a  href="<{:url('wemedia',array_merge($UrlParam,['pricenum'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+								<{volist name="pricenum" id="val"}>
+								<li><a  href="<{:url('wemedia',array_merge($UrlParam,['pricenum'=>$key,'page'=>'','collect'=>'']))}>"><{$val}></a></li>
+								<{/volist}>
+	                            </ul>
+                        	</div>
+                        	<div class="unit" data-type="rkjb" id="rkjb">
+	                            <i><{if condition="!isset($UrlParam['auth'])"}>账号认证<{else}><{:ArrayCheck($UrlParam['auth'],"AuthNum")}><{/if}></i>
+	                            <ul>
+								<li><a  href="<{:url('wemedia',array_merge($UrlParam,['auth'=>'','page'=>'','collect'=>'']))}>">不限</a></li>
+								<{volist name="auth" id="val"}>
+								<li><a  href="<{:url('wemedia',array_merge($UrlParam,['auth'=>$key,'page'=>'','collect'=>'']))}>"><{$val}></a></li>
+								<{/volist}>
+	                            </ul>
+	                        </div>
+							<!--
+	                        <div class="unit" data-type="xwy" id="xwy">
+	                            <i>一手认证</i>
+	                            <ul>
+	                                <li class="filter-option active" data-value="">所有</li>
+	                                <li class="filter-option" data-value="0">已认证</li>
+	                                <li class="filter-option" data-value="1">未认证</li>
+	                            </ul>
+	                        </div>
+							--->
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="tableSection wrap clearfix">
+				<div class="tabBtn" id="status_change">
+
+					
+	                <!---<a href="javascript:void(0);" class="active" data-id="result">媒体查找</a>
+	                <a href="javascript:void(0);" data-id="rec" class="">今日推荐</a>
+	                <a href="javascript:void(0);" data-id="today" class="">今日新增</a>
+					--->
+	            </div>
+	            <div class="table-list">
+	            	<p class="m-zyhd">←左右滑动查看更多→</p>
+	            	<div class="table_box zimeiti-table_box">
+	            		<table>
+				            <thead>
+				            	<tr>
+				            		<th class="th1">名称</th>
+				            		<th class="th2">平台</th>
+				            		<!--<th class="th3">一手认证</th>--->
+				            		<th class="th4">行业分类</th>
+									<th class="th3">游客价格</th>
+				            		<th class="th3_01">大侠价格</th>
+				            		<th class="th4">掌门价格</th>
+				            		<th class="th7">地区</th>
+				            		<th class="th8">参考粉丝数</th>
+				            		<th class="th9">参考阅读数</th>
+				            		<th class="th10">备注</th>
+				            	</tr>
+				            </thead>
+				            <tbody>
+							<{volist name="List" id="val"}>
+				            	<tr>
+				            		<td class="td1">
+										<span class="fl"><{:msubstrprice($val.MediaTitle,0,8)}></span><a href="<{$val.MediaCaseUrl}>" target="_blank" class="case-rk">案例</a>
+										<{if condition="!empty($val.MediaInUrl)"}>
+										<a href="<{$val.MediaInUrl}>" target="_blank" class="tips" data-tips="入口仅供参考">入口</a>
+										<{/if}>
+				            		</td>
+				            		<td class="td2"><a href="<{$val.MediaCaseUrl}>" target="_blank"><{$val.TypeName2}></a></td>
+				            		<!--<td class="td3"><img src="__STATIC__/home/images/renz.png"></td>--->
+				            		<td class="td4"><{$val.TypeName3}></td>
+				            		<td class="td3"><{$val.MemberLevelPrice|intval}></td>
+				            		<td class="td3"><{$val.MemberLevelPrice2|intval}></td>
+				            		<td class="td4"><a href="/member.php">仅代理可查</a></td>
+				            		<td class="td7"><{$val.TypeName4}></td>
+				            		<td class="td8"><{$val.TypeName5}></td>
+				            		<td class="td9"><{$val.TypeName6}></td>
+				            		<td class="td10"><{:msubstr($val.MediaContent,0,10)}></td>
+				            	</tr>
+								<{/volist}>
+				            </tbody>
+	            		</table>
+	            	</div>
+	            </div>
+	             <div class="page clearfix">
+		            <{$List->render()}>
+	            </div>
+			</div>
+			<div class="mtzy_bottom"></div>
+		</div>
+	</section>
+	<{include file="public/footer" /}>
+	<script>
+		//其他筛选下拉选
+        $(".unit i").on("click",function(e){
+            e.stopPropagation();
+            $(this).next("ul").show();
+            $(this).parent(".unit").siblings().children("ul").hide();
+        });
+        $(".unit li").on("click",function(e){
+            e.stopPropagation();
+            $(this).addClass("active").siblings("li").removeClass("active");
+            $(this).parents("ul").hide();
+           //resultTable.ajax.reload();
+        });
+        $("body").on("click",function(){
+            $(".unit ul").each(function(i,n){
+                $(n).hide();
+            });
+        });
+	</script>
+
+</body>
+</html>

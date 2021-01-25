@@ -1,0 +1,155 @@
+<{include file="public/member_header" /}>
+<{include file="public/member_main" /}>
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>
+                软文家首页
+            </li>
+            <li>
+                发票管理
+            </li>
+            <li>
+                添加发票
+            </li>
+        </ul>
+    </div>
+    <style>
+        input[type=checkbox], input[type=radio]{ margin:0 10px;}
+        .form-group .layui-input{ width:500px;}
+    </style>
+    <!-- /section:basics/content.breadcrumbs -->
+    <div class="page-content">
+        <div class="page-content-area">
+            <div class="row">
+                <div class="col-xs-12">
+                    <!-- PAGE CONTENT BEGINS -->
+                    <form class="form-horizontal" id="MyForm" method="post" action="<{:url('add')}>">
+                        <!-- #section:elements.form -->
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">发票类型： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceTypeName}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">发票明细： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceDetailName}> <{$Info.InvoiceOtherContent}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">发票金额： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceMoney}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">发票抬头： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceTitle}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">纳税人识别码： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceCode}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">收货人姓名： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceName}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">收货人手机： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceMobile}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">收货人地址： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceAddress}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">补充说明： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceContent}>
+                            </div>
+                        </div>
+                        <{if condition="$Info['InvoiceExpress'] neq '0'"}>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">快递名称： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceExpressName}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">快递单号： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceNumber}>
+                            </div>
+                        </div>
+                        <{/if}>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">申请状态： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceStateName}>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-3 control-label no-padding-right">申请时间： </label>
+                            <div class="col-sm-9" style="padding-top: 6px">
+                                <{$Info.InvoiceTime|date='Y-m-d H:i:s',###}>
+                            </div>
+                        </div>
+                        <div class="clearfix form-actions">
+                            <div class="col-md-offset-3 col-md-9">
+                                <button class="btn btn-info" type="button" onclick="history.back();">
+                                    <i class="ace-icon fa fa-check bigger-110"></i>
+                                    返回
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.page-content-area -->
+    </div><!-- /.page-content -->
+</div><!-- /.main-content -->
+<{include file="public/member_footer" /}>
+<a href="__STATIC__/member/#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+</div>
+<script>
+    $('#commit').click(function () {
+        var InvoiceMoney=$('#InvoiceMoney').val();
+        var InvoiceTitle=$('#InvoiceTitle').val();
+        var InvoiceCode=$('#InvoiceCode').val();
+        var InvoiceName=$('#InvoiceName').val();
+        var InvoiceAddress=$('#InvoiceAddress').val();
+        if(InvoiceMoney==''){
+            alert("发票金额不能为空");
+            return false;
+        }
+        if(InvoiceTitle==''){
+            alert("发票抬头不能为空");
+            return false;
+        }
+        if(InvoiceCode==''){
+            alert("发纳税人识别码不能为空");
+            return false;
+        }
+        if(InvoiceAddress==''){
+            alert("收货人地址不能为空");
+            return false;
+        }
+        $('#MyForm').submit();
+    })
+</script>
+</body>
+</html>

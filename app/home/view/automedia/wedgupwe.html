@@ -1,0 +1,10 @@
+<div class="am-text-center"><span style="color:green;font-size:20px;">已完成</span>
+<span style="color:red;font-size:20px;"><{$page/$totalPage*100|round=###,2}>%</span></div>
+<script>
+	var page=<{$page}>;
+	var totalPage=<{$totalPage}>;
+	if (page<totalPage)
+	{
+		window.location.href="/Automedia/upwemedia.html?page="+<{$page}>;
+	}
+</script>

@@ -1,0 +1,78 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>修改</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('edit')}>" enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">文章名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AboutTitle" size="40" value="<{$Info.AboutTitle}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">英文名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AboutEngTitle" size="40" value="<{$Info.AboutEngTitle}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:50px;">文章摘要</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="AboutAbstract" style="height: 120px;" class="layui-input"><{$Info.AboutAbstract}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">文章图片</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="file" name="AboutPicPath" class=" layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux">
+            <{if condition="$Info['AboutPicPath'] neq ''"}>
+            <!--预览-->
+            <a href="<{$FileSeat.$Info.AboutPicPath}>" target="_blank"><img src="<{$FileSeat.$Info.AboutPicPath}>"/></a>
+            <{/if}>
+            <{if condition="in_array($Info['AboutID'],[46,47,48])"}>
+                尺寸：62*62像素
+            <{else}>
+                尺寸：448*518像素
+            <{/if}>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height:403px;padding-top:150px;">文章详情</label>
+        <div class="layui-input-inline inputTextWidth" style="width: 80%; ">
+            <textarea id="EditContent" name="AboutContent"><{$Info.AboutContent}></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item " >
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="AboutState" value="1" class="layui-input" title="已启用" <{if condition="$Info['AboutState'] eq 1"}>checked<{/if}>>
+            <input type="radio" name="AboutState" value="0" class="layui-input" title="已禁用" <{if condition="$Info['AboutState'] eq 0"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item " >
+        <label class="layui-form-label">是否推荐</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="AboutRecommendState" value="0" class="layui-input" title="不推荐" <{if condition="$Info['AboutRecommendState'] eq 0"}>checked<{/if}>>
+            <input type="radio" name="AboutRecommendState" value="1" class="layui-input" title="推荐" <{if condition="$Info['AboutRecommendState'] eq 1"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="AboutID" value="<{$Info.AboutID}>">
+        <input type="hidden" id="AboutTypeID" name="AboutTypeID" value="<{$Info['AboutTypeID']}>">
+        <input type="hidden" id="AboutTypePath" name="AboutTypePath" value="<{$Info['AboutTypePath']}>">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery,upload = layui.upload;
+    });
+</script>

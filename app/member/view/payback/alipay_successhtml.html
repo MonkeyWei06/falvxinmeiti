@@ -1,0 +1,43 @@
+<{include file="public/index_header" /}>
+<div class="max hezuo" style="padding-top:30px;">
+  <div class="box" style="background:#fff;">
+      <div class="lmt" aos="fade-up" aos-delay="250"> <strong>— 充值完成 —</strong>
+      <p>PAY FINISH</p>
+    </div>
+    <div class="neirong">
+        <ul style="width:500px; margin: 10px auto;">
+            <li>订单号：<{$OrderInfo.out_trade_no|default=''}></li>
+            <li>充值金额：<{$OrderInfo.total_amount|default=''}></li>
+            <li>支付时间：<{$OrderInfo.timestamp|default=''}></li>
+        </ul>
+    </div>
+  </div>
+</div>
+ <div class="max footer">
+    <div class="box">
+     <p></p> 全网媒体直线发稿、24小时自助发稿平台、助您提升营销效率！</p> <p>
+注册会员 尽享全网3万多家媒体资源！</p>
+    </div>
+    <div class="lianxi">
+        <{$Config.WebSiteCopyright|default=''}>
+    </div>
+ </div>
+<script>
+AOS.init({
+	easing: 'ease-out-back',
+	duration: 800,
+	once:true
+});
+function OpenWin() {
+    layer.open({
+        title:'在线咨询',
+        type: 1,
+        area: ['500px', '240px'],
+        fixed: false, //不固定
+        maxmin: true,
+        content: '<div style="padding:10px 15px;"><{$Config.WebSiteWXWBContent|default=''}></div>'
+    });
+}
+</script>
+</body>
+</html>

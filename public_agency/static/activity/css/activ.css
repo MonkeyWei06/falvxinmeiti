@@ -1,0 +1,104 @@
+*{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+:after,:before{-webkit-box-sizing:border-box;-moz-box-sizing:border-box;box-sizing:border-box}
+body,button,dd,div,dl,dt,form,h1,h2,h3,h4,h5,h6,html,input,li,ol,p,textarea,ul{margin:0;padding:0}
+body{overflow-x:hidden;background:#fff;color:#333;font-size:14px;font-family:"Microsoft YaHei","ºÚÌå","ËÎÌå",Arial,sans-serif;-webkit-user-select:none;-moz-user-select:none;-ms-user-select:none;user-select:none}
+h1,h2,h3,h4,h5,h6{font-weight:400;font-size:100%}
+a{color:#555;text-decoration:none;-webkit-tap-highlight-color:transparent}
+a,a:active,a:focus,a:hover,a:link,a:visited{outline:0;text-decoration:none;-webkit-tap-highlight-color:transparent}
+img{border:none;vertical-align:middle}
+li,ol,ul{list-style:none}
+button,input,select,textarea{font:14px Arial,"Microsoft YaHei","ºÚÌå","ËÎÌå",sans-serif}
+.clearfix:after,.clearfix:before{content:"";display:table;clear:both;visibility:hidden}
+.w1200{width:1200px;margin:0 auto;position:relative}
+.banner{width:100%;height:666px;background:url(/static/activity/images/section_bg1.jpg) center center no-repeat;background-size:cover}
+.banner .w1200{padding-top:20px;text-align:center}
+.blocks{width:100%;height:341px;background:url(/static/activity/images/section_bg2.jpg) center center no-repeat;background-size:cover}
+.blocks ul{width:100%}
+.blocks ul li{float:left;margin-right:49px;width:366px;height:270px;text-align:center;padding-top:187px}
+.blocks ul li:last-child{margin-right:0}
+.blocks ul li:nth-of-type(1){background:url(/static/activity/images/block_img_1.png);background-size:cover}
+.blocks ul li:nth-of-type(2){background:url(/static/activity/images/block_img_2.png);background-size:cover}
+.blocks ul li:nth-of-type(3){background:url(/static/activity/images/block_img_3.png);background-size:cover}
+.blocks ul li a{display:inline-block;width:120px;height:40px;line-height:40px;text-align:center;color:#c63320;font-size:16px;font-weight:700}
+.cj{width:100%;height:894px;background:url(/static/activity/images/section_bg3.jpg) center center no-repeat;background-size:cover}
+.cj .w1200 .fll{width:710px;float:left;position:absolute;top:50px;left:50%;margin-left:-355px;}
+.cj .w1200 .fll h5{color:#62391c;font-size:18px;padding-left:26px}
+.cj .w1200 .fll img.wallet{position:absolute;right:-5px;top:-44px;z-index:1}
+.cj .w1200 .fll img.juan{position:absolute;left:-100px;bottom:116px;z-index:1}
+.cj .w1200 .frr{width:490px;height:854px;float:left}
+.cj .w1200 .fll table{
+        border-collapse:separate;
+        border-spacing:10px;
+}
+
+.shanDeng{position:absolute;padding-top:48px;padding-left:48px;width:653px;height:668px;background:url(/static/activity/images/shandong_bg.png);background-size:cover;left:0;top:25px;z-index:2}
+#btn .cjBtn,#btn .cjBtnDom,.shanDeng .active,.shanDeng td{width:125px;height:126px;background-repeat:no-repeat;background-size:100%}
+#lottery table td a{background-image:url(/static/activity/images/buttonUp.png)}
+#lottery table td a:active{background-image:url(/static/activity/images/buttonDown.png)}
+#lottery .active{background-image:url(/static/activity/images/active.png)}
+.shanDeng td{text-align:center;background-image:url(/static/activity/images/proBj.png);cursor:pointer}
+.ppTxt{margin-left:100px;margin-top:700px;display:block;width:458px;height:89px;line-height:89px;background:url(/static/activity/images/ppTxt_bg.png);color:#fff;font-size:24px;text-align:center}
+.ppTxt span{color:#ffec02}
+.ppTxt a{font-size:24px;color:#ffec02;text-decoration:underline}
+.cj .w1200 .frr{padding-top:68px}
+.number h6{font-size:30px;color:#333;margin-bottom:30px}
+.pep_num{color:#d52d27;font-size:36px;margin-bottom:49px;font-family:SourceHanSerifCN-Heavy}
+.pep_num span{font-size:60px}
+.djs{color:#d52d27;font-size:36px;font-family:SourceHanSerifCN-Heavy;margin-bottom:90px}
+.djs span{font-size:60px}
+.frr .texts{font-size:18px;color:#62391c;line-height:2}
+.winners{width:100%;height:472px;background:url(/static/activity/images/section_bg4.jpg) center center no-repeat;background-size:cover}
+.winners .w1200{padding-top:409px}
+.winners img.piao{position:absolute;right:0;top:0}
+.winners img.wallet{position:absolute;left:-53px;top:39px}
+.winners img.hezi{position:absolute;right:-87px;bottom:-24px;z-index:2}
+.winners .lists{position:absolute;left:0;top:109px;z-index:1;width:100%;height:300px;background:url(/static/activity/images/list_bg.png) center center no-repeat;background-size:cover;padding-top:100px}
+.winners .lists .wheel-list-wrap{height:150px;overflow:hidden}
+.winners .lists li{width:100%;height:30px;line-height:30px;font-size:16px}
+.winners .lists li span{display:inline-block;color:#fff}
+.winners .lists li span.username{padding-left:156px;width:30%}
+.winners .lists li span.prize{padding-left:30px;width:35%;color:#ffec02}
+.winners .lists li span.time{width:15%}
+.winners .lists li span i{font-style:normal}
+.activityRule{width:100%;height:548px;background:url(/static/activity/images/section_bg5.jpg) center center no-repeat;background-size:cover}
+.ruleTxts{width:100%;height:459px;padding-top:118px;padding-left:100px;background:url(/static/activity/images/ruleTxt_bg.png) center center no-repeat;background-size:cover;font-size:16px;color:#fff;line-height:1.8}
+.shadow{width:100%;height:100%;background-color:rgba(0,0,0,.6);position:fixed;left:0;right:0;top:0;z-index:5}
+.popupDiv{position:absolute;z-index:6;top:50%;left:50%;-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);-o-transform:translate(-50%,-50%);transform:translate(-50%,-50%)}
+h6.title{color:#fff5de;font-size:24px;text-align:center;margin-bottom:16px;font-family:SourceHanSerifCN-Heavy}
+.noChange{width:420px;height:456px;background:url(/static/activity/images/no_change.png);background-size:cover;padding-top:250px}
+.noChange .closeBtn{width:24px;height:24px;background:url(/static/activity/images/popup_close_grey.png);background-size:cover;position:absolute;right:0;top:0;cursor:pointer}
+.noChange .ppTxts{width:260px;text-align:center;color:#fddc90;font-size:18px;margin:auto;margin-bottom:25px}
+.noChange a.chargeBtn{display:block;width:244px;height:55px;line-height:49px;background:url(/static/activity/images/popup_btn_bg.png);color:#c63320;font-size:18px;text-align:center;margin:auto}
+.winning{width:420px;height:450px;background:url(/static/activity/images/wining_bg.png);background-size:cover;padding-top:303px}
+.winning .closeBtn{width:24px;height:24px;background:url(/static/activity/images/popup_close_grey.png);background-size:cover;position:absolute;right:0;top:0;cursor:pointer}
+.winning .ppTxts{padding-left:10px;padding-right:10px;width:100%;text-align:center;color:#fddc90;font-size:18px;font-weight:700;margin:auto;margin-bottom:12px}
+.winning a.viewPrizeBtn{display:block;width:244px;height:55px;line-height:49px;background:url(/static/activity/images/popup_btn_bg.png);color:#c63320;font-size:18px;text-align:center;margin:auto}
+.winning .tipsTxts{text-align:center;font-size:14px;color:#fff5de;margin-bottom:20px}
+.winning a.adminView{text-decoration:underline;color:#fff5de}
+.winning a.qq_kf{text-decoration:none;color:#fff5de}
+.txtpopup{width:452px;height:167px;background:url(/static/activity/images/popup_public_bg.png);background-size:cover}
+.txtpopup .closeBtn{width:20px;height:20px;background:url(/static/activity/images/popup_public_close.png);background-size:cover;position:absolute;right:30px;top:35px;cursor:pointer}
+.txtpopup .texts{display:flex;width:100%;color:#fff5de;font-size:18px;line-height:1.5;text-align:center;padding-left:42px;padding-right:30px;padding-top:76px;justify-content:center;align-items:center}
+.prizeList{position:relative;width:520px;height:400px;background:url(/static/activity/images/prize_list_bg.png);background-size:cover;padding-top:103px}
+.prizeList img.noPrize{position:absolute;left:0;top:0;display:none}
+.prizeList .closeBtn{width:20px;height:20px;background:url(/static/activity/images/popup_close_red.png);background-size:cover;position:absolute;right:40px;top:40px;cursor:pointer}
+.prizeList ul{width:420px;height:210px;margin:auto;overflow:hidden;padding-bottom:15px}
+.prizeList ul li{width:420px;height:70px;line-height:56px;background:url(/static/activity/images/prize_bg.png);background-size:cover}
+.prizeList ul li:last-child{margin-bottom:0}
+.prizeList ul li span{display:inline-block;color:#c63320;font-size:16px}
+.prizeList ul li span i{font-style:normal}
+.prizeList ul li span.name{padding-left:30px;width:210px}
+.prizeList ul li span.name i{font-size:24px}
+.prizeList ul li span.category{width:105px;font-size:14px;padding-left:10px}
+.prizeList ul li span.time{widows:85px;font-size:14px;padding-left:5px}
+.pager{display:none;margin:auto;margin-top:15px;width:200px;text-align:center;color:#fddb56}
+.pager a{display:inline-block;color:#e19d9d}
+.pager a:hover{color:#fddb56}
+.pager a.prev{margin-right:15px}
+.pager a.next{margin-left:15px}
+.pager span{display:inline-block}
+
+
+.w-opacity{
+        opacity: 0;
+}

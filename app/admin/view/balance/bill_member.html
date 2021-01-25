@@ -1,0 +1,99 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+    .layui-form-item .layui-input-inline{ margin-right: 0;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>会员账户余额列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('bill_member')}>" method="get">
+            <div class="layui-form-item">
+                <!--<label class="layui-form-label" style="width: 80px;">代理类型</label>-->
+                <!--<div class="layui-input-inline" style="width: 100px;">-->
+                    <!--<select name="MemberTypeID" id="MemberTypeID" style="height:30px;width:30%;">-->
+                        <!--<option value="">代理选择</option>-->
+                        <!--<{volist name="GetMemberTypeList" id="val"}>-->
+                        <!--<option value="<{$val.TypeID}>" <{if condition="!empty($UrlParam.MemberTypeID) && $UrlParam.MemberTypeID eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>-->
+                        <!--<{/volist}>-->
+                    <!--</select>-->
+                <!--</div>-->
+                <label class="layui-form-label" style="width: 80px;">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="订单编号/文章编号/会员名称" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <label class="layui-form-label" style="width: 60px; margin-left: 10px;">邀请码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword2" placeholder="邀请码" value="<{$UrlParam.keyword2|default=''}>" class="layui-input" style="width: 120px;"/>
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="startdate" onclick="WdatePicker();" placeholder="开始时间" value="<{$UrlParam.startdate|default=''}>" class="layui-input" style="width: 100px;" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="enddate" placeholder="结束时间" onclick="WdatePicker();" value="<{$UrlParam.enddate|default=''}>" class="layui-input" style="width: 100px;" />
+                </div>
+                <button class="layui-btn search" type="submit" style="float: left;">搜索</button>
+                <div style="float: left; line-height: 25px; height: 25px; margin-left: 10px; padding-top: 4px;">
+                    总计：<span style="color: red" id="lr"><{$TotalMoney}></span>
+                </div>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th class="listtitle">订单编号</th>
+                <th class="listtitle">发布会员</th>
+                <th class="listtitle">消费金额</th>
+                <th class="listtitle">平台价格</th>
+                <th class="listtitle">利润</th>
+                <th class="listtitle">发布时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List" id="val"}>
+            <tr>
+                <td align="center"><{$val.order_number}></td>
+                <td align="center">
+                    <{$val.Mem3}>
+                    <{if condition="$val.GroupID eq 1"}>
+                    (<{$val.hyjb}>)
+                    <{else /}>
+                    (<{$val.dljb}>)
+                    <{/if}>
+                </td>
+                <td align="center">
+                    <{$val.order_money}>
+                </td>
+               
+<td align="center">
+                    <{$val.media_money}>
+                </td>
+                <td align="center" class="lr">
+                    <{$val.LiRunPrice}>
+                </td>
+                <td align="center">
+                    <{if condition="empty($val.release_time)"}>
+                    -
+                    <{else}>
+                    <{$val.release_time|date='Y-m-d',###}>
+                    <{/if}>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$List->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

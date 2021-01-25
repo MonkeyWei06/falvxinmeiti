@@ -1,0 +1,58 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}></legend>
+</fieldset>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="40" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th width="100" class="listtitle">奖项名称</th>
+				<th width="100" class="listtitle">红包值</th>
+                <th width="100" class="listtitle">中奖概率 %</th>
+                <th class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+			 <{volist name="actList" id="val"}>
+            <tr>
+                <td align="center">
+                    <input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.lid}>" />
+                </td>
+                <td align="center"><{$val.title}></td>
+				<td align="center"><{$val.num}></td>
+                <td align="center"><{$val.randnum}></td>
+				
+                <td align="center">
+				<a href="<{:url('add',['lid'=>$val['lid']])}>">编辑</a>
+				</td>
+            </tr>
+			 <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+			
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+			<a href="<{:url('add')}>" class="layui-btn search">添加奖项</a>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

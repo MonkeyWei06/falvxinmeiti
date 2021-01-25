@@ -1,0 +1,59 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+<div class="admin-content">
+    <div class="admin-content-body">
+        <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">短信提醒开关</strong>
+            </div>
+        </div>
+        <hr>
+
+        <div class="am-g am-padding-horizontal">
+            <form id="info_form" class="am-form am-form-horizontal" method="post" style="max-width: 620px;" action="<{:url("memberset/addsave")}>" >
+                <div class="am-form-group" style="color: #f00; font-size: 15px">
+                    <label class="am-u-sm-4 am-form-label"></label>
+                    <div class="am-u-sm-8">
+                        * 提示：用于收稿订单短信提醒。
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <label class="am-u-sm-4 am-form-label">新闻媒体收稿提醒:</label>
+                    <div class="am-u-sm-8">
+                        <label class="am-radio-inline">
+                            <input id="RState" type="radio" value="1" name="RState" required="" <{if condition="$State['RState'] eq 1"}>checked="checked"<{/if}>> 开启
+                        </label>
+                        <label class="am-radio-inline">
+                            <input id="RState" type="radio" value="0" name="RState" required="" <{if condition="$State['RState'] eq 0"}>checked="checked"<{/if}>> 关闭
+                        </label>
+                    </div>
+                </div>
+
+                <div class="am-form-group">
+                    <label class="am-u-sm-4 am-form-label">自媒体收稿提醒:</label>
+                    <div class="am-u-sm-8">
+                        <label class="am-radio-inline">
+                            <input id="MState" type="radio" value="1" name="MState" required="" <{if condition="$State['MState'] eq 1"}>checked="checked"<{/if}>> 开启
+                        </label>
+                        <label class="am-radio-inline">
+                            <input id="MState" type="radio" value="0" name="MState" <{if condition="$State['MState'] eq 0"}>checked="checked"<{/if}>required=""> 关闭
+                        </label>
+                    </div>
+                </div>
+                <div class="am-form-group">
+                    <div class="am-u-sm-12">
+                         <button id="submit_info" type="submit" class="am-btn am-btn-primary am-radius">保存</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<{include file="public/member_footer" /}>
+</body>
+</html>

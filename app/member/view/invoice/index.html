@@ -1,0 +1,77 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		 <div class="am-cf am-padding am-padding-bottom-0">
+			<div class="am-fl am-cf am-btn-group">
+			  <a href="<{:url('invoice/add')}>" class="am-btn am-btn-default am-btn-sm">申请发票</a>
+			  <a href="<{:url('invoice/index')}>" class="am-btn am-btn-primary am-btn-sm">发票列表</a> 
+			  </div>
+		  </div>
+		<hr>
+
+		 <div class="am-g">
+            <div class="am-u-sm-12">
+                <div id="list_wrapper" class="dataTables_wrapper no-footer">				
+				<table id="list" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="list_info">
+                    <thead>
+					<tr role="row">
+					<th>类型</th>
+					<th>明细</th>
+					<th>金额</th>
+					<th>抬头</th>
+					<th>地址</th>
+					<th>时间</th>
+					<th>状态</th>
+					<th>操作</th>
+					</tr>
+					</thead>
+                    <tbody>
+					 <{volist name="list" id="val"}>
+						<tr>
+							<td width="10%"><{$val.InvoiceType.New}></td>
+							<td width="10%"><{$val.InvoiceDetail.New}></td>
+							<td width="10%"><{$val.InvoiceMoney}></td>
+							<td width="10%" ><{$val.InvoiceTitle}></td>
+							<td width="10%"><{$val.InvoiceAddress}></td>
+							<td width="10%">
+								<{if condition="!empty($val.InvoiceTime)"}>
+								   <{$val.InvoiceTime|date="Y-m-d H:i:s",###}>
+								<{/if}>
+							</td>
+							<td width="10%">
+								<{if condition="$val.InvoiceState eq 0"}>申请中
+								<{elseif condition="$val.InvoiceState eq 1"}>申请失败
+								<{elseif condition="$val.InvoiceState eq 2"}>已寄出
+								<{/if}>
+							</td>
+							<td width="10%">
+								<a href="<{:url('invoiceinfo',['id'=>$val['InvoiceID']])}>">查看</a>
+							</td>
+						</tr>
+						<{/volist}>
+					</tbody>
+				</table>
+					<div class="bottom">
+					
+					    <div style="float:right;margin-right:100px;"> <{$list->render()}></div>
+
+					</div>
+				<div class="clear"></div>
+				</div>
+            </div>
+        </div>
+
+
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/member_footer" /}>
+</body>
+</html>

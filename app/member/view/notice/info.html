@@ -1,0 +1,33 @@
+<{include file="public/member_header" /}>
+<{include file="public/member_main" /}>
+<!-- /section:basics/sidebar -->
+<!-- /section:basics/navbar.layout -->
+<div class="main-content">
+    <div class="breadcrumbs" id="breadcrumbs">
+        <ul class="breadcrumb">
+            <li>会员首页</li>
+            <li>系统公告</li>
+            <li>公告详情</li>
+        </ul>
+    </div>
+    <div class="page-content">
+        <div class="page-content-area">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="text-align:center;font-size: 30px"><{$info.NewsTitle}></div>
+                    <br>
+                    <br>
+                    <br>
+                    <div style="width: 80%;margin-left: 10%;"><{$info.NewsContent}></div>
+                </div><!-- /.col -->
+            </div><!-- /.row -->
+        </div><!-- /.page-content-area -->
+    </div><!-- /.page-content -->
+</div><!-- /.main-content -->
+<{include file="public/member_footer" /}>
+<a href="__STATIC__/member/#" id="btn-scroll-up" class="btn-scroll-up btn btn-sm btn-inverse">
+    <i class="ace-icon fa fa-angle-double-up icon-only bigger-110"></i>
+</a>
+</div>
+</body>
+</html>

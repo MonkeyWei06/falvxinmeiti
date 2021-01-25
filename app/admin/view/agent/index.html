@@ -1,0 +1,122 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 80px;">代理类型</label>
+                <div class="layui-input-inline" style="width: 130px;">
+                    <select name="MemberTypeID" id="MemberTypeID" style="height:30px;width:30%;">
+                        <option value="">代理选择</option>
+                        <{volist name="GetMemberTypeList" id="val"}>
+                        <option value="<{$val.TypeID}>" <{if condition="!empty($UrlParam.MemberTypeID) && $UrlParam.MemberTypeID eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                        <{/volist}>
+                    </select>
+                </div>
+                <label class="layui-form-label" style="width: 80px;">邀请码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="invitecode" placeholder="请输入关键字" value="<{$UrlParam.invitecode|default=''}>" class="layui-input" />
+                </div>
+                <label class="layui-form-label" style="width: 80px;">会员名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="请输入关键字" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th class="listtitle">邀请码</th>
+                <th class="listtitle">名称</th>
+                <th class="listtitle">代理类型</th>
+                <th class="listtitle">价格类型</th>
+                <th class="listtitle">余额</th>
+                <th class="listtitle">电话</th>
+                <th class="listtitle">QQ</th>
+                <th class="listtitle">状态</th>
+                <th width="150" class="listtitle">注册时间</th>
+                <th width="160" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List" id="val"}>
+            <tr>
+                <td align="center">
+                    <input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.MemberID}>" />
+                </td>
+                <td align="center"><{$val.MemberInviteCode|default='--'}></td>
+                <td align="center"><{$val.MemberName}></td>
+                <td align="center"><{$val.MemberTypeID.New}></td>
+                <td align="center"><{$val.MemberPriceType.New}></td>
+                <td align="center"><{$val.MemberAgentBalanceCount}></td>
+                <td align="center"><{$val.MemberMobile}></td>
+                <td align="center"><{$val.MemberQQ}></td>
+                <td align="center">
+                    <input type="checkbox" <{if condition="$val['MemberState'] eq 1"}>checked<{/if}> name="MemberState" lay-skin="switch" Url="<{:url('ajax/ListStateChange')}>" TableName="Member" MainFieldID="MemberID" ChangeField="MemberState" ID="<{$val.MemberID}>" lay-filter="State" lay-text="启用|禁用">
+                </td>
+                <td align="center"><{$val.MemberTime}></td>
+                <td align="center">
+                    <div class="layui-btn-group">
+                        <a class="layui-btn layui-btn-mini" href="<{:url('finance',array('id'=>$val['MemberID']))}>">财务报表</a>
+                        <a class="layui-btn layui-btn-mini" href="<{:url('topup',array('id'=>$val['MemberID']))}>">充值</a>
+                        <a class="layui-btn layui-btn-mini" href="<{:url('edit',array('id'=>$val['MemberID']))}>">编辑</a>
+                        <!-- <span class="layui-btn layui-btn-mini modify_wallet" data="<{$val.MemberID}>" lay-event="userlevel">会员等级</span> -->
+                        <{if condition="$val.MemberRecommendID eq 0"}>
+                        <a class="layui-btn layui-btn-mini" href="<{:url('nextsee',array('id'=>$val['MemberID']))}>">查看下级代理</a>
+                        <{/if}>
+                        <{if condition="$val.MemberRecommendID gt 0"}>
+                        <a class="layui-btn layui-btn-mini" href="<{:url('edit',array('id'=>$val['MemberRecommendID']))}>">查看上级代理</a>
+                        <{/if}>
+						<a class="layui-btn layui-btn-danger" href="<{:url('dlist',array('MemberID'=>$val['MemberID']))}>">查看会员</a>
+                    </div>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$List->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>
+<script>
+    //资金调整
+    $('.modify_wallet').click(function () {
+        var id= $(this).attr('data');
+        layer.open({
+                type: 2,
+                title: '资金调整',
+                maxmin: true,
+                shadeClose: false, //点击遮罩关闭层
+                area: ['500px', '240px'],
+                content: '<{:url('agent/userlevel')}>?MemberID='+id
+         })
+    });
+</script>

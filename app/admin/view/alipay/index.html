@@ -1,0 +1,74 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 80px;">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="会员名称/支付宝APPID" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th width="120" class="listtitle">会员名称</th>
+                <th class="listtitle">支付宝APPID</th>
+                <th width="160" class="listtitle">时间</th>
+                <th width="100" class="listtitle">状态</th>
+                <th width="100" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List" id="val"}>
+            <tr>
+                <td align="center">
+                    <input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.AliPayID}>" />
+                </td>
+                <td align="center"><{$val.MemberName}></td>
+                <td align="center"><{$val.AliPayAPPID}></td>
+                <td align="center"><{$val.AliPayTime}></td>
+                <td align="center">
+                    <input type="checkbox" <{if condition="$val['AliPayState'] eq 1"}>checked<{/if}> name="AliPayState" lay-skin="switch" Url="<{:url('ajax/ListStateChange')}>" TableName="Alipay" MainFieldID="AliPayID" ChangeField="AliPayState" ID="<{$val.AliPayID}>" lay-filter="State" lay-text="已用|未用">
+                </td>
+                <td align="center">
+                    <div class="layui-btn-group">
+                        <a class="layui-btn layui-btn-mini" href="<{:url('edit',array('id'=>$val['AliPayID']))}>"><i class="layui-icon"></i>编辑</a>
+                    </div>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

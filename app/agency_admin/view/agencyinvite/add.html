@@ -1,0 +1,95 @@
+<{include file="public/header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+	  <div class="admin-content">
+		<div class="admin-content-body">
+		  <div class="am-cf am-padding am-padding-bottom-0">
+		   <div class="am-fl am-cf">
+			  <strong class="am-text-warning am-text-lg">添加邀请码</strong>
+		   </div>
+		</div>
+		<hr>
+		<div class="page-content">
+		  <div class="page-content-area" style="margin-left: 3%;" >
+			<form class="layui-form">
+				<div class="layui-form-item">
+					<label class="layui-form-label">邀请码</label>
+					<div class="layui-input-block">
+						<input type="number" name="InviteCode" lay-verify="required" autocomplete="off" placeholder="请输入5位数的邀请码" class="layui-input" oninput ="value=value.replace(/[^\d]/g,'');if(value.length>5) value=''" style="width: 20%;"> <font style="color:red">*最大长度5</font>
+					</div>					
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">推广人</label>
+					<div class="layui-input-block">
+						<input type="text" name="InviteName" lay-verify="required" autocomplete="off" placeholder="请输入名字" class="layui-input" style="width: 20%;">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="am-btn am-btn-sm am-btn-primary" lay-submit="" lay-filter="SubmitBut">立即提交</button>
+						<button type="reset" class="am-btn am-btn-sm am-btn-default">重置</button>
+					</div>
+				</div>
+			</form>
+		  </div>
+		</div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+        //监听提交
+        form.on('submit(SubmitBut)', function(data){
+            //console.log(data);
+            SaveMemberInfo(data.field);
+            return false;
+        });
+    });
+    function SaveMemberInfo(Data) {
+        if(Data.InviteCode==undefined || Data.InviteCode==""){
+            layer.msg('邀请码不能为空');
+            return false;
+        }
+        if(Data.InviteCode.length<4){
+            layer.msg('邀请码长度不可少于4个字符');
+            return false;
+        }
+        if(Data.InviteName==undefined || Data.InviteName==""){
+            layer.msg('推广者不能为空');
+            return false;
+        }
+        $.ajax({
+            url:'<{:url('add')}>',
+            type:'POST',
+            dataType:'json',
+            data:{InviteCode:Data.InviteCode,InviteName:Data.InviteName},
+            cache:false,
+            success:function(Result)
+            {
+                if(Result==0) {
+                    layer.msg('添加成功');
+					window.location.replace("<{:url('agencyinvite/index')}>");
+                    return false;
+                }else if(Result==1){
+                    layer.msg('此邀请码已被占用');
+                    return false;
+                }else{
+                    layer.msg('系统错误');
+                    return false;
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

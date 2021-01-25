@@ -1,0 +1,90 @@
+<{include file="public/header" /}>
+<style type="text/css">
+	.admin-main {margin: 15px;}
+	.layui-elem-quote{ padding: 5px;}
+	.layui-form-item{ margin-bottom: 0;}
+	.layui-table-cell { padding: 0px; line-height: 22px;height: 22px; }
+	.layui-form-item .layui-input-inline{ width: 130px;}
+</style>
+<div class="admin-main">
+	<blockquote class="layui-elem-quote">
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width: 60px;">订单号：</label>
+			<div class="layui-input-inline">
+				<input type="text" id="keyword" placeholder="请输入关键字" class="layui-input">
+			</div>
+			<label class="layui-form-label" style="width: 60px;">邀请码：</label>
+			<div class="layui-input-inline">
+				<input type="text" id="code" placeholder="请输入邀请码" class="layui-input" style="width: 130px;">
+			</div>
+			<label class="layui-form-label" style="width: 60px;">时间：</label>
+			<div class="layui-input-inline">
+				<input type="text" id="startdate" lay-verify="date" placeholder="请输入开始" class="layui-input">
+			</div>
+			<div class="layui-input-inline">
+				<input type="text" id="enddate" lay-verify="date" placeholder="请输入结束" class="layui-input">
+			</div>
+			<button class="layui-btn search" type="button" class="layui-btn" id="SearchBut">搜索</button>
+			总计：<span id="TotalMoney">0.00</span>
+		</div>
+	</blockquote>
+	<table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+</div>
+<!--<script type="text/html" id="toolbarDemo">-->
+<!--<div class="layui-btn-container">-->
+<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>-->
+<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>-->
+<!--<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+<!--</div>-->
+<!--</script>-->
+<{include file="public/footer" /}>
+<script>
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var startdate = $("#startdate").val();
+        var enddate = $("#enddate").val();
+        var code = $("#code").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getbilllist')}>'
+            ,where:{keyword:keyword,code:code,date1:startdate,date2:enddate}
+        });
+    });
+    layui.use(['table','laydate'], function(){
+        var table = layui.table
+			,laydate = layui.laydate;
+        //日期
+        laydate.render({
+            elem: '#startdate'
+        });
+        laydate.render({
+            elem: '#enddate'
+        });
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('getbilllist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '财务报表'
+            ,cols: [[
+                {field:'order_number', title:'订单号',align:'center'}
+                ,{field:'MediaTitle', title:'媒体名称',align:'center'}
+                ,{field:'MemberName', title:'会员名称',align:'center'}
+                ,{field:'hylx', title:'会员级别',align:'center'}
+                ,{field:'cbj', title:'成本价',align:'center'}
+                ,{field:'cjj', title:'成交价',align:'center'}
+                ,{field:'lr', title:'利润',align:'center'}
+                ,{field:'release_time', title:'成交时间',align:'center'}
+            ]]
+            ,limit:20
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next'] //自定义分页布局 ,'limit',  'skip'
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 7 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+            ,done:function(res){
+                $('#TotalMoney').html(res.TotalMoney);
+            }
+        });
+    });
+</script>

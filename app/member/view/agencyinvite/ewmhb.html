@@ -1,0 +1,28 @@
+<{include file="public/member_header" /}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+  <!-- content start -->
+	  <div class="admin-content">
+		<div class="admin-content-body">
+		  <div class="am-cf am-padding am-padding-bottom-0">
+		   <div class="am-fl am-cf">
+			  <strong class="am-text-warning am-text-lg">邀请码海报
+			  <a href="<{$tmpbg}>" download="<{$code}>">【下载海报】</a></strong>
+			  <font style="color:red;">(备注：如果不能直接下载，请点击鼠标右键选择[图片另存为])</font>
+		   </div>
+		</div>
+		<hr>
+		<div class="page-content">
+		  <div class="page-content-area" style="margin-left: 3%;" >
+			<img src="<{$tmpbg}>" height="600px" alt="<{$code}>">
+		  </div>
+		</div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/member_footer" /}>
+</body>
+</html>

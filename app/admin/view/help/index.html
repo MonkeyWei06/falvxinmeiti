@@ -1,0 +1,80 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="请输入关键字" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th width="60" class="listtitle">ID</th>
+                <th width="60" class="listtitle">排序</th>
+                <th class="listtitle"><{$MenuName}>名称</th>
+                <th class="listtitle">是否禁用</th>
+                <th class="listtitle">添加时间</th>
+                <th width="120" class="listtitle">操作</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List" id="val"}>
+            <tr>
+                <td align="center"><input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.HelpID}>" /></td>
+                <td align="center"><{$val.HelpID}></td>
+                <td align="center"><input type="text" name="Sort[<{$val.HelpID}>]" class="layui-input" value="<{$val.HelpSort}>" style="width: 90%; margin: 0 auto;"></td>
+                <td>
+                    <{$val.HelpTitle}>
+                </td>
+                <td align="center">
+                    <input type="checkbox" <{if condition="$val['HelpState'] eq 1"}>checked<{/if}> name="HelpState" lay-skin="switch" Url="<{:url('ajax/ListStateChange')}>" TableName="help" MainFieldID="HelpID" ChangeField="HelpState" ID="<{$val.HelpID}>" lay-filter="State" lay-text="启用|禁用">
+                </td>
+                <td align="center">
+                    <{$val.HelpTime}>
+                </td>
+                <td align="center">
+                    <div class="layui-btn-group">
+                        <a class="layui-btn layui-btn-mini" href="<{:url('edit',array('id'=>$val['HelpID']))}>"><i class="layui-icon"></i>编辑</a>
+                    </div>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                    <option value="Sort" url="<{:url('sort')}>">批量排序</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$List->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

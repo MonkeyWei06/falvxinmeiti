@@ -1,0 +1,164 @@
+<{include file="public/header"}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <button type="button" class="am-btn am-btn-warning am-btn-sm" id="add">轮播图添加</button>
+      </div>
+    </div>
+	<hr>
+	<div class="am-g">
+	  <div class="am-u-sm-12">
+		<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+				  <table class="layui-table" id="DataList" lay-filter="DataList"></table>
+			</div>
+		  <div class="clear"></div>
+		</div>
+	   </div>
+	</div>
+</div>
+<{include file="public/footer"}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script type="text/html" id="DataOperation">
+	<a class="layui-btn layui-btn-xs" lay-event="userlevel">修改</a>
+	<a class="layui-btn layui-btn-xs" lay-event="enable">启用</a>
+	<a class="layui-btn layui-btn-xs" lay-event="forbidden">禁用</a>
+	<a class="layui-btn layui-btn-xs" lay-event="modify_wallet">删除</a>
+</script>
+<script>
+layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('getlist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '轮播图数据表'
+            ,cols: [[
+                 {field:'pictures_name', title:'图片名称',align:'center'}
+                ,{field:'pictures_path', title:'图片',align:'center'}
+                ,{field:'pictures_state', title:'状态',align:'center'}
+                ,{field:'pictures_sort', title:'排序',align:'center'}
+                ,{field:'right', title:'操作',align:'center', toolbar: '#DataOperation'}
+            ]]
+            ,limit:20
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next'] //自定义分页布局 ,'limit',  'skip'
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 7 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+        });
+        //监听工具条
+        table.on('tool(DataList)',function(obj) {
+            var data = obj.data;
+            //console.log(data);
+            if (obj.event === 'modify_pwd'){
+                //iframe层-父子操作
+                layer.open({
+                    title:'密码修改',
+                    type: 2,
+                    area: ['500px', '240px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '<{:url('modify_pwd')}>?MemberID='+data.MemberID+'&MemberName='+data.MemberName
+                });
+            } else if (obj.event === 'modify_wallet') {//删除
+                var pictures_id=data.pictures_id;
+                $.post('<{:url('delete')}>',{id:pictures_id},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            } else if(obj.event === 'userlevel'){
+                //iframe层-父子操作
+                layer.open({
+                    title:'图片修改',
+                    type: 2,
+                    area: ['500px', '450px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '<{:url('edit')}>?id='+data.pictures_id,
+                    cancel: function(index, layero){
+                        layer.closeAll();
+                        location.reload();
+                        return false;
+                    }
+                });
+            } else if(obj.event === 'edit'){
+                window.location.href='<{:url('topup')}>?MemberID='+data.MemberID;
+            }
+            //会员详情
+            else if(obj.event==='userDetail'){
+                window.location.href='/index.php/fxadmin/user/detail'+'/user_id/'+data.id;
+                //alert(666);
+            }
+            //禁用
+            else if(obj.event==='forbidden'){
+                var pictures_id=data.pictures_id;
+                $.post('<{:url('jinyong')}>',{id:pictures_id},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+						});
+					}else{
+                        layer.msg('系统调用错误');
+					}
+                });
+            }
+            //启用
+            else if(obj.event==='enable'){
+                var pictures_id=data.pictures_id;
+                $.post('<{:url('qiyong')}>',{id:pictures_id},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            }
+        });
+    });
+
+    $('#add').click(function () {
+        layer.open({
+            title:'新增数据',
+            type: 2,
+            area: ['500px', '450px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '<{:url('add')}>',
+            cancel: function(index, layero){
+                layer.closeAll();
+                location.reload();
+                return false;
+            }
+        });
+    })
+	function look(id) {
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 0,
+            area: ['500px','auto'],
+            skin: 'layui-layer-nobg', //没有背景色
+            shadeClose: true,
+            content: $('#Img'+id)
+        });
+    }
+</script>
+</body>
+</html>

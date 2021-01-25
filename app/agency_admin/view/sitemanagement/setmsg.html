@@ -1,0 +1,79 @@
+<{include file="public/header"}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+       <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">短信接口</strong>
+            </div>
+    </div>
+	<hr>
+	<div class="am-g">
+	  <div class="am-u-sm-12">
+		<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+				  <form class="layui-form" id="MyForm" action="<{:url('msgsave')}>" method="post" enctype="multipart/form-data">	
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">账户名：</label>
+						<div class="layui-input-block">
+							 <input type="text" name="msgname"  id="msgname" value="<{$info.msgname}>"  autocomplete="off" placeholder="短信接口账户" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">密码：</label>
+						<div class="layui-input-block">
+							<input type="password" name="msgpass"  id="msgpass" value="<{$info.msgpass}>"  autocomplete="off" placeholder="短信接口密码" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">签名：</label>
+						<div class="layui-input-block">
+							<input type="text" name="msgSignature"  id="msgSignature" value="<{$info.msgSignature}>" autocomplete="off" placeholder="短信接口签名" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<span class="am-btn am-btn-primary" lay-submit="" lay-filter="SubmitBut" onclick="setmsg()">立即提交</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		  <div class="clear"></div>
+		</div>
+	   </div>
+	</div>
+</div>
+<{include file="public/footer"}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+    });
+</script>
+<script type="text/javascript">
+  function setmsg() {     
+		var msgname = $('#msgname').val();
+		var msgpass = $('#msgpass').val();
+		var msgSignature = $('#msgSignature').val();
+		if(msgname==undefined || msgname==""){
+			layer.msg('请填写短信接口账户');
+			return false;
+		}
+		if(msgpass==undefined || msgpass==""){
+			layer.msg('请填写短信接口密码');
+			return false;
+		}
+		if(msgSignature==undefined || msgSignature==""){
+			layer.msg('请填写短信接口签名');
+			return false;
+		}
+	$('#MyForm').submit();
+ }
+</script>
+</body>
+</html>

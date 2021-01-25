@@ -1,0 +1,172 @@
+<{include file="public/web_agencyheader" /}>
+<style type="text/css">
+	.admin-main {margin: 15px;}
+	.layui-elem-quote{ padding: 5px 15px;}
+	.layui-form-item{ margin-bottom: 0;}
+	.layui-table-cell { padding: 0px; line-height: 22px;height: 22px; }
+</style>
+<div class="admin-main">
+	<blockquote class="layui-elem-quote">
+		<div class="layui-form-item">
+			<label class="layui-form-label" style="width: 80px;">媒体平台</label>
+			<div class="layui-input-inline" style="width: 130px;margin-top: 5px">
+				<select name="MediaWebNameID">
+					<option value="0">媒体平台选择</option>
+					<{volist name="MediaWebNameID" id="val"}>
+					<option value="<{$val.TypeID}>" <{if condition="!empty($UrlParam.MediaWebNameID) && $UrlParam.MediaWebNameID eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+					<{/volist}>
+				</select>
+			</div>
+			<label class="layui-form-label" style="width: 80px;">行业分类</label>
+			<div class="layui-input-inline" style="width: 130px;margin-top: 5px">
+				<select name="MediaIndustryID">
+					<option value="0">行业分类选择</option>
+					<{volist name="MediaIndustryID" id="val"}>
+					<option value="<{$val.TypeID}>" <{if condition="!empty($UrlParam.MediaIndustryID) && $UrlParam.MediaIndustryID eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+					<{/volist}>
+				</select>
+			</div>
+			<label class="layui-form-label" style="width: 80px;">媒体地区</label>
+			<div class="layui-input-inline" style="width: 130px;margin-top: 5px">
+				<select name="MediaCityID">
+					<option value="0">媒体地区选择</option>
+					<{volist name="MediaCityID" id="val"}>
+					<option value="<{$val.TypeID}>" <{if condition="!empty($UrlParam.MediaCityID) && $UrlParam.MediaCityID eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+					<{/volist}>
+				</select>
+			</div>
+			<button class="layui-btn search" type="button" class="layui-btn" id="SearchBut">搜索</button>
+		</div>
+	</blockquote>
+	<table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+</div>
+<!--<script type="text/html" id="toolbarDemo">-->
+<!--<div class="layui-btn-container">-->
+<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>-->
+<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>-->
+<!--<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+<!--</div>-->
+<!--</script>-->
+<script type="text/html" id="DataOperation">
+	<a class="layui-btn layui-btn-xs" lay-event="edit">财务报表</a>
+	<a class="layui-btn layui-btn-xs" lay-event="modify_pwd">修改密码</a>
+	<a class="layui-btn layui-btn-xs" lay-event="modify_wallet">资金调整</a>
+	<a class="layui-btn layui-btn-xs" lay-event="enable">启用</a>
+	<a class="layui-btn layui-btn-xs" lay-event="forbidden">禁用</a>
+	<a class="layui-btn layui-btn-xs" lay-event="userlevel" data-level="{{d.userlevel}}" data-name="{{d.name}}">会员等级</a>
+</script>
+<{include file="public/web_agencyfooter" /}>
+<script>
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var invitecode = $("#invitecode").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getlist')}>'
+            ,where:{keyword:keyword,invitecode:invitecode}
+        });
+    });
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('member')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,cols: [[
+                {field:'MediaWebNameID.New', title:'媒体平台',align:'center', width:130}
+                ,{field:'MediaIndustryID.New', title:'行业分类',align:'center', width:130}
+                ,{field:'MediaCityID.New', title:'媒体地区',align:'center', width:130}
+                ,{field:'MediaWebPrice', title:'平台价格',align:'center',width:103}
+                ,{field:'MediaPrice', title:'成本价格',align:'center', width:130}
+                ,{field:'MediaMemberPrice1', title:'会员价格',align:'center', width:130}
+                ,{field:'MediaMemberPrice2', title:'二级代理商价格',align:'center', width:130}
+                ,{field:'MemberInviteCode', title:'状态',align:'center', width:130}
+                ,{fixed: 'right', title:'操作',align:'center', toolbar: '#DataOperation'}
+            ]]
+            ,limit:20
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next'] //自定义分页布局 ,'limit',  'skip'
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 7 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+        });
+        //监听工具条
+        table.on('tool(DataList)',function(obj) {
+            var data = obj.data;
+            //console.log(data);
+            if (obj.event === 'modify_pwd'){
+                //iframe层-父子操作
+                layer.open({
+                    title:'密码修改',
+                    type: 2,
+                    area: ['500px', '240px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '<{:url('modify_pwd')}>?MemberID='+data.MemberID+'&MemberName='+data.MemberName
+                });
+            } else if (obj.event === 'modify_wallet') {
+                //资金调整
+                layer.open({
+                    type: 2,
+                    title: '资金调整',
+                    maxmin: true,
+                    shadeClose: false, //点击遮罩关闭层
+                    area: ['500px', '240px'],
+                    content: '<{:url('modify_wallet')}>?MemberID='+data.MemberID
+                });
+            } else if(obj.event === 'userlevel'){
+                //iframe层-父子操作
+                layer.open({
+                    title:'会员等级',
+                    type: 2,
+                    area: ['500px', '280px'],
+                    fixed: false, //不固定
+                    maxmin: true,
+                    content: '<{:url('userlevel')}>?MemberID='+data.MemberID
+                });
+            } else if(obj.event === 'edit'){
+                window.location.href='<{:url('topup')}>?MemberID='+data.MemberID;
+            }
+            //会员详情
+            else if(obj.event==='userDetail'){
+                window.location.href='/index.php/fxadmin/user/detail'+'/user_id/'+data.id;
+                //alert(666);
+            }
+            //禁用
+            else if(obj.event==='forbidden'){
+                var MemberID=data.MemberID;
+                $.post('<{:url('forbidden')}>',{MemberID:MemberID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+						});
+					}else{
+                        layer.msg('系统调用错误');
+					}
+                });
+            }
+            //启用
+            else if(obj.event==='enable'){
+                var MemberID=data.MemberID;
+                $.post('<{:url('enable')}>',{MemberID:MemberID},function(data){
+                    if(data=='0'){
+                        layer.msg('操作成功',{time:2000},function(){
+                            location.reload();
+                        });
+                    }else{
+                        layer.msg('系统调用错误');
+                    }
+                });
+            }
+        });
+        //已冻结
+        table.on('tool(user_delete)', function(obj){
+            var data = obj.data;
+            if(obj.event === 'edit'){
+                window.location.href='/index.php/fxadmin/user2/user_detail'+'/id/'+data.user_id;
+            }
+        });
+    });
+</script>

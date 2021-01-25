@@ -1,0 +1,175 @@
+<{include file="public/header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main" /}>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf am-btn-group">
+          <a href="<{:url('agencyorder/member')}>" class="am-btn am-btn-default am-btn-sm">会员媒体列表</a>
+		  <a href="<{:url('weagencyorder/member')}>" class="am-btn am-btn-primary  am-btn-sm">会员自媒体列表</a> 
+		  </div>
+      <hr>
+    </div>
+	<div class="am-g am-hide-sm-only">
+            <div class="am-u-sm-12 am-u-sm-centered">
+ 				  <form action="?" method="get" class="am-form-inline">
+                    <div class="am-form-group">
+                        <label for="title" class="am-form-label am-padding-left" style="white-space: nowrap">标题:</label>
+                        <input type="text" id="title" name="title" value="<{$UrlParam.title|default=''}>" class="am-form-field" autocomplete="off" placeholder="标题">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="ordernum" class="am-form-label am-padding-left" style="white-space: nowrap">订单号:</label>
+                        <input type="text" id="order" name="order" value="<{$UrlParam.order|default=''}>" class="am-form-field" autocomplete="off" placeholder="订单号">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="customer_name" class="am-form-label am-padding-left" style="white-space: nowrap">客户名:</label>
+                        <input type="text" id="article_customer" name="article_customer" value="<{$UrlParam.article_customer|default=''}>" class="am-form-field" autocomplete="off" placeholder="客户名">
+                    </div><br/><br/>
+                    <div class="am-form-group">
+                        <label for="start_time" class="am-form-label am-padding-left" style="white-space: nowrap">起始时间:</label>
+                        <input type="text" id="startdate" name="startdate" value="<{$UrlParam.startdate|default=''}>" class="am-form-field" data-am-datepicker placeholder="start" autocomplete="off">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="end_time" class="am-form-label" style="white-space: nowrap">至:</label>
+                        <input type="text" id="enddate" name="enddate" value="<{$UrlParam.enddate|default=''}>" class="am-form-field" data-am-datepicker placeholder="end" autocomplete="off">
+                    </div>
+                    <div class="am-btn-group am-margin-left-xs">
+
+					<input type="submit" value="搜索" class="am-btn am-btn-primary">
+                     </div>
+                </form>
+            </div>
+            <hr>
+        </div>
+
+
+		<div class="am-g">
+            <div class="am-u-sm-12 am-margin-bottom-xs">
+                <div class="am-btn-group" id="status_change">
+					<a href="/admin.php/weagencyorder/member.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=-1&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="$UrlParam['status'] eq -1"}> am-btn-secondary<{else}>layui-btn-primary<{/if}>">全部</a> 
+					<a href="/admin.php/weagencyorder/member.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=0&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '0'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">待审核</a>
+					<a href="/admin.php/weagencyorder/member.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=1&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '1'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">发布中</a>
+					<a href="/admin.php/weagencyorder/member.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=2&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '2'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">已完成</a>
+					<a href="/admin.php/weagencyorder/member.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=3&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '3'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">已拒稿</a>
+					<a href="/admin.php/weagencyorder/member.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=4&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '4'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">已取消</a>
+                </div>
+            </div>
+        </div>
+
+<div class="am-g">
+  <div class="am-u-sm-12">
+    <div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+      <table id="my_article" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="my_article_info">
+        <thead>
+          <tr role="row">
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 150px;">订单号</th>
+            <th class="sorting_disabled quart_td td250" rowspan="1" colspan="1" style="width: 183px;"><span class="am-hide-sm-only" style="display: inline !important;">文章</span>标题</th>
+            <th class="sorting_disabled quart_td td100" rowspan="1" colspan="1" style="width: 68px;"><span class="am-hide-sm-only" style="display: inline !important;">发布</span>网址</th>
+            <th class="sorting_disabled quart_td td200" rowspan="1" colspan="1" style="width: 140px;"><span class="am-hide-sm-only" style="display: inline !important;">媒体</span>名称</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 60px;">客户</th>
+            <th class="am-hide-sm-only sorting_disabled price_td" rowspan="1" colspan="1" style="width: 60px;">平台价</th>
+			<th class="am-hide-sm-only sorting_disabled price_td" rowspan="1" colspan="1" style="width: 60px;">成交价</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 60px;">状态</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 76px;">提交时间</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 76px;">发布时间</th>
+            <th class="sorting_disabled quart_td last_td" rowspan="1" colspan="1" style="width: 120px;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+		 <{volist name="list" id="v"}>
+          <tr role="row" class="odd">
+            <td class=" am-hide-sm-only"><{$v.order_number}></td>
+            <td class=" quart_td td250"><{$v.article_title}></td>
+            <td class=" quart_td td100">
+			<{if condition="$v.order_state eq 2"}>
+			<a href="<{$v.fabu_site}>" style="color:red;">点击查看</a>
+			<{/if}>
+			<br/>
+			<{$v.fabu_content}>
+			</td>
+            <td class=" quart_td td200"><{$v.media_name}></td>
+            <td class=" am-hide-sm-only"><{$v.article_customer}></td>
+			<td class=" am-hide-sm-only price_td"><{$v.order_moneyaffirm}></td>
+            <td class=" am-hide-sm-only price_td"><{$v.order_money}></td>
+            <td class=" am-hide-sm-only">
+ 			 <{if condition="$v['order_state'] eq 0"}>
+				<sapn style="color:red">待审核</sapn>
+				<{/if}>
+				<{if condition="$v['order_state'] eq 1"}>
+				<sapn style="color:red">发布中</sapn>
+				<{/if}>
+				<{if condition="$v['order_state'] eq 2"}>
+				已发布
+				<{/if}>
+				<{if condition="$v['order_state'] eq 3"}>
+				已退稿
+				<{/if}>
+				<{if condition="$v['order_state'] eq 4"}>
+				已取消
+				<{/if}>
+				 <{if condition="$v['order_state'] eq 5"}>
+				定时发送
+				<{/if}>
+			
+			</td>
+            <td class=" am-hide-sm-only"><{$v.order_time}></td>
+            <td class=" am-hide-sm-only">
+			<{if condition="$v.release_time"}>
+				<{$v.release_time|date="Y-m-d H:i:s",###}>
+			<{else/}>
+				未发布
+			<{/if}>
+			</td>
+            <td class=" quart_td last_td">
+			<!--
+			<span class="opat preview">
+             <a href="/weagencyorder/welook/id/<{$v.article_id}>" target="_blank" title='预览' class="am-btn am-btn-primary am-radius am-btn-xs am-hide-sm-only">预览</a>
+              </span>--->			  
+			  <span class="opat retry">
+			   <a href="<{:url('wearticle/index')}>?State=Yes&ID=<{$v.article_id}>&TempArticleID=<{:md5(mt_rand(100000,999999).'_'.time().'_'.mt_rand(100000,999999))}>" class="am-btn am-btn-success am-radius am-btn-xs">再次发布</a>
+              </span>
+			   </td>
+          </tr>
+		  <{/volist}>
+        </tbody>
+      </table>
+      <div class="clear"></div>
+    </div>
+	<div style="float:right;margin-right:100px;"> <{$list->render()}></div>
+  </div>
+</div>
+
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+    function ExportOrderExcel(Url){
+        var order=$('#order').val();
+        var title=$('#title').val();
+        var startdate=$('#startdate').val();
+        var enddate=$('#enddate').val();
+        location.href=Url+'?order='+order+'&title='+title+'&startdate='+startdate+'&enddate='+enddate;
+    }
+</script>
+<script type="text/javascript">
+ layui.use(['form'], function(){
+ var form = layui.form,$ = layui.jquery;
+ });
+    function OpenWinSeeLink(Con) {
+        layer.open({
+            //closeBtn: 0, //不显示关闭按钮
+            title:'回链查看'
+            ,content: Con
+            ,scrollbar: false
+            ,btn: []
+        });
+    }
+</script>

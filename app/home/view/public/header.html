@@ -1,0 +1,47 @@
+<header>
+	<div class="m-top clearfix">
+		<p class="fl"><a href="<{:url('index/price')}>" style="padding-right:10px;">媒体资源</a>
+		<a href="<{:url('index/wemedia')}>">自媒体资源</a></p>
+		<p class="fr">
+			<{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+			 	<a href="/member.php" style="width: 90px;">会员中心</a>
+			 	<a href="/member.php/login/loginout" class="login">安全退出</a>
+			<{else}>
+				<a href="/member.php" class="login">登录</a>
+				<a href="/member.php/login/index?act=reg" class="reg">注册</a>
+			<{/if}>
+		</p>
+	</div>
+	
+	<div class="top">
+		<div class="wrap clearfix">
+			<h1 class="fl"><a href=""><img src="__STATIC__/home/images/logo.png" alt="<{$Config.WebSiteTitle|default=''}>"></a></h1>
+			<h1 class="m-logo fl"><a href=""><img src="__STATIC__/home/images/m-logo.png" alt="<{$Config.WebSiteTitle|default=''}>"></a></h1>
+			<span class="m-nav_menu fr"><img src="__STATIC__/home/images/nav_menu.png" alt="导航"></span>
+			<div class="m-menubg clearfix fr">
+				<div class="m-menu">
+					<nav class="fl">
+						<ul>
+							<li><a href="/">首页</a></li>
+							<li><a href="<{:url('index/price')}>">媒体资源</a></li>							
+							<li><a href="<{:url('index/wemedia')}>">自媒体资源</a></li>
+							<li><a href="<{:url('index/writer')}>">软文撰写</a></li>
+							<li><a href="<{:url('index/newslist')}>">营销学院</a></li>
+							<li><a href="javascript:;" class="contact-btn">在线客服</a></li>
+						</ul>
+					</nav>
+					<div class="login-reg fr">
+					<{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+					  <a href="/member.php" style="width: 90px;">会员中心</a>
+					  <a href="/member.php/login/loginout" class="login">安全退出</a>
+					  <{else}>
+					<a href="/member.php" class="login">登录</a>
+					<a href="/member.php/login/index?act=reg" class="reg">注册</a>
+					<{/if}>
+					</div>
+				</div>
+				<div class="m-close"></div>
+			</div>
+		</div>
+	</div>
+</header>

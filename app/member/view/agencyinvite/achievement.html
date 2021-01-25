@@ -1,0 +1,82 @@
+<{include file="public/member_header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content"> 
+   <div class="admin-content-body"> 
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">查看推广明细</strong>
+       </div>
+    </div>
+	<hr>
+ <div class="am-g am-hide-sm-only">
+            <div class="am-u-sm-12 am-u-sm-centered">
+ 				  <form action="?" method="get" class="am-form-inline">                    
+                    <div class="am-form-group">
+                        <label for="start_time" class="am-form-label am-padding-left" style="white-space: nowrap">起始时间:</label>
+                        <input type="text" id="startdate" name="startdate" value="<{$UrlParam.startdate|default=''}>" class="am-form-field" data-am-datepicker placeholder="start" autocomplete="off">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="end_time" class="am-form-label" style="white-space: nowrap">至:</label>
+                        <input type="text" id="enddate" name="enddate" value="<{$UrlParam.enddate|default=''}>" class="am-form-field" data-am-datepicker placeholder="end" autocomplete="off">
+                    </div>
+                    <div class="am-btn-group am-margin-left-xs">
+					<input type="submit" value="查询" class="am-btn am-btn-primary">
+                   </div> 
+				    <span class=" layui-btn-mini " style="color:#FF5722;font-size:14px;font-weight: bold;">总充值：￥ <{$countmoney}></span>
+                </form>
+            </div>
+             <hr>
+        </div>
+	<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+  				<table id="list" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="list_info">
+                    <thead>
+					<tr role="row">
+					<th class="sorting_disabled am-hide-sm-only" rowspan="1" colspan="1" style="width: 70px;">邀请码</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 85px;">账户</th>
+ 					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 92px;">充值</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 92px;">备注</th>
+					<th class="sorting_disabled quart_td" rowspan="1" colspan="1" style="width: 92px;">充值时间</th>
+					</tr>
+					</thead>
+                    <tbody>
+					<{volist name="data" id="v"}>
+					<tr role="row" class="odd">
+					<td class=" am-hide-sm-only"><{$v.MemberInviteCode}></td>
+					<td class=" quart_td">
+					<{$v.MemberMobile}>
+					</td>
+					<td class=" quart_td">
+						<font style="color:#FF5722">￥<{$v.BalanceCount}></font>
+					</td>
+					<td class=" quart_td">
+						<{$v.BalanceTitle}>
+					</td>
+					
+ 					<td class=" quart_td">
+					 <{$v.BalanceTime|date="Y-m-d H:i:s",###}>
+					</td>
+					</tr>
+					<{/volist}>
+					</tbody>
+				</table>
+			  <div class="clear"></div>
+			  <div class="bottom">
+				<div style="float:right;margin-right:100px;">
+				<{$page}>	
+				</div>
+			</div>
+			</div>
+		   </div>
+		</div>
+<{include file="public/member_footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+</body>
+</html>

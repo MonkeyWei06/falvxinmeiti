@@ -1,0 +1,199 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get" id='searchform'>
+            <div class="layui-form-item">
+                <div class="layui-form layui-input-inline  radiofile" style="background: #ffffff;width: 528px;">
+                    <input type="radio" name="order_state" value="" title="全部稿件"  <{if condition="isset($UrlParam['order_state']) && $UrlParam['order_state'] === ''"}> checked<{/if}>>
+                    <input type="radio" name="order_state" value="0" title="待审核"  <{if condition="isset($UrlParam['order_state']) && $UrlParam['order_state'] === '0'"}> checked<{/if}>>
+                    <input type="radio" name="order_state" value="1" title="发布中"  <{if condition="isset($UrlParam['order_state']) && $UrlParam['order_state'] === '1'"}> checked<{/if}>>
+                    <input type="radio" name="order_state" value="2" title="已发布"  <{if condition="isset($UrlParam['order_state']) && $UrlParam['order_state'] === '2'"}> checked<{/if}>>
+                    <input type="radio" name="order_state" value="3" title="已退稿"  <{if condition="isset($UrlParam['order_state']) && $UrlParam['order_state'] === '3'"}> checked<{/if}>>
+                    <input type="radio" name="order_state" value="4" title="已取消"  <{if condition="isset($UrlParam['order_state']) && $UrlParam['order_state'] === '4'"}> checked<{/if}>>
+                </div>
+                <label class="layui-form-label" style="width: 80px;">稿件标题</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="稿件标题/编号" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                
+                <label class="layui-form-label" style="width: 80px;">订单编号</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="order_number" placeholder="订单编号" value="<{$UrlParam.order_number|default=''}>" class="layui-input" />
+                </div>
+				<label class="layui-form-label" style="width: 80px;">会员账户</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="mphone" placeholder="会员账户" value="<{$UrlParam.mphone|default=''}>" class="layui-input" />
+                </div>
+                
+                <div class="layui-input-inline">
+                    <input type="text" name="startdate" onclick="WdatePicker();" placeholder="开始时间" value="<{$UrlParam.startdate|default=''}>" class="layui-input" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="enddate" placeholder="结束时间" onclick="WdatePicker();" value="<{$UrlParam.enddate|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+                <button  style="float: right;" class="layui-btn refreshhezi">更新状态</button>
+				<!---
+                <div style="float: right;" class='autopush'>
+                        <b style="font-size: 14px;color:red">是否自动推送：</b>
+                        <input type="radio" class=" layui-form-checkbox" name="autopush" value="1"  <{if condition=" $config.autopush == 1"}> checked<{/if}> title="是">
+                        <input type="radio" class=" layui-form-checkbox" name="autopush" value="0" <{if condition=" $config.autopush == 0"}> checked<{/if}> title="否">
+                </div>
+				-->
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <{$html}>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$list->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>
+<style type="text/css">
+    .layui-btn.disabled{
+        background-color: #333
+    }
+</style>
+<script type="text/javascript">
+    layui.use(['form'], function(){
+        var form = layui.form,$ = layui.jquery;
+        //console.log($('#searchform input[name="order_state"]'))
+        $('.push_order').click(function(){
+            var orderid=$(this).data('id')
+            $.ajax({
+                url:'<{:url('push_hezi')}>',
+                type:'POST',
+                dataType:'json',
+                data:{'orderid':orderid},
+                cache:false,
+                success:function(Result){
+                //alert('配置成功')
+                },
+                complete:function(Result){
+                    window.location.reload()
+                    console.log(Result.responseText)
+                    alert(Result.responseText)
+                }
+            });
+        })
+        /*$('.push_order').click(function(){
+            var orderid=$(this).data('id')
+            $.ajax({
+                url:'<{:url('cancel_hezi')}>',
+                type:'POST',
+                dataType:'json',
+                data:{'orderid':orderid},
+                cache:false,
+                success:function(Result){
+                    //alert('配置成功')
+                },
+                complete:function(Result){
+                    window.location.reload()
+                    console.log(Result.responseText)
+                    alert(Result.responseText)
+                }
+            });
+        })*/
+        $('#searchform .radiofile').click(function(){
+            $('#searchform').submit()
+        })
+        $('.refreshhezi').click(function(){
+            var that=this
+            $(this).addClass('disabled')
+            $.ajax({
+                url:'<{:url('query_hezi')}>',
+                type:'get',
+                dataType:'json',
+                cache:false,
+                success:function(Result){
+                    //alert('配置成功')
+                },
+                complete:function(Result){
+                    //window.location.reload()
+                    console.log(Result.responseText)
+                    alert('更新成功')
+                }
+            });
+        })
+        form.on('click', function(data){
+            //console.log(data.elem); //得到checkbox原始DOM对象
+            //console.log(data.elem.checked); //是否被选中，true或者false
+            //console.log(data.value); //复选框value值，也可以通过data.elem.value得到
+            //console.log(data.othis); //得到美化后的DOM对象
+            SetDownState(data.value);
+        });
+        $('#searchform .autopush').click(function(){
+            $.ajax({
+                url:'<{:url('system/website')}>',
+                type:'POST',
+                dataType:'json',
+                data:{'autopush':$('input[name="autopush"]:checked').val()},
+                cache:false,
+                success:function(Result){
+                    //alert('配置成功')
+                },
+                complete:function(){
+                    window.location.reload()
+                    alert('配置成功')
+                }
+            });
+        })
+    });
+    function SetDownState(ID) {
+        $.ajax({
+            url:'<{:url('ajax/setdownstate')}>',
+            type:'POST',
+            dataType:'json',
+            data:{'ID':ID},
+            cache:false,
+            success:function(Result){}
+        });
+    }
+    function OpenWinSeeLink(Con) {
+        layer.open({
+            //closeBtn: 0, //不显示关闭按钮
+            title:'回链查看'
+            ,content: Con
+            ,scrollbar: false
+            ,btn: []
+        });
+    }
+    function OpenWinSeeContent(Url) {
+        layer.open({
+            title:'内容查看',
+            type: 2,
+            area: ['700px', '550px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content:Url,
+            end: function(){
+                location.reload()
+            }
+        });
+    }
+    $(function(){
+    })
+</script>

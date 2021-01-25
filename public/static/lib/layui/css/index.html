@@ -1,0 +1,136 @@
+<{include file="public/member_header" /}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf am-btn-group">
+          <a href="<{:url('manage/index')}>" class="am-btn am-btn-primary am-btn-sm">交接列表</a>
+		  </div>
+      <hr>
+    </div>
+	<div class="am-g ">
+            <div class="am-u-sm-12 am-u-sm-centered">
+ 				  <form action="?" method="get" class="am-form-inline  am-form-horizontal">
+					<div class="am-form-group">
+                        <label for="jb_user" class="am-form-label am-padding-left" style="white-space: nowrap">生产人:</label>
+                         <select id="jb_user" name="jb_user" class="am-form-field" style="width:12rem;">
+                                <option value="" <{if condition="$UrlParam['jb_user'] eq ''"}> selected<{/if}>>全部人员</option>
+								<{volist name="Jbuser" id="val"}>
+                                <option value="<{$val.TypeName}>" <{if condition="$UrlParam['jb_user'] ==$val.TypeName"}> selected<{/if}>><{$val.TypeName}></option>
+								 <{/volist}>
+                            </select>
+                    </div>
+					<div class="am-form-group">
+                        <label for="jiwei" class="am-form-label am-padding-left" style="white-space: nowrap">机位:</label>
+                         <select id="jiwei" name="jiwei" class="am-form-field" style="width:12rem;">
+                                <option value="" <{if condition="$UrlParam['jiwei'] eq ''"}> selected<{/if}>>全部机位</option>
+								<{volist name="JiweiList" id="val"}>
+                                <option value="<{$val}>" <{if condition="$UrlParam['jiwei'] ==$val"}> selected<{/if}>><{$val}></option>
+								 <{/volist}>
+                            </select>
+                    </div>
+                    <div class="am-form-group">
+                        <label for="start_time" class="am-form-label am-padding-left" style="white-space: nowrap">起始时间:</label>
+                        <input type="text" id="startdate" name="startdate" value="<{$UrlParam.startdate|default=''}>" class="am-form-field" data-am-datepicker placeholder="start" autocomplete="off">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="end_time" class="am-form-label" style="white-space: nowrap">至:</label>
+                        <input type="text" id="enddate" name="enddate" value="<{$UrlParam.enddate|default=''}>" class="am-form-field" data-am-datepicker placeholder="end" autocomplete="off">
+                    </div>
+                    <div class="am-btn-group am-margin-left-xs">
+					<input type="submit" value="搜索" class="am-btn am-btn-primary">
+                     <input type="button" id='exportbtn' onclick="ExportOrderExcel('<{:url('exportorderexcel')}>');"   value="导出订单" class="am-btn am-btn-success" style="margin-left: 16px">
+					 <div class="get_money_pop" style="left: 180px;">结束时间=下一员工开始时间<span class="pop_arrow"></span></div>
+                     </div>	
+					 
+                </form>
+            </div>
+            <hr>
+        </div>
+<div class="am-g">
+  <div class="am-u-sm-12">
+    <div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+      <table id="my_article" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="my_article_info">
+        <thead>
+          <tr role="row">
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 50px;">生产人</th>
+            <th class="sorting_disabled quart_td td250" rowspan="1" colspan="1" style="width: 80px;"><span class="am-hide-sm-only" style="display: inline !important;">机</span>位</th>
+            <th class="sorting_disabled quart_td td100" rowspan="1" colspan="1" style="width: 80px;"><span class="am-hide-sm-only" style="display: inline !important;">材</span>质</th>
+			 <th class="sorting_disabled quart_td td200" rowspan="1" colspan="1" style="width: 80px;"><span class="am-hide-sm-only" style="display: inline !important;">产</span>品</th>
+            <th class="sorting_disabled quart_td td200" rowspan="1" colspan="1" style="width: 60px;"><span class="am-hide-sm-only" style="display: inline !important;">颜</span>色</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 100px;">字模</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">起始数</th>
+			<th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 60px;">次品数</th>
+			<th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 76px;">终止数</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 76px;">成品数</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">起始->结束时间</th>
+			<!--<th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">结束时间</th>--->
+			<th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">生产状态</th>
+            <th class="sorting_disabled quart_td last_td" rowspan="1" colspan="1" style="width: 80px;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+		 <{volist name="list" id="v"}>
+          <tr role="row" class="odd">
+            <td class=" am-hide-sm-only"><{$v.jb_user}></td>
+            <td class=" quart_td td250"><{$v.jiwei}></td>
+            <td class=" quart_td td100"><{$v.caizhi}></td>
+			<td class=" quart_td td100"><{$v.product}></td>
+            <td class=" quart_td td200"><{$v.yanse}></td>
+			 <td class=" quart_td td200"><{$v.zimu}>[<{$v.changjia}>]</td>
+             <td class=" am-hide-sm-only"><{$v.start_num}></td>
+            <td class=" am-hide-sm-only price_td"><{$v.die_num}></td>
+			<td class=" am-hide-sm-only price_td"><{$v.end_num}></td>
+			<td class=" am-hide-sm-only price_td"><{$v.sc_num}></td>
+			<!--<td class=" am-hide-sm-only price_td"><{$v.uptime}></td>--->
+			<td class=" am-hide-sm-only price_td"><b style="color: #0c80ba; font-size:30px;float: right;">↑</b><{$v.downtime}></td>
+
+            <td class=" am-hide-sm-only">
+ 			 <{if condition="$v['endmake'] eq 0"}>			 
+				<span class="am-badge am-badge-success">生产中</span>
+				<{/if}>
+				<{if condition="$v['endmake'] eq 1"}>
+ 				<span class="am-badge am-badge-danger">已停机</span>
+				<{/if}>			
+			</td>
+            <td class=" quart_td last_td">
+			  <span class="opat retry">
+			   <a href="<{:url('/manage/cancel',['id'=>$v.id])}>" class="am-btn am-badge-danger am-radius am-btn-xs" style="color:#fff;">删除</a>
+              </span>
+			   </td>
+          </tr>
+		  <{/volist}>
+        </tbody>
+      </table>
+      <div class="clear"></div>
+    </div>
+	<div style="float:right;margin-right:100px;"> <{$list->render()}>
+	<{if $list->render()}>
+		<ul class="pagination">
+			<li class="disabled"><span><{$list->total()}> 条记录 20条/页</span></li>
+			<li class="disabled"><span> <{$list->currentPage()}>/<{$list->lastPage()}>页</span></li>
+		</ul>
+		<{/if}>
+	</div>
+  </div>
+</div>
+</div>
+<{include file="public/member_footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+    function ExportOrderExcel(Url){
+        var jiwei=$('#jiwei').val();
+		var jb_user=$('#jb_user').val();
+        var startdate=$('#startdate').val();
+        var enddate=$('#enddate').val();
+        location.href=Url+'?jiwei='+jiwei+'&jb_user='+jb_user+'&startdate='+startdate+'&enddate='+enddate;
+    }
+</script>

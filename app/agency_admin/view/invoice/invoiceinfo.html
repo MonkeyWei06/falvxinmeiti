@@ -1,0 +1,126 @@
+<{include file="public/header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">发票查看</strong>
+       </div>
+    </div>
+	<hr>
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<form class="layui-form" id="MyForm" name="userInfo" method="post" >
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票类型</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceTypeName}>" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票明细</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceDetailName}> <{$Info.InvoiceOtherContent}>" class="layui-input" readonly />
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票金额</label>
+							<div class="layui-input-block">
+								<input type="text"  value="<{$Info.InvoiceMoney}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票抬头</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceTitle}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">纳税人识别码</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceCode}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">收货人姓名</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceName}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">收货人手机</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceMobile}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">收货人地址</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceAddress}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">补充说明</label>
+							<div class="layui-input-block">
+								<textarea style="height: 120px;" class="layui-input" readonly><{$Info.InvoiceContent}></textarea>
+							</div>
+						</div>
+						<{if condition="$Info['InvoiceExpress'] neq '0'"}>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">快递名称</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceExpressName}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">快递单号</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceNumber}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<{/if}>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">申请状态</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceStateName}>" readonly class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">申请时间</label>
+							<div class="layui-input-block">
+								<input type="text" value="<{$Info.InvoiceTime|date='Y-m-d H:i:s',###}>" readonly class="layui-input"/>
+							</div>
+						</div>
+					</form>
+				</div>
+			  <div class="clear"></div>
+			</div>
+		   </div>
+		</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+        //监听提交
+        form.on('submit(SaveMemberInfoBut)', function(data){
+            //console.log(data);
+            //SaveMemberInfo(data.field);
+            $('#MyForm').submit();
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

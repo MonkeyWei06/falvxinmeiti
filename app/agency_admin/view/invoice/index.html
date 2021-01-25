@@ -1,0 +1,113 @@
+<{include file="public/header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">我的发票</strong>
+       </div>
+    </div>
+	<hr>
+	<div class="am-g">
+		<div class="am-u-sm-12">
+			<!--检索开始---> 
+			   <div class="am-margin-bottom-xs am-margin-top"> 
+ 				  <div class="am-form-group am-margin-bottom-0"> 
+				   <label class="am-form-label am-u-sm-1" for="search_media">类型：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+						<select id="InvoiceType" name="InvoiceType" class="layui-input">
+							<option value="">请选择</option>
+							<{volist name="InvoiceType" id="val"}>
+							<option value="<{$val.TypeID}>"><{$val.TypeName}></option>
+							<{/volist}>
+						</select>				   
+					</div> 
+				    <label class="am-form-label am-u-sm-1" for="search_media">明细：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+					 <select id="InvoiceDetail" name="InvoiceDetail" class="layui-input">
+                        <option value="">请选择</option>
+                        <{volist name="InvoiceDetail" id="val"}>
+                        <option value="<{$val.TypeID}>"><{$val.TypeName}></option>
+                        <{/volist}>
+                        <option value="999">其他</option>
+                    </select>
+				   </div>
+				    <label class="am-form-label am-u-sm-1" for="search_media">抬头：</label> 
+					<div class="am-u-sm-2 am-padding-horizontal-xs"> 
+					 <input type="text" id="keyword" name="keyword" placeholder="请输入关键字" class="layui-input">
+				   </div>
+				   <div class="am-u-sm-3 "> 
+					<button type="button" id="SearchBut" class="am-btn am-btn-sm am-btn-primary">搜索</button>
+				   </div> 
+ 				</div> 
+			   </div> 
+			   <!--检索结束--->
+		</div>
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+				</div>
+			  <div class="clear"></div>
+			</div>
+		   </div>
+		</div>
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script type="text/html" id="DataOperation">
+        <a class="layui-btn layui-btn-xs" lay-event="see">查看</a>
+    </script>
+<script type="text/javascript">
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var InvoiceType = $("#InvoiceType").val();
+        var InvoiceDetail = $("#InvoiceDetail").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getlist')}>'
+            ,where:{keyword:keyword,InvoiceType:InvoiceType,InvoiceDetail:InvoiceDetail}
+        });
+    });
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('getlist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,cols: [[
+                {field: 'InvoiceType', align: 'center', title: '类型'}
+                ,{field: 'InvoiceDetail', align: 'center', title: '明细'}
+                ,{field: 'InvoiceMoney', align: 'center', title: '金额'}
+                ,{field: 'InvoiceTitle', align: 'center', title: '抬头'}
+                ,{field: 'InvoiceAddress', align: 'center', title: '地址'}
+                ,{field: 'InvoiceTime', align: 'center', title: '时间', width:160}
+                ,{field: 'InvoiceState', align: 'center', title: '状态'}
+                ,{fixed: 'right', title:'操作',align:'center', toolbar: '#DataOperation', width:100}
+            ]]
+            , page: true
+            , limit:20
+        });
+        table.on('tool(DataList)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            //会员详情
+            if(obj.event==='see'){
+                window.location.href='<{:url('invoiceinfo')}>?id='+data.InvoiceID;
+                //alert(666);
+            }
+        });
+    });
+</script>
+</body>
+</html>

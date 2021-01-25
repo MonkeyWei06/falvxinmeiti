@@ -1,0 +1,50 @@
+<{include file="public/admin_header" /}>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>修改<{$MenuName}></legend>
+</fieldset>
+<!---->
+<form class="layui-form layui-form-pane" action="<{:url('edit')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">分类名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="TypeName" size="40" value="<{$Info.TypeName}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">父级节点</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="TypePID">
+                <option value="0">一级分类</option>
+                <{volist name="ParentTypeList" id="val"}>
+                <option value="<{$val.TypeID}>_<{$val.TypeNode}>_<{$val.TypePath}>" <{if condition="$val['TypeID'] eq $Info['TypePID']"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="TypeSort" size="40" value="<{$Info.TypeSort}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item inputTextWidth" pane>
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-input-inline">
+            <input type="radio" name="TypeState" value="1" title="已启用" <{if condition="$Info.TypeState eq 1"}> checked<{/if}>>
+            <input type="radio" name="TypeState" value="0" title="已禁用" <{if condition="$Info.TypeState eq 0"}> checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="TypeID" value="<{$Info.TypeID}>"/>
+        <input type="hidden" name="TypePath" value="<{$Info.TypePath}>">
+        <button class="layui-btn" type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery
+            ,upload = layui.upload;
+    });
+</script>

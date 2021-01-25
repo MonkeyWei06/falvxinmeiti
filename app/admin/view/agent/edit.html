@@ -1,0 +1,237 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>修改</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('edit')}>"  enctype="multipart/form-data" method="post" onsubmit="return AgencyEditSaveInfoCheck();">
+    <!-- <div class="layui-form-item">
+        <label class="layui-form-label"><{$MenuName}>邀请码</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberInviteCode" class="layui-input" onblur="MemberInfoCheck3(this,'<{:url('ajax/MemberInfoCheck3')}>',7);"  value="<{$Info.MemberInviteCode}>" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+        <span id="Msg7State" style="display:none;">1</span>
+    </div> -->
+    <div class="layui-form-item">
+        <label class="layui-form-label">登录账户</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" readonly class="layui-input" value="<{$Info.MemberName}>"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux">不可修改</div>
+        <span id="Msg1State" style="display:none;">1</span>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">公司名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberCompanyName" value="<{$Info.MemberCompanyName}>" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">平台域名</label>
+        <div class="layui-input-inline inputTextWidth">
+            <{if condition="empty($Info.Domain)"}>
+            <input type="text" name="Domain" value="<{$Info.Domain}>" class="layui-input" onblur="MemberInfoCheck(this,'<{:url('ajax/MemberInfoCheck')}>','Domain',5,'<{$Info.MemberID}>');"  />
+            <{else}>
+            <input type="text" value="<{$Info.Domain}>" class="layui-input" disabled/>
+            <input type="hidden" name="DomainState" value="Yes" class="layui-input"/>
+            <{/if}>
+        </div>
+        <div class="layui-form-mid layui-word-aux">一旦注册不可修改</div>
+        <span id="Msg5State" style="display:none;">1</span>
+    </div>
+
+
+	<div class="layui-form-item">
+        <label class="layui-form-label">一级域名</label>
+        <div class="layui-input-inline inputTextWidth">
+            <{if condition="empty($Info.oneDomain)"}>
+            <input type="text" name="oneDomain" value="<{$Info.oneDomain}>" class="layui-input" onblur="MemberInfoCheck(this,'<{:url('ajax/MemberInfoCheck')}>','oneDomain',5,'<{$Info.MemberID}>');"  />
+            <{else}>
+            <input type="text" value="<{$Info.oneDomain}>" class="layui-input" disabled/>
+            <input type="hidden" name="oneDomainState" value="Yes" class="layui-input"/>
+            <{/if}>
+        </div>
+        <div class="layui-form-mid layui-word-aux">一旦注册不可修改</div>
+        <span id="Msg5State" style="display:none;">1</span>
+    </div>
+
+
+
+
+    <div class="layui-form-item" id="OneAgencyShow" <{if condition="$Info.MemberTypeID.Old eq 3"}>style="display: none;"<{/if}>>
+        <label class="layui-form-label">一级代理商</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" class="layui-input" value="<{$Info.MemberOneLevelName|default=''}>" disabled />
+        </div>
+        <div class="layui-form-mid layui-word-aux">不可修改</div>
+        <span id="Msg6State" style="display:none;">6</span>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">所属会员级别</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select disabled>
+                <{volist name="GetMemberTypeList" id="val"}>
+                <option value="<{$val.TypeID}>" <{if condition="!empty($Info.MemberTypeID.Old) && $Info.MemberTypeID.Old eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+        </div>
+        <div class="layui-form-mid layui-word-aux">不可修改</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <select name="MemberPriceType">
+                <{volist name="MemberPriceType" id="val"}>
+                <option value="<{$val.TypeID}>" <{if condition="!empty($Info.MemberPriceType.Old) && $Info.MemberPriceType.Old eq $val.TypeID"}>selected<{/if}>><{$val.TypeName}></option>
+                <{/volist}>
+            </select>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label"><{$MenuName}>密码</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="password" name="MemberPwd" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux">不修改为空即可</div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">确认密码</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="password" name="MemberAffirmPwd" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux">不修改为空即可</div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">真实姓名</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="MemberTrueName" value="<{$Info.MemberTrueName}>" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">联系电话</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" value="<{$Info.MemberMobile}>" onblur="MemberInfoCheck(this,'<{:url('ajax/MemberInfoCheck')}>','MemberMobile',2,'<{$Info.MemberID}>');" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+        <span id="Msg2State" style="display:none;"><{if condition="empty($Info.MemberMobile)"}>1<{else}>0<{/if}></span>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">电子邮箱</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="MemberEmail" value="<{$Info.MemberEmail}>" onblur="MemberInfoCheck(this,'<{:url('ajax/MemberInfoCheck')}>','MemberEmail','3','<{$Info.MemberID}>');" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+        <!--<span id="Msg3State" style="display:none;"><{if condition="empty($Info.MemberEmail)"}>1<{else}>0<{/if}></span>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">联系地址</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="MemberAddress" value="<{$Info.MemberAddress}>" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">在线QQ</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberQQ" value="<{$Info.MemberQQ}>" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">微信号</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="MemberWeiXin" value="<{$Info.MemberWeiXin}>" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label"><{$MenuName}>头像</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="file" name="MemberPicPath" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux">-->
+            <!--<{if condition="$Info['MemberPicPath'] neq ''"}>-->
+            <!--&lt;!&ndash; <a href="<{$UpLoadSeat.$Info.MemberPicPath}>" target="_blank"></a> &ndash;&gt;-->
+            <!--<img class="imgScaleStyle" src="/<{$UpLoadSeat.$Info.MemberPicPath}>"/>-->
+            <!--<{/if}>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">身份证正面</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="file" name="AgentIdentityFront" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux">-->
+            <!--<{if condition="$Info['AgentIdentityFront'] neq ''"}>-->
+            <!--&lt;!&ndash; <a href="<{$UpLoadSeat.$Info.AgentIdentityFront}>" target="_blank"></a> &ndash;&gt;-->
+            <!--<img class="imgScaleStyle" src="/<{$UpLoadSeat.$Info.AgentIdentityFront}>"/>-->
+            <!--<{/if}>-->
+        <!--</div>-->
+    <!--</div>-->
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">身份证背面</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="file" name="AgentIdentityBack" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux">-->
+            <!--<{if condition="$Info['AgentIdentityBack'] neq ''"}>-->
+            <!--&lt;!&ndash; <a href="<{$UpLoadSeat.$Info.AgentIdentityBack}>" target="_blank"></a> &ndash;&gt;-->
+            <!--<img class="imgScaleStyle" src="/<{$UpLoadSeat.$Info.AgentIdentityBack}>"/>-->
+            <!--<{/if}>-->
+        <!--</div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">申请时间</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="AgentApplyTime" value="<{if condition="$Info.AgentApplyTime gt 0"}><{$Info.AgentApplyTime|date="Y-m-d",###}><{/if}>" onclick="WdatePicker()" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">审核状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="AgentAuditState" value="2" title="审核中" <{if condition="$Info.AgentAuditState eq 2"}>checked<{/if}>>
+            <input type="radio" name="AgentAuditState" value="1" title="审核通过" <{if condition="$Info.AgentAuditState eq 1"}>checked<{/if}>>
+            <input type="radio" name="AgentAuditState" value="0" title="审核不通过" <{if condition="$Info.AgentAuditState eq 0"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">审核时间</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<input type="text" name="AgentAuditTime" value="<{if condition="$Info.AgentAuditTime gt 0"}><{$Info.AgentAuditTime|date="Y-m-d",###}><{/if}>" onclick="WdatePicker()" class="layui-input" />-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <!-- <div class="layui-form-item ">
+        <label class="layui-form-label">是否开设平台</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="IsSite" value="1" title="已开设" <{if condition="$Info.IsSite eq 1"}>checked<{/if}>>
+            <input type="radio" name="IsSite" value="0" title="未开设" <{if condition="$Info.IsSite eq 0"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div> -->
+    <!-- <div class="layui-form-item ">
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="MemberState" value="1" title="已启用" <{if condition="$Info.MemberState eq 1"}>checked<{/if}>>
+            <input type="radio" name="MemberState" value="0" title="已禁用" <{if condition="$Info.MemberState eq 0"}>checked<{/if}>>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div> -->
+    <div class="layui-form-item">
+        <input type="hidden" name="MemberID" value="<{$Info.MemberID}>">
+        <input type="hidden" name="MemberName" value="<{$Info.MemberName}>">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery,upload = layui.upload;
+    });
+</script>

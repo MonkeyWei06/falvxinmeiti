@@ -1,0 +1,48 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><{$Config.WebSiteTitle|default=''}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+    <link href="/favicon.ico"  rel="shortcut icon" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/skin/dist/css/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/skin/css/aos.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/skin/css/css.css"/>
+    <script src="__STATIC__/home/skin/js/jquery-1.10.2.js"></script>
+    <script src="__STATIC__/home/skin/dist/js/swiper.min.js"></script>
+    <script src="__STATIC__/home/skin/js/aos.js"></script>
+    <script src="__STATIC__/home/skin/layer/layer.js"></script>
+</head>
+<body>
+<div class="max hezuo" style="padding-top:30px;">
+    <div class="box" style="background:#fff;">
+        <div class="lmt" aos="fade-up" aos-delay="250"> <strong><{$title|default=''}></strong>
+        </div>
+        <div class="neirong">
+            <{$html|default=''}>
+        </div>
+    </div>
+</div>
+<script>
+    AOS.init({
+        easing: 'ease-out-back',
+        duration: 800,
+        once:true
+    });
+    function OpenWin() {
+        layer.open({
+            title:'在线咨询',
+            type: 1,
+            area: ['500px', '240px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '<div style="padding:10px 15px;"><{$Config.WebSiteWXWBContent|default=''}></div>'
+        });
+    }
+</script>
+</body>
+</html>

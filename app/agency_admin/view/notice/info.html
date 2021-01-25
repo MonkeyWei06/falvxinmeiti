@@ -1,0 +1,64 @@
+<{include file="public/web_agencyheader" /}>
+<style type="text/css">
+    .admin-main {margin: 15px;}
+    .layui-form-item .layui-input-inline{ width: 300px;}
+</style>
+<div class="admin-main">
+    <blockquote class="layui-elem-quote">
+        新闻详情
+    </blockquote>
+    <div style="text-align:center;font-size: 30px"><{$info.NewsTitle}></div>
+    <br>
+    <br>
+    <br>
+    <div style="width: 80%;margin-left: 10%;"><{$info.NewsContent}></div>
+    </form>
+</div>
+<{include file="public/web_agencyfooter" /}>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+    });
+</script>
+<script type="text/javascript">
+    function Alipay() {
+        var AliPayType=$('input[name="AliPayType"]:checked').val();
+        if(AliPayType==1){
+            var AliPayAPPID = $('#AliPayAPPID').val();
+            var AliPayPublicKey = $('#AliPayPublicKey').val();
+            var AliPayPrivateKey = $('#AliPayPrivateKey').val();
+            if(AliPayAPPID==undefined || AliPayAPPID==""){
+                alert('APPID不能为空');
+                return false;
+            }
+            if(AliPayPublicKey==undefined || AliPayPublicKey==""){
+                alert('公钥不能为空');
+                return false;
+            }
+            if(AliPayPrivateKey==undefined || AliPayPrivateKey==""){
+                alert('私钥不能为空');
+                return false;
+            }
+        }else if(AliPayType==2){
+            var AliPayBankName = $('#AliPayBankName').val();
+            var AliPayBankWD = $('#AliPayBankWD').val();
+            var AliPayBankNum = $('#AliPayBankNum').val();
+            var AliPayBankPeople = $('#AliPayBankPeople').val();
+            if(AliPayBankName!=""){
+                if(AliPayBankWD==undefined || AliPayBankWD==""){
+                    alert('开户网点不能为空');
+                    return false;
+                }
+                if(AliPayBankNum==undefined || AliPayBankNum==""){
+                    alert('银行卡号不能为空');
+                    return false;
+                }
+                if(AliPayBankPeople==undefined || AliPayBankPeople==""){
+                    alert('持卡人不能为空');
+                    return false;
+                }
+            }
+        }
+        $('#MyForm').submit();
+    }
+</script>

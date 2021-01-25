@@ -1,0 +1,46 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>添加</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('add')}>"  enctype="multipart/form-data" method="post">
+    <!--<div class="layui-form-item">-->
+        <!--<label class="layui-form-label">会员选择</label>-->
+        <!--<div class="layui-input-inline inputTextWidth">-->
+            <!--<select name="InviteMemberID">-->
+                <!--<option value="0">会员选择</option>-->
+                <!--<{volist name="MemberList" id="val"}>-->
+                <!--<option value="<{$val.MemberID}>"><{$val.MemberName}></option>-->
+                <!--<{/volist}>-->
+            <!--</select>-->
+        <!--</div>-->
+        <!--<div class="layui-form-mid layui-word-aux"></div>-->
+    <!--</div>-->
+    <div class="layui-form-item">
+        <label class="layui-form-label">邀请码</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InviteCode" size="40" onblur="InviteCodeCheck(this,'<{:url('ajax/InviteCodeCheck')}>');" class="layui-input"/>
+        </div>
+        <span id="MsgState" style="display:none;">1</span>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">推广者</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="InviteName" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="InviteState" value="1" title="已启用" checked>
+            <input type="radio" name="InviteState" value="0" title="已禁用">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

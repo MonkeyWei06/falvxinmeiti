@@ -1,0 +1,18 @@
+<a href="#" class="am-icon-btn am-icon-th-list am-show-sm-only admin-menu" data-am-offcanvas="{target: '#admin-offcanvas'}"></a>
+<script>
+ //流程切换
+    $("#tabs>div").on("click",function(){
+        var index=$(this).index();
+        $(this).addClass("active").siblings().removeClass("active");
+        $("#process").children(".img:eq("+index+")").show().siblings().hide();
+    });
+	//滚动时 ueditor的nav浮动
+    $(".content-article").scroll(function () {
+        var toolbar = $("#edui1_toolbarbox");
+        if ($("#edui1").offset().top < 60) {
+            toolbar.offset({top: 60}).css({zIndex: 9999});
+        } else {
+            toolbar.css({position: "relative", top: 0}).prev("div").remove();
+        }
+    });
+</script>

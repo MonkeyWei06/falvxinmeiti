@@ -1,0 +1,227 @@
+<{include file="public/header"}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		<div class="page-content">
+		  <div class="page-content-area">
+		  <link rel="stylesheet" href="__STATIC__/activity/css/activ.css">
+				<section class="cj">
+					<div class="w1200 clearfix">
+						<div class="fll">
+							<h5>为了回馈广大平台客户的信任与支持，特举行充值抽奖活动</h5>
+							<div class="shanDeng" id="deng">
+								<div id="lottery" prize_site=0>
+									<table cellspacing="10">
+										<tr>
+											<td class="w-opacity"></td>
+											<td class="lottery-unit lottery-unit-0"><img src="/static/activity/images/1.png"></td>
+											<td class="lottery-unit lottery-unit-1"><img src="/static/activity/images/2.png"></td>
+										</tr>
+										<tr>
+											<td class="lottery-unit lottery-unit-7"><img src="/static/activity/images/11.png"></td>
+											<td rowspan="2" colspan="2"><a href="javascript:;"><img src="/static/activity/images/buttonUp.png" alt=""></a></td>
+											<td class="lottery-unit lottery-unit-2"><img src="/static/activity/images/4.png"></td>
+										</tr>
+										<tr>
+											<td class="lottery-unit lottery-unit-6"><img src="/static/activity/images/6.png"></td>
+											<td class="lottery-unit lottery-unit-3"><img src="/static/activity/images/8yuan.png"></td>
+										</tr>
+										<tr>
+											<td class="w-opacity"></td>
+											<td class="lottery-unit lottery-unit-5"><img src="/static/activity/images/12.png"></td>
+											<td class="lottery-unit lottery-unit-4"><img src="/static/activity/images/8.png"></td>
+										</tr>
+									</table>
+								</div>
+							</div>
+							<img src="/static/activity/images/zp_wallet.png" class="wallet"/>
+							<img src="/static/activity/images/zp_juan.png" class="juan"/>
+							<div class="ppTxt">你还可以抽 <span id="count" class="count"><{$drawcount}></span> 次，<a href="<{:url('/activity/mygift')}>" id="myPrizes">我的奖品</a></div>
+						</div>
+					</div>
+				</section>
+				<!-- 没有抽奖机会,去充值 -->
+				<div class="shadow" style="display:none;" id="noChange">
+					<div class="popupDiv noChange">
+						<div class="closeBtn"></div>
+						<h6 class="title">您当前没有抽奖机会啦</h6>
+						<div class="ppTxts">充值每满1000元即可抽奖一次，<br/>百分百中奖哦！</div>
+						<a class="chargeBtn" href="<{:url('/agencyfund/recharge')}>">立即充值</a>
+					</div>
+				</div>
+
+				<!-- 恭喜你，中奖啦 -->
+				<div class="shadow" style="display:none;" id="winning">
+					<div class="popupDiv winning">
+						<div class="closeBtn"></div>
+						<div class="ppTxts">获得&nbsp;<span id="prizeName">奖品名称</span>！</div>
+						<div class="tipsTxts">请在我的奖品查看!</div>
+						<a class="viewPrizeBtn" href="javascript:void(0);">确定</a>
+					</div>
+				</div>
+
+				<!-- 公共文字提示框 -->
+				<div class="shadow" id="errorPopup" style="display:none;">
+					<div class="popupDiv txtpopup">
+						<div class="closeBtn"></div>
+						<div class="texts">提示信息</div>
+					</div>
+				</div>
+				<input type="hidden" id="__token__" value="">
+		  </div>
+		</div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/footer" /}>
+<script>
+    var gift_arry=["0","1","2","3","4","5","6","7"];
+    var gift_name="";
+    var myIndex=-1;
+    var giftName_arry=["666元充值红包","2元充值红包","5元充值红包","8元充值红包","10元充值红包","66元充值红包","188元充值红包","高档汝瓷茶具一套"]
+    var click=false;
+
+    var flag=false;//控制是否让抽奖
+
+    //抽奖start
+    var lottery = {
+        index: 0, //当前转动到哪个位置，起点位置
+        count: 0, //总共有多少个位置
+        timer: 0, //setTimeout的ID，用clearTimeout清除
+        speed: 20, //初始转动速度
+        times: 0, //转动次数
+        cycle: 24, //转动基本次数：即至少需要转动多少次再进入抽奖环节
+        prize: 0, //中奖位置
+        init: function(id) {
+            if ($("#" + id).find(".lottery-unit").length > 0) {
+                $lottery = $("#" + id);
+                $units = $lottery.find(".lottery-unit");
+                this.obj = $lottery;
+                this.count = $units.length;
+                $lottery.find(".lottery-unit-" + this.index).addClass("active");
+            }
+        },
+        roll: function() {
+            var index = this.index;
+            var count = this.count;
+            var lottery = this.obj;
+            $(lottery).find(".lottery-unit-" + index).removeClass("active");
+            index += 1;
+            if (index > count - 1) {
+                index = 0;
+            }
+            $(lottery).find(".lottery-unit-" + index).addClass("active");
+            this.index = index;
+            return false;
+        },
+        stop: function(index) {
+            this.prize = index;
+            return false;
+        }
+    };
+
+    function roll() {
+        lottery.times += 1;
+        lottery.roll();
+        var prize_site =$("#lottery").attr("prize_site");
+        var tips = '';
+        if (lottery.times > lottery.cycle + 10 && lottery.index == prize_site) {
+            $("#prizeName").html(giftName_arry[prize_site]);
+                tips = "红包已发放";
+            $(".tipsTxts").html(tips);
+            $("#winning").show();
+            //
+            //alert("前端中奖位置："+prize_site+"\n"+"中奖名称："+giftName_arry[prize_site]);
+            clearTimeout(lottery.timer);
+            lottery.prize = -1;
+            lottery.times = 0;
+            click = false;
+            //抽奖次数
+            let num=$("#count").text();
+            if(num>=1){
+                $("#count").text(num-1);
+            }
+			
+        } else {
+            if (lottery.times < lottery.cycle) {
+                lottery.speed -= 10;
+            } else if (lottery.times == lottery.cycle) {
+                var index = Math.random() * (lottery.count) | 0;
+                lottery.prize = index;
+            } else {
+                if (lottery.times > lottery.cycle + 10 && ((lottery.prize == 0 && lottery.index == 7) || lottery.prize == lottery.index + 1)) {
+                    lottery.speed += 110;
+                } else {
+                    lottery.speed += 20;
+                }
+            }
+            if (lottery.speed < 40) {
+                lottery.speed = 40;
+            }
+            lottery.timer = setTimeout(roll, lottery.speed);
+        }
+        return false;
+    }
+
+    var click = false;
+
+    $(function() {
+        lottery.init('lottery');
+        $("#lottery a").click(function() {
+            if (click) {
+                return false;
+            } else {
+				 let num=$("#count").text();
+				 if (num<=0)
+				 {
+					$("#noChange").show();
+					return false;
+				 }
+                lottery.speed = 100;
+				//roll();
+                // click = true;
+				// return false;
+				 $.post("/admin.php/activity/drawaction/", function(data) { 
+				//获取奖品，也可以在这里判断是否登陆状态
+                    if(data.code == 200){						
+                        prize_site =gift_arry[data.data.key];
+                       //gift_type = data.data.gift_type;
+                        $("#lottery").attr("prize_site", prize_site);
+                       //$("#lottery").attr("gift_type", gift_type);
+                        roll();
+                        click = true;
+						
+                    }else{
+                        if(data.code == 201){
+                            errorPop(data.msg);
+                        }else if(data.code == 202){
+                            $("#noChange").show();
+                        }
+                    }
+                    return false;
+                }, "json")
+				
+            }
+        });
+		
+    })
+    //抽奖end
+
+//关闭弹框
+$(".closeBtn,.viewPrizeBtn").on("click",function(){
+    $(".shadow").hide();
+});
+
+//错误信息提示
+function errorPop(text){
+    $("#errorPopup").show();
+    $("#errorPopup .txtpopup .texts").html(text);
+}
+</script>
+</body>
+</html>

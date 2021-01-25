@@ -1,0 +1,71 @@
+<div class="am-cf admin-main">
+  <!-- content start -->
+  <div class="admin-content">
+ 	<div class="admin-content-body">
+		<div class="page-content">
+		  <div class="page-content-area" style="margin-left: 3%;" >
+			 <form class="layui-form" id="form" enctype="multipart/form-data" method="post" action="<{:url('add')}>">
+				<div class="layui-form-item">
+					<label class="layui-form-label">图片上传</label>
+					<div class="layui-input-inline">
+						<input type="file" value="选择图片" name="image" id="image1"   lay-verify="required" autocomplete="off" />尺寸：1920*572像素
+					</div>
+				</div>
+				<div class="layui-form-item">
+				<label class="layui-form-label">图片名称</label>
+				<div class="layui-input-inline">
+					<input type="text" name="pictures_name" lay-verify="required" autocomplete="off"  class="layui-input">
+				</div>
+			</div>
+				<div class="layui-form-item">
+				<label class="layui-form-label">排序</label>
+				<div class="layui-input-inline">
+					<input type="text" name="pictures_sort" value="0" lay-verify="required" autocomplete="off"  class="layui-input">
+				</div>
+				</div>
+				<div class="layui-form-item">
+					<label class="layui-form-label">状态</label>
+					<div class="layui-input-inline">
+						<input type="radio" name="pictures_state" value="1"class="layui-input"  title="开启"  checked>
+						<input type="radio" name="pictures_state" value="0"  title="关闭" class="layui-input">
+					</div>
+				</div>
+				<div class="layui-form-item">
+					<div class="layui-input-block">
+						<button class="layui-btn" lay-submit="" lay-filter="SubmitBut">立即提交</button>
+					</div>
+				</div>
+			</form>
+		  </div>
+		</div>
+    </div>
+  </div>
+  <!-- content end -->
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use(['form'], function(){
+        var form = layui.form,layer = layui.layer;
+        //监听提交
+        form.on('submit(SubmitBut)', function(data){
+            //console.log(data);
+            SaveMemberInfo(data.field);
+            return false;
+        });
+    });
+    function SaveMemberInfo(Data) {
+        if(Data.image==undefined || Data.image==""  || Data.image=="0"){
+            layer.msg('请选择上传图片');
+            return false;
+        }
+        if(Data.pictures_name==undefined || Data.pictures_name=="" ){
+            layer.msg('请填写图片名称');
+            return false;
+        }
+        $('#form').submit();
+    }
+</script>
+</body>
+</html>

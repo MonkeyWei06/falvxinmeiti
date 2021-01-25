@@ -1,0 +1,104 @@
+<{include file="public/admin_header" /}>
+<body>
+<div id="dcWrap">
+    <{include file="public/admin_left" /}>
+    <div id="dcMain">
+        <!-- 当前位置 -->
+        <div id="urHere">
+            <a href="<{:url('/admin')}>">系统管理中心</a>
+            <b>></b>
+            <strong><{$MenuName}>管理</strong>
+        </div>
+        <div class="mainBox" style="height:auto!important;height:550px;min-height:550px;">
+            <h3><a href="<{:url('add')}>" class="actionBtn add">添加<{$MenuName}></a><{$MenuName}>列表</h3>
+            <div class="filter">
+                <form action="<{:url('index')}>" method="get">
+                    <!--<select name="cat_id">
+                        <option value="0">未分类</option>
+                        <option value="1"> 公司动态</option>
+                        <option value="2"> 行业新闻</option>
+                    </select>-->
+                    关键字：
+                    <input name="key" type="text" class="inpMain" value="<{$Key}>" size="20" />
+                    <input class="btnGray" type="submit" value="搜索" />
+                </form>
+            </div>
+            <div id="list">
+                <form id="MyForm" method="post">
+                    <table width="100%" border="0" cellpadding="8" cellspacing="0" class="tableBasic">
+                        <tr>
+                            <th width="22" align="center">
+                                <input type='checkbox' onclick='AllSelectFun(this)'>
+                            </th>
+                            <th width="40" align="center">编号</th>
+                            <th align="center">排序</th>
+                            <th align="center">会员名称</th>
+                            <th align="center">充值/消费标题</th>
+                            <th align="center">操作类型</th>
+                            <th align="center">金额</th>
+                            <th align="center">账户余额</th>
+                            <th width="80" align="center">是否显示</th>
+                            <th width="80" align="center">添加时间</th>
+                            <th width="80" align="center">操作</th>
+                        </tr>
+                        <{volist name="List" id="val"}>
+                        <tr>
+                            <td align="center" width="10">
+                                <input type="checkbox" name="DelID[]" value="<{$val.BalanceID}>" />
+                            </td>
+                            <td align="center" width="10"><{$val.BalanceID}></td>
+                            <td align="center" width="10">
+                                <input type="text" name="Sort[<{$val.BalanceID}>]" value="<{$val.BalanceSort}>" class="inpMain" size="5">
+                            </td>
+                            <td align="left">
+                                <{$val.MemberName}>
+                            </td>
+                            <td align="left">
+                                <{$val.BalanceTitle}>
+                            </td>
+                            <td align="left">
+                                <!--<{$val.BalanceType.Old}>-->
+                                <{$val.BalanceType.New}>
+                            </td>
+                            <td align="left">
+                                <{$val.BalanceCount}>
+                            </td>
+                            <td align="left">
+                                <{$val.BalanceCurrentCount}>
+                            </td>
+                            <td align="center">
+                                <{if condition="$val.BalanceState eq 1"}>
+                                    显示
+                                <{else /}>
+                                    禁用
+                                <{/if}>
+                            </td>
+                            <td align="center">
+                                <{$val.BalanceTime}>
+                            </td>
+                            <td align="center">
+                                <a href="<{:url('del',['id'=>$val.BalanceID])}>">删除</a>
+                            </td>
+                        </tr>
+                        <{/volist}>
+                    </table>
+                    <div class="action">
+                        <select id="OperationType">
+                            <option value="0">请选择...</option>
+                            <option value="MoreDel" data-url="<{:url('del')}>">批量删除</option>
+                            <option value="MoreSort" data-url="<{:url('sort')}>">批量排序</option>
+                        </select>
+                        <input class="btn" type="button" value="执行" onclick="OperationExecute();" />
+                    </div>
+                    <div class="pager">
+                        总记录数：<{$List->total()}>记录
+                        每页<{$List->listRows()}>条记录
+                        当前<{$List->currentPage()}>/<{$List->lastPage()}>页
+                        <{$List->render()}>
+                    </div>
+                </form>
+            </div>
+            <div class="clear"></div>
+        </div>
+    </div>
+    <{include file="public/admin_footer" /}>

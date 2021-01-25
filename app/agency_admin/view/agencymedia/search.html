@@ -1,0 +1,154 @@
+<{include file="public/web_agencyheader" /}>
+<style type="text/css">
+	.admin-main {margin: 15px;}
+	.layui-table-cell{display:table-cell;height:auto;vertical-align:middle;white-space:normal;padding:0;}
+</style>
+<form class="layui-form" id="MyForm" method="post">
+	<div class="admin-main">
+		<blockquote class="layui-elem-quote layui-text">
+			资源管理/资源列表
+		</blockquote>
+		<label class="layui-form-label">媒体名称</label>
+		<div class="layui-span" style="float:left;">
+			<input type="text" id="media_name" placeholder="媒体名称" class="layui-input">
+		</div>
+		<button type="button" style="margin-left: 10px" class="layui-btn" id="normal_sbtn">搜索</button>
+		<style>
+			.levelpre{ float: left;margin-left: 10px;}
+		</style>
+		<table class="layui-hide" id="DataList" lay-filter="test"></table>
+		<!--<script type="text/html" id="toolbarDemo">-->
+		<!--<div class="layui-btn-container">-->
+		<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckData">获取选中行数据</button>-->
+		<!--<button class="layui-btn layui-btn-sm" lay-event="getCheckLength">获取选中数目</button>-->
+		<!--<button class="layui-btn layui-btn-sm" lay-event="isAll">验证是否全选</button>-->
+		<!--</div>-->
+		<!--</script>-->
+	</div>
+</form>
+<{include file="public/web_agencyfooter" /}>
+<script>
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var invitecode = $("#invitecode").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getlist')}>'
+            ,where:{keyword:keyword,invitecode:invitecode}
+        });
+    });
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('getlist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,cols: [[
+                {field: 'pdlx', align: 'center', title: '频道类型'}
+                //, {field: 'mtmc', align: 'center', title: '综合门户媒体'}
+                , {field: 'MediaTitle', align: 'center', title: '媒体名称'}
+                //, {field: 'city', align: 'center', title: '所在区域'}
+                , {field: 'xwy', align: 'center', title: '新闻源'}
+                // , {field: 'rkjb', align: 'center', title: '入口级别'}
+                , {field: 'ljlx', align: 'center', title: '链接类型'}
+                , {field: 'MediaMemberPrice1',  align: 'center', title: '游客价格'}
+                , {field: 'MediaMemberPrice2',  align: 'center', title: '大侠价格'}
+                , {field: 'MediaMemberPrice3', align: 'center', title: '掌门价格'}
+                , {field: 'MediaMemberPrice4',  align: 'center', title: '盟主价格'}
+//                , {field: 'MediaMemberPrice5', width: '6%', align: 'center', title: 'v4会员价格'}
+                , {field: 'cgl', align:'center',title: '出稿率',templet:'#contributionrate_nameTpl'}
+//                , {field: 'ad', width: '6%', align: 'center', title: '显示状态', templet: "#proscenium_typeTpl" }
+//                , {
+//                    field: 'special_industry',
+//                    width: '8%',
+//                    align: 'center',
+//                    title: '可发媒体',
+//                    templet: '#special_industryTpl'
+//                }
+//                , {fixed: 'right', width: '8%', align: 'center', toolbar: '#barDemo'}
+            ]]
+            , page: true
+            ,limit:20
+        });
+        table.on('tool(test)', function (obj) { //注：tool是工具条事件名，test是table原始容器的属性 lay-filter="对应的值"
+            var data = obj.data; //获得当前行数据
+            var layEvent = obj.event; //获得 lay-event 对应的值（也可以是表头的 event 参数对应的值）
+            var tr = obj.tr; //获得当前行 tr 的DOM对象
+            // 删除 事件操作
+            if (layEvent === 'del') {
+                layer.confirm('真的删除么', function (index) {
+                    layer.close(index);
+                    var  selecttype = $("#status").val();
+                    var  medaid =  data.id;
+                    table.reload('test',{
+                        url: '/index.php/fxadmin/media/deleteproscenium.html',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            selecttypetype: selecttype,
+                            medaid: medaid
+                        }
+                    });
+                    $("#checkdiv").data('on', false);
+                    $("#checkdiv").attr('checked',  false );
+                    if( selecttype == '0'){
+                        $("#delbtn").css('display',"none");
+                        $("#addbtn").css('display',"block");
+                    }else if( selecttype == '1' ){
+                        $("#delbtn").css('display',"block");
+                        $("#addbtn").css('display',"none");
+                    }else if( selecttype == 'all'){
+                        $("#delbtn").css('display',"block");
+                        $("#addbtn").css('display',"block");
+                    }
+                });
+            }
+            // 添加 事件操作
+            if (layEvent === 'edit') {
+                layer.confirm('真的添加么', function (index) {
+                    layer.close(index);
+                    var  selecttype = $("#status").val();
+                    var  medaid =  data.id;
+                    table.reload('test',{
+                        url: '/index.php/fxadmin/media/addproscenium.html',
+                        where: { //设定异步数据接口的额外参数，任意设
+                            selecttypetype: selecttype,
+                            medaid: medaid
+                        }
+                    });
+                    $("#checkdiv").data('on', false);
+                    $("#checkdiv").attr('checked', false );
+                    if( selecttype == '0'){
+                        $("#delbtn").css('display',"none");
+                        $("#addbtn").css('display',"block");
+                    }else if( selecttype == '1' ){
+                        $("#delbtn").css('display',"block");
+                        $("#addbtn").css('display',"none");
+                    }else if( selecttype == 'all'){
+                        $("#delbtn").css('display',"block");
+                        $("#addbtn").css('display',"block");
+                    }
+                });
+            }
+        });
+    });
+    <!--时间插件-->
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+        laydate.render({
+            elem: '#date1'
+        });
+        laydate.render({
+            elem: '#date2'
+        });
+    });
+    //搜索
+    //1.展示中
+    $("#normal_sbtn").click(function () {
+        //媒体名称
+        var media_name = $("#media_name").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('getlist')}>'
+            //接口的其他参数
+            , where: { media_name: media_name}
+        });
+    });
+</script>

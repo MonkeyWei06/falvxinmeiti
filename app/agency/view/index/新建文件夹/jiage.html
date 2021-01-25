@@ -1,0 +1,299 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><{$Config.WebSiteTitle|default=''}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+    <link href="/favicon.ico"  rel="shortcut icon" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/lib/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/lib/swiper/swiper.min.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/lib/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/agency/home/css/css.css"/>
+    <script src="__STATIC__/lib/jquery-1.10.2.js"></script>
+    <script src="__STATIC__/lib/layui/layui.js"></script>
+    <script src="__STATIC__/lib/aos/aos.js"></script>
+    <script src="__STATIC__/lib/layer/layer.js"></script>
+    <style type="text/css">
+        .pagination li{float:left;}
+        .pagination li.active span{background-color: #017cf9; color: #fff; font-weight: bold;}
+    </style>
+</head>
+<body>
+<div class="max top">
+    <div class="box"> <span class="left">您好 <{$SessionMemberName|default=''}>，欢迎光临，<{$Config.WebSiteName|default=''}>！</span>
+        <div class="right">
+            <p><span>咨询热线：</span><strong><{$Config.WebSitePhone|default=''}></strong></p>
+            <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+            <a href="/member.php" style="width: 90px;">会员中心</a>
+            <a href="/member.php/login/loginout" style="width: 90px;">安全退出</a>
+            <{else}>
+            <a href="/member.php/login/index?act=reg">注册</a>
+            <a href="/member.php" class="login">登录</a>
+            <{/if}>
+        </div>
+    </div>
+</div>
+<div class="max header">
+    <div class="box">
+        <a href="<{:url('/')}>" class="left logo">
+            <{if condition="!empty($Config['WebSiteLogo'])"}>
+            <img src="<{$Config['WebSiteLogo']}>" width="181" height="54">
+            <{/if}>
+            <img src="__STATIC__/agency/home/images/slogan.png">
+        </a>
+        <div class="right nav">
+            <ul>
+                <li><a href="<{:url('/')}>">首页</a></li>
+                <li><a href="<{:url('jiage')}>">媒体价格</a></li>
+                <li><a href="jacascript::void(0);" onclick="OpenWin();">微信</a></li>
+                <li><a href="jacascript::void(0);" onclick="OpenWin();">微博</a></li>
+                <li><a href="<{:url('about')}>">关于我们</a></li>
+                <div class="denglu">
+                    <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+                    <a href="/member.php/member" style="width: 90px;">会员中心</a>
+                    <a href="/member.php/member/login/loginout" class="login">安全退出</a>
+                    <{else}>
+                    <a href="/member.php/login/index?act=reg">注册</a>
+                    <a href="/member.php" class="login">登录</a>
+                    <{/if}>
+                </div>
+            </ul>
+            <div class="close"></div>
+        </div>
+        <div class="nav_menu"></div>
+    </div>
+</div>
+<div class="max hezuo">
+    <div class="box jiage">
+        <div class="lmt" aos="fade-up" aos-delay="250"> <strong>— 媒体价格 —</strong>
+            <p>THE MEDIA PRICE</p>
+        </div>
+        <div class="jiage_box">
+            <div class="jiage_jiansuo">
+                <div class="jiange_li"> <span class="leiming">频道类型：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaWebNameID'])"}>class="active"<{/if}>><a href="<{:url('jiage',array_merge($UrlParam,['MediaWebNameID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaWebNameID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaWebNameID']) && $UrlParam['MediaWebNameID'] eq $val.TypeID"}>class="active"<{/if}>><a href="<{:url('jiage',array_merge($UrlParam,['MediaWebNameID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">门户媒体：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaIndustryID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaIndustryID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaIndustryID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaIndustryID']) && $UrlParam['MediaIndustryID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaIndustryID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">覆盖区域：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaCityID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaCityID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaCityID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaCityID']) && $UrlParam['MediaCityID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaCityID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">链接类型：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaUrlTypeID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaUrlTypeID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaUrlTypeID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaUrlTypeID']) && $UrlParam['MediaUrlTypeID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaUrlTypeID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">发稿速度：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaSpeedID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaSpeedID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaSpeedID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaSpeedID']) && $UrlParam['MediaSpeedID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaSpeedID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">新闻源：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaNewsSourceID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaNewsSourceID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaNewsSourceID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaNewsSourceID']) && $UrlParam['MediaNewsSourceID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaNewsSourceID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">周末可发：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaCanSendID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaCanSendID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaCanSendID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaCanSendID']) && $UrlParam['MediaCanSendID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaCanSendID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">特别行业：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaSpecialIndustryID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaSpecialIndustryID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaSpecialIndustryID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaSpecialIndustryID']) && $UrlParam['MediaSpecialIndustryID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaSpecialIndustryID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">收录情况：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaSituationID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaSituationID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaSituationID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaSituationID']) && $UrlParam['MediaSituationID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaSituationID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+                <div class="jiange_li"> <span class="leiming">入口级别：</span>
+                    <ul>
+                        <li <{if condition="empty($UrlParam['MediaInLevelID'])"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaInLevelID'=>'','page'=>'']))}>">全部</a></li>
+                        <{volist name="MediaInLevelID" id="val"}>
+                        <li <{if condition="!empty($UrlParam['MediaInLevelID']) && $UrlParam['MediaInLevelID'] eq $val.TypeID"}>class="active"<{/if}>><a  href="<{:url('jiage',array_merge($UrlParam,['MediaInLevelID'=>$val.TypeID,'page'=>'']))}>"><{$val.TypeName}></a></li>
+                        <{/volist}>
+                    </ul>
+                </div>
+            </div>
+            <div class="jiage_sousuo">
+                <div class="left">
+                    <ul>
+                        <li class="active"><a href="<{:url('index/jiage')}>" style="color:#ffffff;">媒体查找</a></li>
+                        <li style="display: none;">今日推荐</li>
+                        <li style="display: none;">今日新增</li>
+                        <li class="scj" style="margin-left: 20px;">
+                            <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+                            <a href="<{:url('jiage',['collect'=>'list'])}>">收藏夹</a>
+                            <{else}>
+                            <a href="javascript:layer.msg('请先登录！');">收藏夹</a>
+                            <{/if}>
+                        </li>
+                        <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+                        <!-- <li class="scj" style="margin-left: 20px;">
+                            <a href="javascript:void(0);" onclick="ExportExcel('<{:url('exportexcel',array_merge($UrlParam,['page'=>'']))}>');" style="color:#000000;">导出Excel</a>
+                        </li> -->
+                        <{/if}>
+                    </ul>
+                </div>
+                <div class="right">
+                    <a class="excel_dc" href="<{:url('index/jiage')}>" style="padding: 0 10px;">全部媒体查看</a>
+                    <button id="export_btn" class="excel_dc" style="display: none;">导出Excel</button>
+                    <form class="am-form am-form-horizontal" action="<{:url('index/jiage')}>">
+                        <label class="am-form-label am-u-sm-4 am-padding-right-0" for="search_media">媒体名称：</label>
+                        <input class="text" id="search_media" value="<{$Key}>" type="text" placeholder="请输入媒体名称" autocomplete="off" name="key" onchange="GetChangeValue(this);">
+                        <button type="submit" id="search_btn" class="am-btn am-btn-sm am-btn-primary">搜索</button>
+                    </form>
+                </div>
+                <div class="clearit"></div>
+            </div>
+            <div class="ruanwen-list">
+                <p class="zyhd">←左右滑动查看更多→</p>
+                <div class="table_box">
+                    <table class="layui-table">
+                        <colgroup>
+                            <col width="100">
+                            <col width="200">
+                            <col>
+                        </colgroup>
+                        <thead>
+                        <tr>
+                            <th style="width:50px; padding:10px 0; text-align: center;">频道类型</th>
+                            <th style="width:100px; padding:10px 0; text-align: center;">媒体名称</th>
+                            <th style="width:60px; padding: 10px 0; text-align: center;">游客</th>
+                            <th style="width:60px; padding: 10px 0; text-align: center;">大侠</th>
+                            <th style="width:80px; padding: 10px 0; text-align: center;">掌门</th>
+                            <th style="width:60px; padding: 10px 0; text-align: center;">出稿率</th>
+                            <th style="width:80px; padding: 10px 0; text-align: center;">电脑权重<span class="tips tips_ico" data-tips="以爱站提供数据为标准，仅供参考"></span></th>
+                            <th style="width:80px; padding: 10px 0; text-align: center;">移动权重<span class="tips tips_ico" data-tips="移动以爱站提供数据为标准，仅供参考"></span></th>
+                            <th style="width:80px; padding: 10px 0; text-align: center;">新闻源<span class="tips tips_ico" data-tips="仅供参考"></span></th>
+                            <th style="width:100px; padding: 10px 0; text-align: center;">链接情况<span class="tips tips_ico" data-tips="仅供参考，不可带网址一般指不可带任何联系方式"></span></th>
+                            <th style="padding: 10px 0; text-align: center;">备注</th>
+                            <th style="width:50px; padding: 10px 0; text-align: center;">收藏</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <{volist name="List" id="val"}>
+                        <tr>
+                            <td><{$val.TypeName2}></td>
+                            <td class="td200">
+                                <a href="<{$val.MediaCaseUrl}>" target="_blank"><{$val.MediaTitle}></a>
+                                <{if condition="!empty($val.MediaInUrl)"}>
+                                <a href="<{$val.MediaInUrl}>" target="_blank" class="tips" data-tips="入口仅供参考" style="color:red;">入口</a>
+                                <{/if}>
+                            </td>
+                            <td class="price_td"><{$val.MemberLevelPrice}></td>
+                            <td><{$val.MemberLevelPrice2}></td>
+                            <td>
+                               代理可见
+                            </td>
+                            <td><{$val.ChuGaoLv}>%</td>
+                            <td><img src="__STATIC__/agency/home/images/baidu<{$val.WebUrl}>.png"></td>
+                            <td><img src="__STATIC__/agency/home/images/baidu<{$val.MobileUrl}>.png"></td>
+                            <td><{$val.TypeName5}></td>
+                            <td><{$val.TypeName6}></td>
+                            <td class="td250"><{$val.MediaContent}></td>
+                            <td>
+                                <span onclick="collectFun('<{:url('Index/collect')}>','<{$val.MediaID}>',this);" class="layui-icon <{if condition="empty($val['CollectState'])"}>layui-icon-rate<{else}>layui-icon-rate-solid<{/if}>" style="cursor: pointer; color: #ff0505;"></span>
+                            </td>
+                        </tr>
+                        <{/volist}>
+                        </tbody>
+                    </table>
+                </div>
+                <div id="demo0">
+                    <div class="layui-box layui-laypage layui-laypage-default" id="layui-laypage-1">
+                        <{$List->render()}>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    AOS.init({
+        easing: 'ease-out-back',
+        duration: 800,
+        once:true
+    });
+    function GetChangeValue(Obj){
+        if(Obj.value==""){
+            location.href="<{:url('jiage')}>";
+        }
+    }
+    function OpenWin() {
+        layer.open({
+            title:'在线咨询',
+            type: 1,
+            area: ['500px', '240px'],
+            fixed: false, //不固定
+            maxmin: true,
+            content: '<div style="padding:10px 15px;"><{$Config.WebSiteWXWBContent|default=''}></div>'
+        });
+    }
+    function ExportExcel(Url) {
+        if(Url.indexOf('?')==-1){
+            var UrlStr=Url+'?jump=yes';
+        }else{
+            var UrlStr=Url+'&jump=yes';
+        }
+        $.ajax({
+            type: "get",
+            url: UrlStr,
+            dataType: "json",
+            success: function(data) {
+                if(data == '1') {
+                    layer.msg('导出的数据为空');
+                    return false;
+                }else if(data == '2') {
+                    layer.msg('请先登录再进行导出');
+                    return false;
+                }else{
+                    location.href=Url;
+                }
+            }
+        });
+    }
+</script>
+<script src="http://www.meijiehome.com/static/home/skin/js/js.js"></script>
+</body>
+</html>

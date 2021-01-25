@@ -1,0 +1,97 @@
+<{include file="public/header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">财务报表</strong>
+       </div>
+    </div>
+	<hr>
+	<div class="am-g">
+		<div class="am-u-sm-12">
+			<!--检索开始---> 
+			<blockquote class="layui-elem-quote">
+				<div class="layui-form-item">
+					<label class="layui-form-label">订单号：</label>
+					<div class="layui-input-inline">
+						<input type="text" id="keyword" placeholder="请输入关键字" class="layui-input">
+					</div>
+					<label class="layui-form-label">时间：</label>
+					<div class="layui-input-inline">
+						<input type="text" id="startdate" lay-verify="date" placeholder="请输入开始" class="layui-input">
+					</div>
+					<div class="layui-input-inline">
+						<input type="text" id="enddate" lay-verify="date" placeholder="请输入结束" class="layui-input">
+					</div>
+					<button class="layui-btn search" type="button" class="layui-btn" id="SearchBut">搜索</button>
+				</div>
+			</blockquote>			     
+			   <!--检索结束--->
+		</div>
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+				</div>
+			  <div class="clear"></div>
+			</div>
+		   </div>
+		</div>
+</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    $("#SearchBut").click(function(){
+        var keyword=$("#keyword").val();
+        var startdate = $("#startdate").val();
+        var enddate = $("#enddate").val();
+        layui.table.reload('DataList', {
+            url: '<{:url('gettopuplist')}>'
+            ,where:{MemberID:<{$MemberID}>,keyword:keyword,startdate:startdate,enddate:enddate}
+        });
+    });
+    layui.use(['table','laydate'], function(){
+        var table = layui.table
+			,laydate = layui.laydate;
+        //日期
+        laydate.render({
+            elem: '#startdate'
+        });
+        laydate.render({
+            elem: '#enddate'
+        });
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('gettopuplist')}>?MemberID=<{$MemberID}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '财务报表'
+            ,cols: [[
+                {field:'BalanceNumber', title:'订单号',align:'center', width:'20%'}
+                ,{field:'BalanceCount', title:'交易金额',align:'center', width:'20%'}
+                ,{field:'BalanceTitle', title:'交易说明',align:'center', width:'20%'}
+				,{field:'BalancePayState', title:'交易状态',align:'center', width:'20%'}
+                ,{field:'BalanceTime', title:'交易时间',align:'center'}
+            ]]
+            ,limit:20
+            ,page: { //支持传入 laypage 组件的所有参数（某些参数除外，如：jump/elem） - 详见文档
+                layout: ['count', 'prev', 'page', 'next'] //自定义分页布局 ,'limit',  'skip'
+                //,curr: 5 //设定初始在第 5 页
+                ,groups: 7 //只显示 1 个连续页码
+                ,first: false //不显示首页
+                ,last: false //不显示尾页
+            }
+        });
+    });
+</script>
+</body>
+</html>

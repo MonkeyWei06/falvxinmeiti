@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/mobile/css/base.css"/>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/mobile/css/swiper.min.css"/>
+	<link rel="stylesheet" type="text/css" href="__STATIC__/home/mobile/css/costom.css"/>
+	<script src="__STATIC__/home/mobile/js/flexible.js" type="text/javascript" charset="utf-8"></script>
+</head>
+<body>
+<!-- 弹窗充值 -->
+	<div class="recharge-container" style="display: block;">
+		<div class="recharge-img">
+		<{volist name=":GetMPoster(139,1)" id="vl"}>		
+			<a href="<{$vl.PosterUrl}>" target="_top"><img src="/uploads/<{$vl.PosterPicPath}>" alt=""></a>
+		<{/volist}>
+		</div>
+		<{if condition="$is_myquesstion"}>
+		<{if condition="!$order_true"}>
+		<form class="layui-form" action="<{:url('/index.php/alipay')}>" enctype="multipart/form-data" id="payForm" method="post"  target="_top">
+		<div class="title-price">
+			此题<{if condition="$tp eq 'skin1'"}>答案<{else if condition="$tp eq 'skin2'"}>解析<{/if}>查看<br><span id="price">￥<{if condition="$tp eq 'skin1'"}><{$info.solutionprice}><input type="hidden" name="solutionprice" value="<{$info.solutionprice}>"/><{else if condition="$tp eq 'skin2'"}><{$info.analysisprice}><input type="hidden" name="analysisprice" value="<{$info.analysisprice}>"/><{/if}></span>元
+		</div>
+		<ul class="payment-list">
+
+			<{if condition="$BalanceCount >= $money"}>
+			<li class="payment-item clearfix" id="li3" onclick="li3()">
+				<div class="payment-name">
+					<img src="__STATIC__/home/pc/images/weixinzhifu.png" class="payment-img" alt="余额支付">
+					<p class="payment-title">余额支付 [可用余额：<{$BalanceCount}>]</p>
+					<input type="radio" name="payment_name" value="yezf" checked id="payment_name3" style="display:none;" />
+				</div>
+				<div class="change-btn fr active" id="yezf" value="3"></div>
+			</li>
+			<{/if}>
+			<{if condition="empty($SessionMemberID)"}>
+			<li class="payment-item" id="li1" onclick="li1()">
+				<div class="payment-name">
+					<img src="__STATIC__/home/mobile/images/zhifubao.png" class="payment-img" alt="支付宝支付">
+					<p class="payment-title">支付宝支付</p>
+					<input type="radio" name="payment_name" checked value="alipay" id="payment_name1" style="display:none;" />
+				</div>
+				<div class="change-btn active" id="zfb" value="1"></div>
+			</li>
+			<{else}>
+			<li class="payment-item" id="li1" onclick="li1()">
+				<div class="payment-name">
+					<img src="__STATIC__/home/mobile/images/zhifubao.png" class="payment-img" alt="支付宝支付">
+					<p class="payment-title">支付宝支付</p>
+					<input type="radio" name="payment_name" value="alipay" id="payment_name1" style="display:none;" />
+				</div>
+				<div class="change-btn" id="zfb" value="1"></div>
+			</li>
+			<{/if}>
+
+			<li class="payment-item clearfix" id="li2" onclick="li2()">
+				<div class="payment-name">
+					<img src="__STATIC__/home/mobile/images/weixinzhifu.png" class="payment-img" alt="微信支付">
+					<p class="payment-title">微信支付</p>
+					<input type="radio" name="payment_name" value="wxpay" id="payment_name2" style="display:none;" />
+				</div>
+				<div class="change-btn" id="wxpay" value="2"></div>
+			</li>
+		</ul>
+		<input type="hidden" name="tp" id="tp" value="<{$tp}>"/>
+		<input type="hidden" name="qid" id="qid" value="<{$info.id}>"/>
+		<input type="hidden" name="randtoken" id="randtoken" value="<{$Request.token}>" />		
+		<div class="confirm-payment" id="submitbt">立即支付</div>
+		<div class="payment-tips">郑重提醒：在线充值/支付后，不支持退款</div>
+	</form>
+	<input type="hidden" name="order" id="order" value=""/>
+	<input type="hidden" name="qsid" id="qsid" value="<{$info.id}>"/>
+	<{else}>
+		<div class="confirm-payment" id="closep">
+			<span id="payment-tips">已购买过此订单(点击关闭后查看)</span>
+		</div>
+	<{/if}>
+	<{else}>
+		<div class="confirm-payment">
+			<span id="payment-tips">不能查看自己发布的试题</span>
+		</div>
+	<{/if}>
+	</div>
+	<script src="__STATIC__/home/mobile/js/jquery.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__STATIC__/home/mobile/js/swiper.min.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__STATIC__/home/mobile/js/costom.js" type="text/javascript" charset="utf-8"></script>
+	<script src="__STATIC__/home/pc/js/layer/layer.js" type="text/javascript" charset="utf-8"></script>
+<script type="text/javascript">
+		jQuery("#submitbt").click(function(){
+			var from = $('#payForm');
+			var tp=$("#tp").val();
+			var qid=$("#qid").val();
+			var paymentype = $('.payment-list input[name="payment_name"]:checked ').val();
+			var randtoken=$("#randtoken").val();
+ 			if(paymentype=="wxpay"){
+				var winRef = window.open("", "_blank");//打开一个新的页面
+				$.ajax({
+				  type: 'POST',
+				  url: '<{:url('index/wxpay')}>',//发送请求
+				  data: {id:qid,tp:tp,payment_name:paymentype,randtoken:randtoken},
+				  //dataType : "html",
+				  success: function(result) {
+					  var htmlCont = result;//返回的结果页面
+					  if(result.code==0){
+						 layer.msg(result.info);
+					  }else if(result.code==200){
+						$("#order").val(result.info.order_number);
+							function loc(){
+								winRef.location = result.info.mwebUrl;//改变页面的 location
+							}
+							setTimeout(loc(),800);//这个等待很重要，如果不等待的话将无法
+					  } else if(result.code==202) {
+							layer.msg(result.info,{icon:2,time:500},function() {
+								parent.layer.close(1);
+							});
+					  }
+					}
+				});
+			}else if(paymentype=="alipay"){
+				from.submit();
+			}else if(paymentype=="yezf"){
+				$.ajax({
+				  type: 'POST',
+				  url: '<{:url('index/yezf')}>',//发送请求
+				  data: {id:qid,tp:tp,payment_name:paymentype,randtoken:randtoken},
+				  success: function(result) {
+					  var htmlCont = result;//返回的结果页面
+					  if(result.code==0){
+						 layer.msg(result.info);
+					  }else if(result.code==200){
+						layer.msg(result.info,{icon:2,time:500},function() {
+							window.open(result.url);
+							var index = parent.layer.getFrameIndex(window.name);
+							parent.layer.close(index); //再执行关闭
+                        });
+					  }else if(result.code==202){
+						layer.msg(result.info);
+					  }
+					}
+				});
+			}
+		});
+	/*********************************/
+		function discheck(){
+			const radioList=$(":radio");
+			for(let radio in radioList){
+				radio.checked=false;
+			}
+		}
+		$("#li1").on("click",function(){
+			discheck();
+			let input=document.getElementById("payment_name1");
+			input.checked =true;
+			$("#zfb").addClass('active');
+			$("#wxpay").removeClass('active');
+			$("#yezf").removeClass('active');
+		})
+		$("#li2").on("click",function(){
+			discheck();
+			let input=document.getElementById("payment_name2");
+			input.checked =true;
+				$("#zfb").removeClass('active');
+				$("#wxpay").addClass('active');
+				$("#yezf").removeClass('active');
+		})
+		$("#li3").on("click",function(){
+			discheck();
+			let input=document.getElementById("payment_name3");
+			input.checked =true;
+				$("#zfb").removeClass('active');
+				$("#wxpay").removeClass('active');
+				$("#yezf").addClass('active');
+		})
+		$("#closep").on("click",function(){
+			var index = parent.layer.getFrameIndex(window.name);
+			parent.layer.close(index); //再执行关闭
+		});
+	</script>
+</body>
+</html>

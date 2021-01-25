@@ -1,0 +1,42 @@
+ <div class="admin-sidebar am-offcanvas" id="admin-offcanvas">
+    <div class="am-offcanvas-bar admin-offcanvas-bar">
+      <ul class="am-list admin-sidebar-list">
+         <li class="admin-parent">
+          <a class="am-cf" data-am-collapse="{target: '#collapse-nav1'}"><span class="am-icon-user"></span> 个人中心 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+          <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav1">
+            <li><a href="<{:url('member/recharge')}>" class="am-cf"><span class="am-icon-rmb"></span> 我要充值</a></li>
+            <li><a href="<{:url('balance/index')}>"><span class="am-icon-table"></span> 财务报表</a></li>
+			<li><a href="<{:url('agencyinvite/index')}>"><span class="am-icon-table"></span> 邀请码</a></li>
+          </ul>
+        </li>
+		 <li class="admin-parent">
+          <a class="am-cf" data-am-collapse="{target: '#collapse-nav2'}"><span class="am-icon-book"></span> 软文发布 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+          <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav2">
+            <li><a href="<{:url('article/index')}>" class="am-cf"><span class="am-icon-pencil-square-o"></span> 发布稿件</a></li>
+            <li><a href="<{:url('order/index')}>"><span class="am-icon-list"></span> 稿件列表</a></li>
+          </ul>
+        </li>
+		<li class="admin-parent">
+          <a class="am-cf" data-am-collapse="{target: '#collapse-nav5'}"><span class="am-icon-book"></span> 问题反馈 <span class="am-icon-angle-right am-fr am-margin-right"></span></a>
+          <ul class="am-list am-collapse admin-sidebar-sub am-in" id="collapse-nav5">
+            <li><a href="<{:url('feedback/add')}>" class="am-cf"><span class="am-icon-plus"></span> 添加反馈</a></li>
+
+			<li><a href="<{:url('feedback/messagelist')}>" class="am-cf"><span class="am-icon-list"></span> 反馈列表</a></li>
+           </ul>
+        </li>
+       </ul>
+		<{if condition="$AgencySiteInfo.Domain =='-1'"}> 
+      <div class="am-panel am-panel-default admin-sidebar-panel">
+        <div class="am-panel-bd">
+          <p><span class="am-icon-bookmark"></span> 咨询</p>
+          <span>合作加盟:279976115 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=279976115&site=qq&menu=yes"><img border="0" src="/static/img/qq.gif"></a></span>
+		  <br>
+		   <span>业务咨询:99431499 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=99431499&site=qq&menu=yes"><img border="0" src="/static/img/qq.gif"></a></span>
+		    <br>
+		    <span>技术支持:1227187938 <a target="_blank" href="http://wpa.qq.com/msgrd?v=3&uin=1227187938&site=qq&menu=yes">
+			<img border="0" src="/static/img/qq.gif"></a></span>
+        </div>
+      </div>
+	  <{/if}>
+    </div>
+  </div>

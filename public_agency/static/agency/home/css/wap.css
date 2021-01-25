@@ -1,0 +1,292 @@
+html,body{
+	min-width: 100%;
+}
+.wrap{
+	width: 96%;
+}
+.header-main .logo{
+	margin:20px 0;
+	padding:0 10px;
+}
+.header-main figure{
+	display: none;
+}
+.login-reg{
+	padding-top: 0px;
+}
+.login-reg a{
+	margin-left: 0;
+	line-height: 25px;
+	height: 25px;
+	float: none;
+	margin-top: 12px;
+}
+nav .wrap{
+	width: 100%;
+}
+nav ul{
+	display: flex;
+	flex-direction: row;
+}
+nav ul li{
+	flex:1;height: 30px;
+	line-height: 30px;
+	font-size: 16px;
+}
+.banner{
+	height: 137px;
+}
+.banner .swiper-slide{
+	background-size: 100%!important;
+	height: 137px;
+}
+.banner-text{
+	width: 100%;
+	top:0;
+	left:0;
+	margin-left:0;
+	text-align: center;
+}
+.banner-text .c1 {
+    font-size: 16px;
+    line-height: 30px;
+    padding-top: 15px;
+}
+.banner-text .c2 {
+    font-size: 14px;
+    line-height: 30px;
+    padding: 5px 0;
+}
+.banner-text .c3 {
+    font-size: 14px;
+}
+.media-resources{
+	padding:20px 0;
+}
+.index-title .en{
+	font-size: 22px;
+	line-height: 30px;
+}
+.index-title h3{
+	font-size: 22px;
+}
+.media-resources .subtitle{
+	font-size: 16px;
+}
+.media-resources .media-list{
+	margin-top:20px;
+}
+.media-resources .media-list li{
+	width: 31%;
+	margin:0 1% 5% 1%;
+	height: 114px;
+}
+.media-resources .media-list li img{
+	width: 100%;
+	height: 114px;
+}
+.our-advantages{
+	padding:20px 0;
+}
+.advantages-con{
+	padding-top: 0;
+}
+.advantages-con li{
+	width: 100%;
+	margin:0 0 20px 0;
+}
+.successful-case{
+	height: auto;
+	padding-bottom: 20px;
+	height: 580px;
+}
+.successful-case .case-con{
+	padding-top: 0;
+}
+.successful-case .case-con .swiper-wrapper{
+	height: auto;
+}
+.successful-case .case-con .swiper-slide{
+	width: 100%!important;
+	padding:0;
+}
+.successful-case .case-con .swiper-slide figure{
+	width: 100%;
+	border: 3px solid #2961b9;
+	height: 182px;
+}
+.successful-case .case-con .swiper-slide figure img{
+	width: 100%;
+	height: 182px;
+}
+.successful-case .case-con .swiper-slide .title{
+	padding-top: 20px;
+	font-size: 18px;
+}
+.successful-case .case-con .swiper-slide .text{
+	font-size: 14px;
+	line-height: 26px;
+	height: 156px;
+}
+.successful-case .case-con .swiper-pagination{
+	display: none;
+}
+.successful-case .case-con .swiper-button-prev, 
+.successful-case .case-con .swiper-button-next{
+	display: none;
+}
+.successful-case .case-con .swiper-slide .web-site{
+	width: 100%;
+}
+.successful-case .case-con .swiper-slide .web-site a{
+	width: 15%;
+	overflow: hidden;
+}
+.strategic-partners{
+	padding:20px 0;
+}
+.strategic-partners-con{
+	padding-top: 0px;
+}
+.strategic-partners-con figure{
+	width: 30.6%;
+	margin:0 1% 2% 1%;
+	height: 42px;
+}
+.strategic-partners-con figure img{
+	width: 100%;
+	height: 42px;
+}
+.reg-member{
+	background: none;
+	height: auto;
+}
+.reg-member-con{
+	margin-left: 0;
+	text-align: center;
+	width: 100%;
+	padding-top: 0;
+}
+.reg-member .c1{
+	font-size: 16px;
+}
+.reg-member .c2{
+	font-size: 18px;
+	line-height: 30px;
+}
+.reg-member a{
+	margin:20px auto;
+}
+
+
+/* 媒体资源 */
+.inside-meiti{
+	width: 96%;
+	padding-top: 20px;
+}
+.meiti-search{
+	width: 94%;
+	padding:0 3%;
+	height: 40px;
+}
+.meiti-search .inptext{
+	width: 85%;
+	line-height: 40px;
+}
+.ipt_button{
+	width: 40px;
+	height: 40px;
+}
+.meiti-search-condition{
+	padding:10px;
+	margin-top: 20px;
+}
+.meiti-search-condition .condition ul{
+	margin-left: 0;
+}
+.meiti-search-condition .condition ul li{
+	padding: 0 5px;
+    margin-right: 5px;
+    line-height: 26px;
+    height: 26px;
+}
+.selectBox{
+	display: block;
+	margin-left: 0;
+}
+.selectBox .unit{
+	margin-bottom: 10px
+}
+.selectBox .unit ul{
+	width: 105%;
+}
+.tabBtn{
+	margin:20px 0;
+	display: flex;
+	flex-direction: row;
+}
+.tabBtn a{
+	flex: 1;
+	padding:0 10px;
+}
+.m-zyhd{
+	display: block;
+    width: 100%;
+    height: 40px;
+    margin-top: 20px;
+    line-height: 40px;
+    text-align: center;
+    font-size: 14px;
+    color: red; 
+}
+.table_box {
+    overflow-x: auto;
+}
+.dataTables_jump{
+	display: none;
+}
+.mtzy_bottom{
+	background-size: 100%;
+	height: 62px;
+}
+/* 关于我们 */
+.inside-content{
+	padding-top: 20px;
+}
+.inside-title h3{
+	font-size: 24px;
+	line-height: 30px;
+}
+.inside-title .en{
+	font-size: 24px;
+	line-height: 30px;
+}
+.inside-info{
+	margin:20px 5px 5px 5px;
+	padding:15px;
+}
+
+footer{
+	padding:20px 0 40px 0!important;
+}
+footer .footer-tel p{
+	font-size: 16px;
+	line-height: 30px;
+}
+footer .wb-wx, footer .copyright{
+	line-height: 30px;
+}
+
+.page{
+	width: 100%;
+	margin-top:20px;
+}
+.page .pagination li a,
+.page .pagination li.active,
+.page .pagination li.disabled span{
+	font-size: 12px;
+	padding:0 5px;
+	line-height: 20px;
+	height: 20px;
+	margin:0 3px;
+}

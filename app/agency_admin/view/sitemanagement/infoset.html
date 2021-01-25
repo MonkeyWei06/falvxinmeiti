@@ -1,0 +1,173 @@
+<{include file="public/header"}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+       <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">站点信息管理</strong>
+            </div>
+    </div>
+	<hr>
+	<div class="am-g">
+	  <div class="am-u-sm-12">
+		<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+				  <form id="MyForm" class="layui-form" method="post" enctype="multipart/form-data">
+					<div class="layui-form-item">
+						<label class="layui-form-label">站点名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteName" id="WebSiteName" lay-verify="required" value="<{$info.WebSiteName|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">站点标题</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteTitle" id="WebSiteTitle" lay-verify="required" value="<{$info.WebSiteTitle|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">站点关键字</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteKeyword" id="WebSiteKeyword" lay-verify="required" value="<{$info.WebSiteKeyword|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">站点描述</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteDescription" id="WebSiteDescription" lay-verify="required" value="<{$info.WebSiteDescription|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">站点LOGO</label>
+						<div class="layui-input-block">
+							<input type="file" name="WebSiteLogo" id="WebSiteLogo" value="<{$info.WebSiteLogo|default=""}>" autocomplete="off"  class="layui-input" style="float:left; width:50%;">
+							<div class="layui-form-mid layui-word-aux" style=" padding:2px 0!important; margin-left: 10px;">
+							<{if condition="!empty($info['WebSiteLogo']) && $info['WebSiteLogo'] neq ''"}>
+							<!--预览http://www.rwj.com/uploads/20181114/5273652e87ca912eba1910cca4a60b21.jpg-->
+							<!--<a href="<{$info.WebSiteLogo}>" target="_blank">-->
+							<img class="imgScaleStyle" src="<{$info.WebSiteLogo}>" width="34" height="34" />
+							<!--</a>-->
+							<{/if}>
+							尺寸：181*54像素
+						</div>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">公司名称</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteCompanyName" id="WebSiteCompanyName" lay-verify="required" value="<{$info.WebSiteCompanyName|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">咨询热线</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSitePhone" id="WebSitePhone" lay-verify="required" value="<{$info.WebSitePhone|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">售后电话</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteAfterSalePhone" id="WebSiteAfterSalePhone" lay-verify="required" value="<{$info.WebSiteAfterSalePhone|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">公司地址</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteAddress" id="WebSiteAddress" lay-verify="required" value="<{$info.WebSiteAddress|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">服务QQ</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteQQ" id="WebSiteQQ" lay-verify="required" value="<{$info.WebSiteQQ|default=""}>" autocomplete="off"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">公司邮箱</label>
+						<div class="layui-input-block">
+							<input type="text" name="WebSiteEmail" id="WebSiteEmail" lay-verify="required" value="<{$info.WebSiteEmail|default=""}>" autocomplete="off" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">写稿设置</label>
+						<div class="layui-input-block">
+							<input name="WebSiteWXWBContent" id="WebSiteWXWBContent" placeholder="价格之间用英文逗号分隔,如：100,150,200,250,300 共5个级别"  value="<{$info.WebSiteWXWBContent|default=""}>" lay-verify="required" placeholder="" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">版权信息</label>
+						<div class="layui-input-block">
+							<textarea name="WebSiteCopyright" id="WebSiteCopyright" lay-verify="required" placeholder="" class="layui-textarea"><{$info.WebSiteCopyright|default=""}></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label">关于我们</label>
+						<div class="layui-input-block">
+							<textarea id="WebSiteAbout" name="WebSiteAbout" lay-verify="required" style="height: 400px;width: 100%;"><{$info.WebSiteAbout|default=""}></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<button class="am-btn am-btn-primary" lay-submit="" lay-filter="SaveMemberInfoBut">立即提交</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		  <div class="clear"></div>
+		</div>
+	   </div>
+	</div>
+</div>
+<{include file="public/footer"}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    var ue = UE.getEditor('WebSiteAbout');
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+            //监听提交
+            form.on('submit(SaveMemberInfoBut)', function(data){
+                //SaveMemberInfo(data.field);
+                $('#MyForm').submit();
+                return false;
+            });
+    });
+    function SaveMemberInfo(Data) {
+        $.ajax({
+            url:'<{:url('infoset')}>',
+            type:'POST',
+            dataType:'json',
+            data:Data,
+            cache:false,
+            success:function(Result)
+            {
+                if(Result=='1'){
+                    layer.msg('提交成功');
+                    return false;
+                }else{
+                    layer.msg(Result);
+                    return false;
+                }
+            }
+        });
+    }
+    $(".imgScaleStyle").on('click',function(){
+        var Src=$(this).attr('src');
+        layer.open({
+            type: 1,
+            title: false,
+            closeBtn: 1,
+            area: ['300px', 'auto'],
+            skin: 'layui-layer-nobg',
+            shadeClose: true,
+            content: '<img src="'+Src+'" style="width: 300px;">'
+        });
+    });
+</script>
+</body>
+</html>

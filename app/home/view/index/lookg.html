@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><{$Info.articletitle|default=''}></title>
+    <style>
+        .container{width: 600px;margin: 20px auto;position: relative;border: 1px solid #ccc;box-shadow: 0 1px 3px #aaa;background-color: #fff;padding: 14px}
+        .container img{max-width: 600px !important;}
+        .title{line-height: 40px;font-size: 24px;text-align: center;color: #333}
+        .line{margin-top: 30px;border-bottom: 2px solid #08A5E0;position: relative}
+        .content{margin: 20px 0;line-height: 200%;font-size: 16px;word-wrap: break-word}
+        .contact{border: 1px solid #e6e6e6;height: 38px;line-height: 38px;}
+        .contact label{width: 100px;text-align: right;display: inline-block;background: #FBFBFB;padding-right: 5px;box-sizing: border-box;border-right: 1px solid #e6d6d6;margin-right: 10px}
+        .copy-wrap{border: 1px solid #e6e6e6;}
+        .copy-title{border-bottom: 1px solid #e6e6e6;height: 38px;line-height: 38px;background: #FBFBFB;text-align: center}
+        .copy-area>div{line-height: 38px;margin: 0;border-bottom: 1px solid #e6e6e6;overflow: hidden;padding-left: 26px}
+        .copy-area>div:last-child{border-bottom: 0}
+        .copy-area label{width: 100px;text-align: right;display: inline-block;padding-right: 5px;box-sizing: border-box;margin-right: 10px;float: left;height: 100%}
+        .copy-area img{max-width: 400px}
+        #copy{width: 100px;height: 38px;border: 0;outline: 0;background: #fd6340;line-height: 38px;font-size: 16px;color: #fff;cursor: pointer}
+        #tips{position: absolute;top: 150px;left: 0;right: 0;margin: auto;width: 150px;height: 38px;line-height: 38px;background-color: rgba(0,0,0,.6);color: #fff;font-size: 16px;text-align: center;z-index: -666;opacity: 0;transition: opacity linear .3s}
+        #tips.show{opacity: 1;z-index: 666}
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="title"><{$Info.articletitle|default=''}></div>
+    <div class="line"></div>
+    <div class="content">
+        <div class="copy-wrap">
+            <div>原标题： <{$Info.articletitle|default=''}></div>
+            <div>媒体：<{$Info.media_name|default='' }></div>
+            <div>查看网址：<{$Info.fabu_site}><br><{$Info.fabu_content}></div>
+            <div class="copy-title">修改意见：</div>
+            <div id="copy_area" class="copy-area">
+                <div>
+                 <p><{$Info.changedc}></p>
+				 </div>
+            </div>
+        </div>
+    </div>
+    <div style="text-align: center"><button id="copy">复制</button></div>
+</div>
+<div id="tips"></div>
+<script src="/static/home/js/clipboard.min.js"></script>
+<script>
+    function showTips(str) {
+        var tips = document.getElementById('tips');
+        tips.innerHTML = str;
+        tips.className = 'show';
+        setTimeout(function () {
+            tips.className = '';
+        },2000)
+    }
+    var clipboard = new ClipboardJS('#copy', {
+        target: function() {
+            return document.getElementById('copy_area');
+        }
+    });
+    clipboard.on('success', function(e) {
+        showTips("复制成功");
+    });
+
+    clipboard.on('error', function(e) {
+        showTips("<span style='color: #f00'>失败</span>");
+    });
+</script>
+</body>
+</html>

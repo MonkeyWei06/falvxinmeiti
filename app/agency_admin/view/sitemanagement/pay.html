@@ -1,0 +1,170 @@
+<{include file="public/header"}>
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+       <div class="am-cf am-padding am-padding-bottom-0">
+            <div class="am-fl am-cf">
+                <strong class="am-text-warning am-text-lg">支付设置</strong>
+            </div>
+    </div>
+	<hr>
+	<div class="am-g">
+	  <div class="am-u-sm-12">
+		<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+				  <form class="layui-form" id="MyForm" action="<{:url('paysave')}>" method="post" enctype="multipart/form-data">
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">
+							<strong>方式一支付宝接口：</strong>
+						</label>
+						<div class="layui-input-block">
+							<input type="radio" name="AliPayType" value="1" <{if condition="$info.AliPayType eq 1"}>checked<{/if}>>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">支付宝APPID：</label>
+						<div class="layui-input-block">
+							<input type="text" name="AliPayAPPID" id="AliPayAPPID" value="<{$info.AliPayAPPID}>" autocomplete="off" placeholder="支付宝APPID"  class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">支付宝公钥：</label>
+						<div class="layui-input-block">
+							<textarea name="AliPayPublicKey" id="AliPayPublicKey" placeholder="支付宝公钥" class="layui-textarea"><{$info.AliPayPublicKey}></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">商户私钥：</label>
+						<div class="layui-input-block">
+							<textarea name="AliPayPrivateKey" id="AliPayPrivateKey" placeholder="商户私钥" class="layui-textarea"><{$info.AliPayPrivateKey}></textarea>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">
+							<strong>方式二收款码支付：</strong>
+						</label>
+						<div class="layui-input-block">
+							<input type="radio" name="AliPayType" value="2" <{if condition="$info.AliPayType eq 2"}>checked<{/if}>>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">支付宝收款码：</label>
+						<div class="layui-input-block">
+							<{if condition="@$info.AliPayPicture"}>
+							<img src="<{$info.AliPayPicture}>" width="150">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="<{:url('paypicdel',['type'=>1])}>">点击删除</a>
+							<br><br>
+							<{/if}>
+							<input type="file" value="选择图片" name="image1" id="image1" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">微信收款码：</label>
+						<div class="layui-input-block">
+							<{if condition="@$info.AliPayWXPicture"}>
+							<img src="<{$info.AliPayWXPicture}>" width="150">
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<a href="<{:url('paypicdel',['type'=>2])}>">点击删除</a>
+							<br><br>
+							<{/if}>
+							<input type="file" value="选择图片" name="image2" id="image2" autocomplete="off" />
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">开户银行：</label>
+						<div class="layui-input-block">
+							<select name="AliPayBankName" id="AliPayBankName">
+								<option value=""></option>
+								<{volist name="AliPayBankName" id="val"}>
+								<option value="<{$val.TypeID}>" <{if condition="$val.TypeID eq $info.AliPayBankName"}>selected<{/if}>><{$val.TypeName}></option>
+								<{/volist}>
+							</select>
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">开户网点：</label>
+						<div class="layui-input-block">
+							<input type="text" name="AliPayBankWD"  id="AliPayBankWD" value="<{$info.AliPayBankWD}>"  autocomplete="off" placeholder="开户网点" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">银行卡号：</label>
+						<div class="layui-input-block">
+							<input type="text" name="AliPayBankNum"  id="AliPayBankNum" value="<{$info.AliPayBankNum}>" autocomplete="off" placeholder="银行卡号" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<label class="layui-form-label" style="width: 150px;">持卡人：</label>
+						<div class="layui-input-block">
+							<input type="text" name="AliPayBankPeople" id="AliPayBankPeople" value="<{$info.AliPayBankPeople}>" autocomplete="off" placeholder="持卡人" class="layui-input">
+						</div>
+					</div>
+					<div class="layui-form-item">
+						<div class="layui-input-block">
+							<span class="am-btn am-btn-primary" lay-submit="" lay-filter="SubmitBut" onclick="Alipay()">立即提交</span>
+						</div>
+					</div>
+				</form>
+			</div>
+		  <div class="clear"></div>
+		</div>
+	   </div>
+	</div>
+</div>
+<{include file="public/footer"}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use('form', function(){
+        var form = layui.form;
+    });
+</script>
+<script type="text/javascript">
+    function Alipay() {
+        var AliPayType=$('input[name="AliPayType"]:checked').val();
+        if(AliPayType==1){
+            var AliPayAPPID = $('#AliPayAPPID').val();
+            var AliPayPublicKey = $('#AliPayPublicKey').val();
+            var AliPayPrivateKey = $('#AliPayPrivateKey').val();
+            if(AliPayAPPID==undefined || AliPayAPPID==""){
+                alert('APPID不能为空');
+                return false;
+            }
+            if(AliPayPublicKey==undefined || AliPayPublicKey==""){
+                alert('公钥不能为空');
+                return false;
+            }
+            if(AliPayPrivateKey==undefined || AliPayPrivateKey==""){
+                alert('私钥不能为空');
+                return false;
+            }
+        }else if(AliPayType==2){
+            var AliPayBankName = $('#AliPayBankName').val();
+            var AliPayBankWD = $('#AliPayBankWD').val();
+            var AliPayBankNum = $('#AliPayBankNum').val();
+            var AliPayBankPeople = $('#AliPayBankPeople').val();
+            if(AliPayBankName!=""){
+                if(AliPayBankWD==undefined || AliPayBankWD==""){
+                    alert('开户网点不能为空');
+                    return false;
+                }
+                if(AliPayBankNum==undefined || AliPayBankNum==""){
+                    alert('银行卡号不能为空');
+                    return false;
+                }
+                if(AliPayBankPeople==undefined || AliPayBankPeople==""){
+                    alert('持卡人不能为空');
+                    return false;
+                }
+            }
+        }
+        $('#MyForm').submit();
+    }
+</script>
+</body>
+</html>

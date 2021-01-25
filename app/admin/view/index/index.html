@@ -1,0 +1,88 @@
+<{include file="public/admin_headermain" /}>
+<script type="text/javascript" src="__STATIC__/lib/jquery-1.10.2.js"></script>
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    var seatcount="<{:count($RulesList['One'])}>";
+    layui.use('element', function(){
+        var $ = layui.jquery,element = layui.element;
+        //头部菜单切换
+        $('.layui-layout-left .layui-nav-item').click(function(){
+            var menu_index = $(this).index('.layui-layout-left .layui-nav-item');
+            if(menu_index==(seatcount-1)){
+                var url = '<{:url('index/main')}>';
+                $('.admin-iframe').attr('src',url);
+                return false;
+            }
+            $('.layui-layout-left .layui-nav-item').removeClass('layui-this');
+            $(this).addClass('layui-this');
+            $('.left_menu_ul').addClass('hide');
+            $('.left_menu_ul:eq('+menu_index+')').removeClass('hide');
+            $('.left_menu_ul .layui-nav-item dl dd').removeClass('layui-this');
+            $('.left_menu_ul:eq('+menu_index+') .layui-nav-item dl dd').eq(0).addClass('layui-this');
+            var url = $('.left_menu_ul:eq('+menu_index+')').find('.first-item a').attr('href');
+             $('.admin-iframe').attr('src',url);
+        });
+    });
+</script>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo"><a href="/" target="_new" style="color:#ffffff;">媒体综合管理系统</a></div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <{if condition="!empty($RulesList['One'])"}>
+            <{volist name="RulesList.One" id="val"}>
+                    <li class="layui-nav-item <{if condition="count($RulesList['One']) eq $i"}> noRight<{/if}>">
+                        <a href="<{:url($val.name)}>" target="main"><{$val.title}></a>
+                    </li>
+            <{/volist}>
+            <{/if}>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="__STATIC__/admin/images/AdminAvatar.jpg" class="layui-nav-img"><{$AdminInfo.AdminName}>
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="<{:url('admin/edit',['id'=>$AdminInfo['AdminID']])}>" target="main">基本资料</a></dd>
+                    <dd><a href="<{:url('login/logout')}>" target="_top">安全退出</a></dd>
+                </dl>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <{if condition="!empty($RulesList['One'])"}>
+            <{volist name="RulesList.One" id="val"}>
+            <ul class="layui-nav layui-nav-tree left_menu_ul <{if condition="$i gt 1"}> hide<{/if}>">
+                <{if condition="!empty($RulesList.Two[$val.id])"}>
+                <{volist name="RulesList.Two[$val.id]" id="val2"}>
+                <li class="layui-nav-item layui-nav-itemed">
+                    <a href="javascript:void(0);"><{$val2.title}></a>
+                    <dl class="layui-nav-child">
+                        <{if condition="!empty($RulesList.Three[$val2.id])"}>
+                            <{volist name="$RulesList.Three[$val2.id]" id="val3"}>
+                                <dd>
+                                    <a href="<{:url($val3.name)}>" target="main"><{$val3.title}></a>
+                                </dd>
+                            <{/volist}>
+                        <{/if}>
+                    </dl>
+                </li>
+                <{/volist}>
+                <{/if}>
+            </ul>
+            <{/volist}>
+            <{/if}>
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+        </div>
+    </div>
+    <div class="layui-body" >
+        <!-- 内容主体区域Begin -->
+        <iframe  class="admin-iframe" id="admin-iframe" name="main" src="<{:url('index/main')}>"></iframe>
+        <!-- 内容主体区域End -->
+    </div>
+</div>
+</body>
+</html>

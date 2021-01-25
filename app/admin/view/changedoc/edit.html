@@ -1,0 +1,59 @@
+<{include file="public/admin_header" /}>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>申请改稿</legend>
+</fieldset>
+<!---->
+<form class="layui-form layui-form-pane" action="<{:url('change_editsave')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单编号</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" disabled name="ordernum" size="40" value="<{$Info.ordernum}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">媒体名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" disabled name="media_name" size="40" value="<{$Info.media_name}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">改稿价格</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" disabled name="price" size="40" value="改稿价格：<{$Info.price}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">改稿说明</label>
+        <div class="layui-input-inline inputTextWidth">
+            <a href="/index/lookg/id/<{$Info.id}>" target="_blank">查看说明</a>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">提交时间</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" disabled name="addtime" size="40" value="<{$Info.addtime|date='Y-m-d H:i:s',###}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">订单状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="state" value="0" title="未处理"  <{if condition="$Info.state eq 0"}> checked<{/if}>>
+            <input type="radio" name="state" value="1" title="改稿中"  <{if condition="$Info.state eq 1"}> checked<{/if}>>
+            <input type="radio" name="state" value="2" title="已完成"  <{if condition="$Info.state eq 2"}> checked<{/if}>>
+            <input type="radio" name="state" value="3" title="已拒改"  <{if condition="$Info.state eq 3"}> checked<{/if}>>
+        </div>
+    </div>
+	<div class="layui-form-item">
+        <label class="layui-form-label">处理备注</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text"  name="state_text" size="40" value="<{$Info.state_text}>" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <input type="hidden" name="id" value="<{$Info.id}>"/>
+        <button class="layui-btn" type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+</script>

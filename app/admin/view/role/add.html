@@ -1,0 +1,96 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .menu-name{padding-left:30px;width: 110px; padding: 8px 15px;height: 38px;line-height: 20px;border: 1px solid #e6e6e6;border-radius: 2px 0 0 2px;text-align: center;background-color: #FBFBFB;overflow: hidden;white-space: nowrap;text-overflow: ellipsis;box-sizing: border-box;}
+    .menu-content{border: 1px solid #e6e6e6;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>添加</legend>
+</fieldset>
+<form class="layui-form-pane"  action="<{:url('add')}>"  enctype="multipart/form-data" method="post">
+    <div class="layui-form-item">
+        <label class="layui-form-label"><{$MenuName}>名称</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="title" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <div class=" ">
+            <table width="100%" border="0" cellspacing="0" id="GroupRuleDiv">
+                <tr>
+                    <td class="menu-name" style="width: 135px;">栏目选择</td>
+                    <td class="menu-content" style="width: 498px;">
+                        <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                            <{volist name="$AuthRuleList['List']" id="val"}>
+                            <tr>
+                                <td style="padding:15px 10px 15px 15px;">
+                                    <label <{if condition="$val.id eq 1 or $val.id eq 702"}>style="display:none;"<{/if}>><input class="CheckBox<{$val.parentid}>" type="checkbox" name="Rules[]" value="<{$val.id}>" onclick="OneAllSelect(this,'<{$val.id}>');<{if condition="$val.id eq 1 or $val.id eq 702"}>this.checked=true;<{/if}>"  <{if condition="$val.id eq 1 or $val.id eq 702"}> checked <{/if}>> <{$val.oldtitle}></label>
+                                </td>
+                            </tr>
+                            <{if condition="!empty($val['List'])"}>
+                            <{volist name="$val['List']" id="val2"}>
+                            <tr>
+                                <td style="padding-left:50px;">
+                                    <label><input class="CheckBox<{$val2.parentid}>" type="checkbox" name="Rules[]" value="<{$val2.id}>" onclick="OneAllSelect(this,'<{$val2.id}>');"> <{$val2.oldtitle}></label>
+                                </td>
+                            </tr>
+                            <{if condition="!empty($val2['List'])"}>
+                            <{volist name="$val2['List']" id="val3"}>
+                            <tr>
+                                <td style="padding-left:100px;">
+                                    <table width="100%" border="0" cellpadding="0" cellspacing="0">
+                                        <tr>
+                                            <td>
+                                                <label><input class="CheckBox<{$val3.parentid}>" type="checkbox" name="Rules[]" value="<{$val3.id}>" onclick="OneAllSelect(this,'<{$val3.id}>');"> <{$val3.oldtitle}></label>
+                                            </td>
+                                        </tr>
+                                        <{if condition="!empty($val3['List'])"}>
+                                        <tr>
+                                            <td style="padding-left:50px; padding-right: 20px;">
+                                                <{volist name="$val3['List']" id="val4"}>
+                                                    <label><input class="CheckBox<{$val4.parentid}>" type="checkbox" name="Rules[]" value="<{$val4.id}>"> <{$val4.oldtitle}></label>
+                                                <{if condition="$i%4==0"}>
+                                                <br>
+                                                <{/if}>
+                                                <{/volist}>
+                                            </td>
+                                        </tr>
+                                        <{/if}>
+                                    </table>
+                                </td>
+                            </tr>
+                            <{/volist}>
+                            <{/if}>
+                            <{/volist}>
+                            <{/if}>
+                            <{/volist}>
+                        </table>
+                    </td>
+                </tr>
+        </table>
+    </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">排序</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="sort" value="0" size="40" class="layui-input"/>
+        </div>
+    </div>
+    <div class="layui-form layui-form-item " >
+        <label class="layui-form-label">是否禁用</label>
+        <div class="layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="status" value="1" title="已启用" checked>
+            <input type="radio" name="status" value="0" title="已禁用">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item" >
+        <label class="layui-form-label">全选</label>
+        <div class="layui-input-inline">
+            <div style="padding:3px 0 0 10px;">
+                <input type="checkbox" onclick="GroupAllSelectCheck(this)">
+                <button class="layui-btn" style="margin-left:100px;" type="submit">提交保存</button>
+            </div>
+        </div>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>

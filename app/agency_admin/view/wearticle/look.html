@@ -1,0 +1,111 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title><{$Config.WebSiteTitle|default=''}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>" />
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>" />
+    <link href="/favicon.ico" rel="shortcut icon" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/home/css/news.css" />
+</head>
+<body>
+    <div id="wrapmain">
+    <center><span style="font-size: 30px; color: rgb(255, 0, 0);">
+</span>
+    </center>
+    <div class="maincont clearfix">
+        <div class="wrapindex clearfix">
+            <div class="homeleft corner5px mb15">
+                <div class="clearfix" id="content"><!-- style="overflow: visible;"-->
+                    <div class="post-title">
+                        <center><span style="font-size: 24px;"><{$title|default=''}></span></center>
+                    </div>
+                    <div class="bk20"></div>
+                    <div class="b2"></div>
+                    <div class="clearfix"></div>
+                    <div class="post-content clearfix">
+                        <{$html|default='' }>
+                    </div>
+                </div>
+                <div class="corner"></div>
+            </div>
+            <p class="statement">本平台所发布信息的内容和准确性由提供消息的原单位或组织独立承担完全责任！</p>
+        </div>
+    </div>
+</div>
+    <style type="text/css">
+   .remark{
+            position: absolute;
+            width: 150px;
+            height: auto;
+            right: -150px;
+            top: 70px;
+            border-radius: 10px;
+            padding: 10px;
+            font-size: 14px;
+            line-height: 24px;
+            z-index: 666;
+/*            -moz-user-select:none;*/
+/*            -webkit-user-select:none;*/
+/*            -ms-user-select:none;*/
+/*            user-select:none;*/
+            background: #eee;
+        }
+        .remark_arr{
+            width: 0;
+            height: 0;
+            border-top:10px solid transparent;
+            border-left:25px solid transparent;
+            border-right:25px solid #eee;
+            border-bottom:15px solid transparent;
+            position: absolute;
+            top: 10px;
+            left: -50px;
+        }
+        .remark_msg{
+            height: auto;
+            overflow: hidden;
+            word-break: break-all;
+            text-overflow: ellipsis;
+        }
+        .small_tips{
+            position: absolute;
+            left: 15px;
+            top: 50px;
+            font-size: 18px;
+            color: #f00;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
+        .post-title{
+            line-height: 40px;
+        }
+        .corner {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background: url(/static/home/images/corner.png) center center no-repeat;
+    background-size: cover;
+    bottom: -9px;
+    right: -8px;
+    z-index: 6;
+}
+        .statement{
+            font-size: 15px;
+            text-align: center;
+            color: #f00;
+            margin-bottom: 30px;
+            -moz-user-select:none;
+            -webkit-user-select:none;
+            -ms-user-select:none;
+            user-select:none;
+        }
+        .post-content{min-height: 100px}
+    </style>
+</body>
+</html>

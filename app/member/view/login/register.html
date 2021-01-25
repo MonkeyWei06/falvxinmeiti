@@ -1,0 +1,275 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="x5-orientation" content="portrait">
+	<meta name="x5-fullscreen" content="true">
+	<meta name="full-screen" content="yes">
+	<meta name="browsermode" content="application">
+	<meta name="x5-page-mode" content="app">
+    <title><{$Config.WebSiteName|default=''}>|会员注册</title>
+ 	<meta name="description" content="<{$Config.WebSiteName|default=''}>|会员注册" />
+    <link rel="stylesheet" href="__STATIC__/assets/css/amazeui.min.css"/>
+	<link rel="stylesheet" href="__STATIC__/home/css/reset_reg.css"/>
+    <style>
+        
+    </style>
+</head>
+<body class="login_bg">
+<div class="main">
+    <div class="unit">
+        <div class="fl_div">
+            <{if condition="!empty($Config['WebSiteLogo'])"}>
+				<img src="<{$path}><{$Config['WebSiteLogo']}>" class="login-logo">
+				<{else}>
+				<{$Config.WebSiteName|default=''}>
+			<{/if}>
+            <div class="line"></div>
+            <div class="call_tel">
+                <div class="text">注册咨询热线</div>
+                <div class="tel"><{$Config.WebSitePhone|default=''}></div>
+            </div>
+            <ul>
+                <li><a href="/">返回首页</a></li>
+                 <li><a href="/index.php/index/contact.html" >联系我们</a></li>
+            </ul>
+        </div>
+        <form class="loginForm" method="post" action="<{:url('check')}>" name="login">
+            <h4 class="title">注册账号</h4>
+			<!--
+            <div class="inputBox">
+                <input type="text" placeholder="请输入用户名(中文,英文,数字[6-12位])" id="username"/>
+            </div>
+			--->
+
+			 <div class="inputBox">
+                <input type="tel" placeholder="请输入手机号" id="mobile"/>
+            </div>
+
+			<div class="inputBox verifCode">
+                <input type="text" placeholder="请输入短信验证码" id="mobile_code">
+				<button type="button" id="get_code">获取验证码</button>
+            </div>
+
+            <div class="inputBox">
+                <input type="password" placeholder="请输入密码(8-16位)" id="password"/>
+            </div>
+			<!--
+            <div class="inputBox">
+                <input type="password" placeholder="请再次输入密码" id="again_pwd"/>
+            </div>
+			--->
+            <div class="inputBox">
+                <input type="text" placeholder="请输入邀请码" id="invite_code" value="<{$Invite}>"/>
+            </div>
+            
+			<!--
+			<div class="inputBox">
+ 				<input type="text" name="MemberQQ" id="MemberQQ" class="inptext qq" placeholder="请输入QQ号">
+            </div>
+			--->
+            <div class="privacy">
+                <input type="checkbox" id="agree">
+                <label for="agree">我已阅读并同意</label>
+                <a href="javascript:OpenWin();">《服务条款》</a>
+            </div>
+            <!-- 错误信息提示 -->
+            <div class="errorTip" style="display:block;" id="errorTip">
+                <div class="tips">
+                    <img src="/static/home/images/error.png"/>
+                    <span>客户服务热线 <{$Config.WebSitePhone|default=''}></span>
+                </div>
+            </div>
+            <a class="submit" id="submit_btn" href="javascript:void(0);">立即注册</a>
+            <div class="bottom">
+                <div class="fll"><span>已有账号？</span><a href="/member.php/login/index.html">去登录</a></div>
+            </div>
+        </form>
+    </div>
+</div>
+<script src="__STATIC__/home/js/jquery-1.10.2.js"></script>
+	<script src="__STATIC__/home/js/jquery.SuperSlide.2.1.js"></script>
+<script type="text/javascript">
+		window.jQuery || document.write("<script src='__STATIC__/lib/ace_admin/js/jquery.min.js'>"+"<"+"/script>");
+	</script>
+	<!-- <![endif]-->
+	<!--[if IE]>
+	<script type="text/javascript">
+		window.jQuery || document.write("<script src='__STATIC__/lib/ace_admin/js/jquery1x.min.js'>"+"<"+"/script>");
+	</script>
+	<![endif]-->
+	<script type="text/javascript">
+		if('ontouchstart' in document.documentElement) document.write("<script src='__STATIC__/lib/ace_admin/js/jquery.mobile.custom.min.js'>"+"<"+"/script>");
+	</script>
+	<script src="__STATIC__/home/js/layer/layer.js"></script>
+<script>
+	//错误信息提示消失
+    function errorTip(){
+        $("#errorTip").show();
+        var t=3;
+        errorTimer = setInterval(function () {
+            t--;
+            if(t==1){
+                clearInterval(errorTimer);
+                errorTimer = null;
+                $("#errorTip").hide();
+            }
+        },1000);
+    }
+	//获取短信验证码
+    $("#get_code").on("click",function(){
+        var mobile = $("#mobile").val();
+        var reg=/^1[3-9]\d{9}$/;
+        if (!mobile){
+            errorTip();
+            $("#errorTip span").text("手机号码不能为空！");
+            return false; 
+        }
+        if(!(reg.test(mobile))){ 
+            errorTip();
+            $("#errorTip span").text("手机号格式不正确！");
+            return false; 
+        } 
+        var _t = $(this);
+       
+        $.ajax({
+            url: "<{:url('login/send_mcode')}>",
+            type: 'post',
+            data: {
+				type:1,
+                mobile:mobile//手机号
+            },
+            success: function (result) {
+                if(result.code==200){
+					_t.attr('disabled',"true");
+				_t.css("cursor","not-allowed").html('<span style="color: #f00"><span id="time_remain">60</span> 秒后重试</span>');
+                 timer = setInterval(function () {
+						var time_remain = $("#time_remain"),
+							val = time_remain.html();
+						time_remain.html(time_remain.html() - 1);
+						if(val === "1"){
+							clearInterval(timer);
+							timer = null;
+							_t.css("cursor","pointer").html('获取验证码');
+						}
+					},1000);
+                }else{
+                    alert(result.msg);
+                    _t.css("cursor","pointer").html('获取验证码');
+                    clearInterval(timer);
+                    timer = null;
+                     $("#captcha_img").trigger("click");
+                }
+            }
+        });
+    });
+
+    function OpenWin() {
+      layer.open({
+			title:'用户协议',
+		  type: 1,
+		  skin: 'layui-layer-demo', //样式类名
+		  area: ['80%', '80%'], //宽高
+		  closeBtn: 1, //不显示关闭按钮
+		  anim: 2,
+		  shadeClose: true, //开启遮罩关闭
+		  maxmin: true,
+		  content: '<div style="padding:10px 20px;"><{$MainConfig.WebSiteUserAgreement}></div>'
+		});
+    }
+    //注册
+    $("#submit_btn").on("click",function(){
+        var username=$("#username").val();
+        var password=$("#password").val();
+        var again_pwd=$("#again_pwd").val();
+        var invite_code=$("#invite_code").val();
+        var mobile = $("#mobile").val();
+		var mobile_code = $("#mobile_code").val();
+        var reg=/^1[3-9]\d{9}$/;
+        var reg2=/(?![a-zA-Z]+$|[0-9]+$|_+$)^[a-zA-Z0-9_]{8,16}$/;
+        var agree=$("#agree").is(':checked');
+		/*
+        if (!username){
+            errorTip();
+            $("#errorTip span").text("用户名不能为空！");
+            return false; 
+        }*/
+		if (!mobile){
+            errorTip();
+            $("#errorTip span").text("手机号码不能为空！");
+            return false; 
+        }
+        if(!(reg.test(mobile))){ 
+            errorTip();
+            $("#errorTip span").text("手机号格式不正确！");
+            return false; 
+        }
+		if (!mobile_code){
+            errorTip();
+            $("#errorTip span").text("短信验证码不能为空！");
+            return false; 
+        }
+        if (!password){
+            errorTip();
+            $("#errorTip span").text("密码不能为空！");
+            return false; 
+        }
+        if(!(reg2.test(password))){ 
+            errorTip();
+            $("#errorTip span").text("密码必须是8-16位(字母,数字,下划线[2种组合])！");
+            return false; 
+        } 
+		/*
+        if (!again_pwd){
+            errorTip();
+            $("#errorTip span").text("请再次输入密码！");
+            return false; 
+        }
+        if(again_pwd !== password){
+            errorTip();
+            $("#errorTip span").text("两次密码输入不一致！");
+            return false;
+        }*/
+        if (!invite_code){
+            errorTip();
+            $("#errorTip span").text("邀请码不能为空！");
+            return false; 
+        }
+        
+        if(!agree){
+            errorTip();
+            $("#errorTip span").text("请阅读并同意《服务条款》后再注册!");
+            return false;
+        }
+        $.ajax({
+            url: "<{:url('login/register')}>",
+            type: "post",
+            data: {
+                MemberName: username,
+                MemberPwd: password,
+                MemberInviteCode: invite_code,
+                MemberMobile: mobile,
+				mobile_code: mobile_code,
+                mcode_id: $("#mcode_id").val(),
+             },
+            success:function(Result) {
+                if(Result.code === '200'){
+					layer.msg(Result.msg,{time:2000},function () {
+                        window.location.href = "<{:url('/login')}>";
+                    });
+                }else{
+					layer.msg(Result.msg);
+					$("#get_code").css("cursor","pointer").html('发送验证码');
+					clearInterval(timer);
+                    timer = null;
+                    $("#captcha_img").trigger("click");
+                    $("#reg_code").val("");
+                }
+            }
+        });
+    });
+</script>
+</body>
+</html>

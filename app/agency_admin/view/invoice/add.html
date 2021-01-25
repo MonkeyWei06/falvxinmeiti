@@ -1,0 +1,112 @@
+<{include file="public/header"}>
+<link rel="stylesheet" href="__STATIC__/assets/css/filter.min.css">
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/main"}>
+  <!-- sidebar end -->
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+       <div class="am-fl am-cf">
+          <strong class="am-text-warning am-text-lg">申请发票</strong>
+       </div>
+    </div>
+	<hr>
+		<div class="am-g">
+		  <div class="am-u-sm-12">
+			<div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+			 <input type="hidden" id="where" value="" />
+				<input type="hidden" id="collect" value="" />
+				<div class="table-list table-list2" id="result" style="padding:1.5rem;">
+					<form class="layui-form" id="MyForm" name="userInfo" method="post" >
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票类型</label>
+							<div class="layui-input-block">
+								<{volist name="InvoiceType" id="val"}>
+								<input type="radio" name="InvoiceType" <{if condition="$key eq 0"}>checked<{/if}> value="<{$val.TypeID}>" title="<{$val.TypeName}>" >
+								<{/volist}>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票明细</label>
+							<div class="layui-input-block">
+								<{volist name="InvoiceDetail" id="val"}>
+								<input type="radio" name="InvoiceDetail" <{if condition="$key eq 0"}>checked<{/if}> value="<{$val.TypeID}>" title="<{$val.TypeName}>">
+								<{/volist}>
+								<input type="radio" name="InvoiceDetail" value="999" title="其他">
+								<input type="text" name="InvoiceOtherContent" class="layui-input" style="width: 100px; display:inline;"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票金额</label>
+							<div class="layui-input-block">
+								<input type="text" name="InvoiceMoney" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">发票抬头</label>
+							<div class="layui-input-block">
+								<input type="text" name="InvoiceTitle" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">纳税人识别码</label>
+							<div class="layui-input-block">
+								<input type="text" name="InvoiceCode" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">收货人姓名</label>
+							<div class="layui-input-block">
+								<input type="text" name="InvoiceName" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">收货人手机</label>
+							<div class="layui-input-block">
+								<input type="text" name="InvoiceMobile" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">收货人地址</label>
+							<div class="layui-input-block">
+								<input type="text" name="InvoiceAddress" lay-verify="required" class="layui-input"/>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<label class="layui-form-label" style="width: 120px;">补充说明</label>
+							<div class="layui-input-block">
+								<textarea name="InvoiceContent" style="height: 120px;" class="layui-input"></textarea>
+							</div>
+						</div>
+						<div class="layui-form-item">
+							<div class="layui-input-block">
+								<button class="am-btn am-btn-sm am-btn-primary" lay-submit="" lay-filter="SaveMemberInfoBut">立即提交</button>
+								<button type="reset" class="am-btn am-btn-sm am-btn-default">重置</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			  <div class="clear"></div>
+			</div>
+		   </div>
+		</div>
+<{include file="public/footer" /}>
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+<script>
+    layui.use(['form', 'layedit', 'laydate'], function(){
+        var form = layui.form
+            ,layer = layui.layer;
+        //监听提交
+        form.on('submit(SaveMemberInfoBut)', function(data){
+            //console.log(data);
+            //SaveMemberInfo(data.field);
+            $('#MyForm').submit();
+            return false;
+        });
+    });
+</script>
+</body>
+</html>

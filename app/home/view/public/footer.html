@@ -1,0 +1,71 @@
+<footer>
+	<div class="friendlinks">
+		    <div class="wrap clearfix">
+		        <p class="friendlinks-title fl">友情链接：</p>
+		        <ul class="fr">
+				 <li><a href="http://www.ha185.cn" target="_blank">狼烟科技</a></li>
+					<{volist name="links" id="vo"}>
+		            <li><a href="<{$vo.NewsContent}>" target="_blank"><{$vo.NewsTitle}></a></li>
+					<{/volist}>
+		        </ul>
+		    </div>
+		</div>
+		<div class="footer-copyright">
+			<ul class="footer-nav">
+				<li><a href="/">网站首页</a></li>
+				<li><a href="<{:url('index/price')}>">媒体资源</a></li>
+				<li><a href="<{:url('index/wemedia')}>">自媒体资源</a></li>
+				<li><a href="<{:url('index/writer')}>">软文撰写</a></li>
+				<li><a href="<{:url('index/newslist')}>">营销学院</a></li>
+				<li><a href="javascript:;" class="contact-btn">联系我们</a></li>
+			</ul>			
+			<p>加盟、入住：<{$Config.WebSitePhone|default=''}>&emsp;177-xxx-xxxx（同微信） 公司邮箱：<{$Config.WebSiteEmail|default=''}>&emsp;  客服QQ：<{$Config.WebSiteQQ|default=''}>			
+			</p>
+			<p>版权所有<{$Config.WebSiteCompanyName|default=''}>&emsp;技术支持：<a href="https://www.ha185.cn/" target="_blank" style="color:#999;display:inline;">狼烟科技</a>&emsp;</p>
+		</div>
+	</footer>
+	<div class="contact-container" id="contact-container">
+		<ul class="contact-list">
+			<li>
+				<img src="__STATIC__/home/images/xxxx.png" alt="">
+				<p>158-3822-xxx（同微信）</p>
+              	<p>QQ：<a href="http://wpa.qq.com/msgrd?v=3&uin=xxxx&site=qq&menu=yes" target="_blank">xxxx</a></p>
+			</li>
+			<li>
+				<img src="__STATIC__/home/images/xxx.png" alt="">
+				<p>177-1xxx-4xxx（同微信）</p>
+              	<p>QQ：<a href="http://wpa.qq.com/msgrd?v=3&uin=xxxx&site=qq&menu=yes" target="_blank">xxxx</a></p>
+			</li>
+		</ul>
+	</div>
+	
+	<script src="__STATIC__/home/js/jquery-1.10.2.js"></script>
+	<script src="__STATIC__/home/js/layer/layer.js"></script>
+	<script src="__STATIC__/home/js/aos.js"></script>
+	<script src="__STATIC__/home/js/swiper.min.js"></script>
+	<script src="__STATIC__/home/js/jquery.SuperSlide.2.1.js"></script>
+	<script src="__STATIC__/home/js/public.js"></script>
+	
+	<script>
+	var submitClickRepeatedly = true;
+	$(".contact-btn").click(function(){
+		layer.open({
+			type: 1,
+			title: '',
+			shadeClose: true,
+			shade: 0.8,
+			area: ['50%', '50%'],
+			content: $('#contact-container')
+		});      
+	})
+	$("#business-open").click(function(){
+		layer.open({
+			type: 1,
+			title: '',
+			shadeClose: true,
+			shade: 0.8,
+			area: ['auto', '90%'],
+			content: '<img src="__STATIC__/home/images/business-license.jpg" class="business-license"/>'
+		});      
+	});
+</script>

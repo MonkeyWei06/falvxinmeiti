@@ -1,0 +1,74 @@
+<{include file="public/web_agencyheader" /}>
+<div class="admin-main">
+	<blockquote class="layui-elem-quote">
+		<p>您好：<{$AgencyMemberName}>，欢迎您的登录。</p>
+	</blockquote>
+	<div style="    margin: 15px;">
+		<div class="layui-row  layui-col-space10">
+	    <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+	        <fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>账户信息</legend>
+			</fieldset>
+			<blockquote class="layui-elem-quote layui-quote-nm">
+				账户余额：<{$AgencyMemberInfo.MemberAgentBalanceCount}> 元
+                                <a class="layui-btn  layui-btn-normal" style='margin-left:10px;height:30px;line-height:30px' href="<{:url('agencyfund/recharge')}>">在线充值</a>
+				<br><br>
+				我的订单：<a href="<{:url('agencyorder/home')}>">点击查看</a>
+				<{if condition="!empty($ConfigInfo.WebSitePhone)"}>
+				<br><br>
+				电话咨询：<{$ConfigInfo.WebSitePhone}>
+				<{/if}>
+				<{if condition="!empty($ConfigInfo.WebSiteQQ)"}>
+				<br><br>
+				客服QQ：<{$ConfigInfo.WebSiteQQ}>
+				<{/if}>
+				<{if condition="!empty($ConfigInfo.WebSiteEmail)"}>
+				<br><br>
+				客服邮箱：<{$ConfigInfo.WebSiteEmail}>
+				<{/if}>
+				<{if condition="!empty($ConfigInfo.WebSiteAddress)"}>
+				<br><br>
+				公司地址：<{$ConfigInfo.WebSiteAddress}>
+				<{/if}>
+			</blockquote>
+			<!--
+			<blockquote class="layui-elem-quote">快速使用后台</blockquote>
+			<div>
+			    <a href="<{:url('article/index')}>"><button class="layui-btn">发布广告</button></a>
+			    <a href="<{:url('media/index')}>"><button class="layui-btn layui-btn-normal">媒体价格</button></a>
+			    <a href="<{:url('agencyorder/home')}>"><button class="layui-btn layui-btn-warm">我的订单</button></a>
+			  </div>--->
+	    </div>
+		
+
+	    <div class="layui-col-xs12 layui-col-sm6 layui-col-md6">
+	    	<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+				<legend>系统公告</legend>
+			</fieldset>
+	        <table class="layui-hide" id="DataList" lay-filter="DataList"></table>
+	    </div>
+   </div>
+	</div>
+</div>
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#DataList'
+            ,url:'<{:url('notice/getlist')}>'
+            //,toolbar: '#toolbarDemo'
+            ,title: '用户数据表'
+            ,cols: [[
+                {field: 'NewsTitle', align: 'center', title: '公告标题'}
+                ,{field: 'NewsTime', align: 'center',width:'120', title: '时间'}
+            ]]
+            , page: true
+            ,limit:20
+        });
+    });
+</script>
+<style type="text/css">
+	.layui-table-cell{display:table-cell;height:auto;vertical-align:middle;white-space:normal;}
+</style>
+</body>
+</html>

@@ -1,0 +1,187 @@
+  <{include file="public/member_header"}>
+  <link rel="stylesheet" type="text/css" href="__STATIC__/assets/css/main.css" /> 
+  <div class="am-cf admin-main"> 
+   <!-- sidebar start --> 
+   <{include file="public/member_main"}>
+   <!-- sidebar end --> 
+   <!-- content start --> 
+   <div class="admin-content"> 
+    <div class="admin-content-body"> 
+     <div class="pay"> 
+      <!--主内容开始编辑--> 
+      <div class="tr_recharge"> 
+       <div class="tr_rechtext"> 
+        <p class="te_retit"><img src="__STATIC__/assets/images/coin.png" alt="" />充值中心</p> 
+		 <{if condition="$Info.RegDomain =='-1'"}> 
+        <p>1.每充值1000增送一次抽奖机会，多充多得</p> 
+        <p>2.充值抽大奖，红包、奖品送不停。</p>
+        <div class="am-cf">
+         <div class="am-fl am-cf">
+          <a href="/member.php/activity/"><img src="__STATIC__/home/images/choujiang.png" /></a> 
+         </div>
+        </div> 
+		<{/if}>
+       </div>
+	   <{if condition="$Info.AliPayType == 1"}>
+
+	    <form class="am-form" id="doc-vld-msg" action="<{:url('alipay')}>" method="post" target="_blank">
+        <div class="tr_rechbox">
+         <div class="tr_rechli am-form-group"> 
+          <ul class="ui-choose am-form-group" id="uc_01"> 
+           <li> <label class="am-radio-inline"> <input type="radio" value="100" name="money" required="" data-validation-message="请选择一项充值额度" /> 100￥ </label> </li> 
+           <li> <label class="am-radio-inline"> <input type="radio" value="1000" name="money" data-validation-message="请选择一项充值额度" /> 1000￥ </label> </li> 
+           <li> <label class="am-radio-inline"> <input type="radio" value="5000" name="money" data-validation-message="请选择一项充值额度" /> 5000￥ </label> </li> 
+           <li> <label class="am-radio-inline"> <input type="radio" name="money" value="custom" data-validation-message="请选择一项充值额度" /> 其他金额 </label> </li> 
+          </ul> 
+         </div> 
+         <div class="tr_rechoth am-form-group"> 
+          <span>其他金额：</span> 
+          <input type="number" min="0.01" name ="custommoney" id="custommoney" max="10000" class="othbox" data-validation-message="充值金额范围：100-10000元" /> 
+         </div>
+		 <div class="layui-form-item">
+		
+           <div class="layui-input-block" style="background:#fff2f2;border-radius: 3px;color:#f15746;line-height: 45px;
+padding-left: 10px;font-size: 20px;margin-top: 10px; font-weight: 600;">温馨提示：发布违法违规稿件会直接封号不退款，并提交公安机关报警处理！</div>
+		 <hr>
+		  <div class="tr_rechcho am-form-group"> 
+          <span>充值方式：</span> 
+          <label class="am-radio" style="margin-right:30px;"><img src="__STATIC__/assets/images/zfbpay.png" /> </label>
+         </div>
+        
+         <div class="tr_rechnum"> 
+          <span>应付金额：</span> 
+          <p class="rechnum">0.00元</p> 
+         </div> 
+        </div>
+		 <div class="layui-input-block alarm" style="background:#fff2f2;border-radius: 3px;color:#f15746;line-height: 40px;
+padding-left: 10px;font-size: 14px;margin-top: 10px;">因平台上不断有违规用户注册充值少量金额，严重扰乱我公司健康长期发展战略，即日起本平台限定最低充值金额100元，敬请谅解！</div>
+        </div>
+        <div class="tr_paybox"> 
+         <input type="submit" value="确认支付" class="tr_pay am-btn" /> 
+        </div> 
+		
+       </form>
+
+	    <{elseif condition="$Info.AliPayType == 2" /}>
+        <{if condition="!empty($Info.AliPayPicture)"}>
+        <div style="margin: 0 auto;width: 100%;">
+            <p style="margin-top: 10px;text-align: center;line-height: 30px;font-size: 16px;">
+                <span>支付宝扫码支付</span>
+            </p>
+            <p style="text-align: center;">
+                <img src="<{$Info.AliPayPicture}>" style="float: none;"  style='max-width: 300px;'>
+            </p>
+        </div>
+        <{/if}>
+        <{if condition="!empty($Info.AliPayWXPicture)"}>
+        <div style="margin: 0 auto;width: 100%;">
+            <p style="margin-top: 10px;text-align: center;line-height: 30px;font-size: 16px;">
+                <span>微信扫码支付</span>
+            </p>
+            <p style="text-align: center;" >
+                <img src="<{$Info.AliPayWXPicture}>" style="float: none;" style='max-width: 300px;'>
+            </p>
+        </div>
+        <{/if}>
+        <{if condition="!empty($Info.AliPayBankName)"}>
+        <div style="clear: both;"></div>
+        <div style="margin: 0 auto;width: 700px; margin-top: 20px;">
+            <p style="text-align: center;line-height: 30px;font-size: 16px; padding-bottom: 10px;color: red">
+                <span>银行卡转账</span>
+            </p>
+            <div class="layui-form-item">
+                <label class="layui-form-label bank-lab">开户银行：</label>
+                <div class="layui-input-block">
+                    <input type="text" readonly lay-verify="required" autocomplete="off"  value="<{$Info.AliPayBankName}>" class="layui-input" style="width:350px;">
+                </div>
+            </div> <div class="layui-form-item">
+            <label class="layui-form-label bank-lab">开户网点：</label>
+            <div class="layui-input-block">
+                <input type="text" readonly lay-verify="required" autocomplete="off" value="<{$Info.AliPayBankWD}>" class="layui-input" style="width:350px;">
+            </div>
+        </div> <div class="layui-form-item">
+            <label class="layui-form-label bank-lab">银行卡号：</label>
+            <div class="layui-input-block">
+                <input type="text" readonly lay-verify="required" autocomplete="off" value="<{$Info.AliPayBankNum}>" class="layui-input" style="width:350px;">
+            </div>
+        </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label bank-lab">持卡人：</label>
+                <div class="layui-input-block">
+                    <input type="text" readonly lay-verify="required" autocomplete="off" value="<{$Info.AliPayBankPeople}>" class="layui-input" style="width:350px;">
+                </div>   </div>
+        </div>
+        <{/if}>
+        <{/if}>
+
+      </div> 
+     </div> 
+    </div> 
+   </div> 
+   <!-- content end --> 
+  </div> 
+  <{include file="public/member_footer" /}>
+  <script type="text/javascript" src="__STATIC__/assets/js/ui-choose.js"></script> 
+  <script type="text/javascript">
+	// 将所有.ui-choose实例化
+	$('.ui-choose').ui_choose();
+	// uc_01 ul 单选
+	var uc_01 = $('#uc_01').data('ui-choose'); // 取回已实例化的对象
+	uc_01.click = function(index, item) {
+		console.log('click', index, item.text())
+	}
+	uc_01.change = function(index, item) {
+		console.log('change', index, item.text())
+	}
+	$(function() {
+		$('#uc_01 li:eq(3)').click(function() {
+			$('.tr_rechoth').show();
+			$('.tr_rechoth').find("input").attr('required', 'true')
+			$('.rechnum').text('0元');
+		})
+		$('#uc_01 li:eq(0)').click(function() {
+			$('.tr_rechoth').hide();
+			$('.rechnum').text('100.00元');
+			$('.othbox').val('');
+		})
+		$('#uc_01 li:eq(1)').click(function() {
+			$('.tr_rechoth').hide();
+			$('.rechnum').text('1000.00元');
+			$('.othbox').val('');
+		})
+		$('#uc_01 li:eq(2)').click(function() {
+			$('.tr_rechoth').hide();
+			$('.rechnum').text('5000.00元');
+			$('.othbox').val('');
+		})
+		$(document).ready(function() {
+			$('.othbox').on('input propertychange', function() {
+				var num = $(this).val();
+				$('.rechnum').html(num + ".00元");
+			});
+		});
+	})
+
+	$(function() {
+		$('#doc-vld-msg').validator({
+			onValid: function(validity) {
+				$(validity.field).closest('.am-form-group').find('.am-alert').hide();
+			},
+			onInValid: function(validity) {
+				var $field = $(validity.field);
+				var $group = $field.closest('.am-form-group');
+				var $alert = $group.find('.am-alert');
+				// 使用自定义的提示信息 或 插件内置的提示信息
+				var msg = $field.data('validationMessage') || this.getValidationMessage(validity);
+
+				if(!$alert.length) {
+					$alert = $('<div class="am-alert am-alert-danger"></div>').hide().
+					appendTo($group);
+				}
+				$alert.html(msg).show();
+			}
+		});
+	});
+</script>  
+ </body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>支付成功 - <{$Config.WebSiteTitle|default=''}></title>
+    <meta name="keywords" content="<{$Config.WebSiteKeyword|default=''}>"/>
+    <meta name="description" content="<{$Config.WebSiteDescription|default=''}>"/>
+    <link href="/favicon.ico"  rel="shortcut icon" />
+    <meta content="yes" name="apple-mobile-web-app-capable" />
+    <meta content="telephone=no" name="format-detection" />
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/agency/css/aos.css">
+    <link rel="stylesheet" type="text/css" href="__STATIC__/agency/css/css.css"/>
+    <script src="__STATIC__/agency/js/jquery-1.10.2.js"></script>
+    <script src="__STATIC__/agency/js/aos.js"></script>
+    <script src="__STATIC__/agency/js/js.js"></script>
+</head>
+<body>
+<div class="max top">
+    <div class="box"> <span class="left">您好 <{$SessionMemberName|default=''}>，欢迎光临，<{$Config.WebSiteName|default=''}></span>
+        <div class="right">
+            <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+            <a href="<{:url('/member')}>" target="_blank" style="width: 90px;">会员中心</a>
+            <a href="<{:url('/member/login/loginout')}>" target="_blank" style="width: 90px;">安全退出</a>
+            <{else}>
+            <a href="<{:url('/reg')}>" target="_blank">注册</a>
+            <a href="<{:url('/login')}>" target="_blank" class="login">登录</a>
+            <{/if}>
+        </div>
+    </div>
+</div>
+<div class="max header">
+    <div class="box">
+        <a href="<{:url('/')}>" class="left logo">
+            <{if condition="empty($Config.WebSiteLogo)"}>
+            <img src="__STATIC__/agency/images/logo.png">
+            <{else}>
+            <img src="/uploads/<{$Config.WebSiteLogo}>">
+            <{/if}>
+        </a>
+        <audio id="music" src="/uploads/<{$WebSiteMusic}>" autoplay="autoplay" loop="loop">你的浏览器不支持audio标签。</audio>
+        <a id="audio_btn"><img src="__STATIC__/agency/images/play.gif" width="60"  id="music_btn" border="0"></a>
+        <script>
+            $("#audio_btn").click(function(){
+                var music = document.getElementById("music");
+                if(music.paused){
+                    music.play();
+                    $("#music_btn").attr("src","__STATIC__/agency/images/play.gif");
+                }else{
+                    music.pause();
+                    $("#music_btn").attr("src","__STATIC__/agency/images/pause.gif");
+                }
+            });
+        </script>
+        <div class="right nav">
+            <ul>
+                <li><a href="<{:url('index/price')}>">媒体价格</a></li>
+                <li><a href="<{:url('index/join')}>">合作加盟</a></li>
+                <li><a href="<{:url('index/newslist')}>">营销商学院</a></li>
+                <li><a href="<{:url('index/contact')}>">联系我们</a></li>
+                <div class="denglu">
+                    <{if condition="!empty($SessionMemberID) && !empty($SessionMemberName)"}>
+                    <a href="<{:url('/member')}>" style="width: 90px;">会员中心</a>
+                    <a href="<{:url('/member/login/loginout')}>" class="login">安全退出</a>
+                    <{else}>
+                    <a href="<{:url('/reg')}>" target="_blank">注册</a>
+                    <a href="<{:url('/login')}>" target="_blank" class="login">登录</a>
+                    <{/if}>
+                </div>
+            </ul>
+            <div class="close"></div>
+        </div>
+        <div class="nav_menu"></div>
+    </div>
+</div>
+<div class="max hezuo">
+    <div class="box">
+        <div class="biaoti">
+            <h1>支付成功</h1>
+        </div>
+        <div class="neirong">
+            <ul style="width:500px; margin: 10px auto;">
+                <li>订单号：<{$OrderInfo.out_trade_no|default=''}></li>
+                <li>充值金额：<{$OrderInfo.total_amount|default=''}></li>
+                <li>支付时间：<{$OrderInfo.timestamp|default=''}></li>
+            </ul>
+        </div>
+    </div>
+    <div class="zs-l l1" aos="fade-right" aos-delay="250"><img src="__STATIC__/agency/images/zs_l1.png"></div>
+    <div class="zs-l l2" aos="fade-right" aos-delay="450"><img src="__STATIC__/agency/images/zs_l2.png"></div>
+    <div class="zs-l l3" aos="fade-right" aos-delay="650"><img src="__STATIC__/agency/images/zs_l3.png"></div>
+    <div class="zs-r r1" aos="fade-left" aos-delay="850"><img src="__STATIC__/agency/images/zs_r1.png"></div>
+    <div class="zs-r r2" aos="fade-left" aos-delay="1050"><img src="__STATIC__/agency/images/zs_r2.png"></div>
+    <div class="zs-r r3" aos="fade-left" aos-delay="1250"><img src="__STATIC__/agency/images/zs_r3.png"></div>
+</div>
+<script>
+    AOS.init({
+        easing: 'ease-out-back',
+        duration: 800,
+        once:true
+    });
+</script>
+</body>
+</html>

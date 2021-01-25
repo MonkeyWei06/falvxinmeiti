@@ -1,0 +1,94 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend>会员财务报表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('finance')}>" method="get">
+            <div class="layui-form-item">
+                <label class="layui-form-label" style="width: 80px;">会员类型</label>
+                <div class="layui-input-inline" style="width: 130px;">
+                    <select name="BalanceType" style="height:30px;width:30%;">
+                        <option value="">类型选择</option>
+                        <option value="1" <{if condition="!empty($UrlParam.BalanceType) && $UrlParam.BalanceType eq 1"}>selected<{/if}>>充值</option>
+                        <option value="2" <{if condition="!empty($UrlParam.BalanceType) && $UrlParam.BalanceType eq 2"}>selected<{/if}>>消费</option>
+                    </select>
+                </div>
+                <label class="layui-form-label" style="width: 80px;">关键字</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="keyword" placeholder="会员名称/充值描述" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="startdate" onclick="WdatePicker();" placeholder="开始时间" value="<{$UrlParam.startdate|default=''}>" class="layui-input" />
+                </div>
+                <div class="layui-input-inline">
+                    <input type="text" name="enddate" placeholder="结束时间" onclick="WdatePicker();" value="<{$UrlParam.enddate|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th class="listtitle">名称</th>
+                <th class="listtitle">充值/消费</th>
+                <th class="listtitle">充值类型</th>
+                <th class="listtitle">充值金额</th>
+                <th class="listtitle">账户余额</th>
+                <th class="listtitle" width="400">描述</th>
+                <th class="listtitle">状态</th>
+                <th class="listtitle">时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List[0]" id="val"}>
+            <tr>
+                <td align="center"><input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.BalanceID}>" /></td>
+                <td align="center"><{$val.MemberName}></td>
+                <td align="center"><{$val.BalanceType.New}></td>
+                <td align="center"><{$val.BalanceGroup.New}></td>
+                <td align="center">
+                    <{if condition="$val.BalanceType.Old eq 2"}>
+                    -
+                    <{/if}>
+                    <{$val.BalanceCount}>
+                </td>
+                <td align="center"><{$val.BalanceCurrentCount}></td>
+                <td align="center"><{$val.BalanceTitle}></td>
+                <td align="center">
+                    <input type="checkbox" <{if condition="$val['BalanceState'] eq 1"}>checked<{/if}> name="BalanceState" lay-skin="switch" Url="<{:url('ajax/ListStateChange')}>" TableName="Balance" MainFieldID="BalanceID" ChangeField="BalanceState" ID="<{$val.BalanceID}>" lay-filter="State" lay-text="启用|禁用">
+                </td>
+                <td align="center"><{$val.BalanceTime}></td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('balancedel')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$List[0]->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

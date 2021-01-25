@@ -1,0 +1,77 @@
+<{include file="public/admin_header" /}>
+<style>
+    select{border: 1px solid #DBDBDB;height: 29px;width:25%;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>添加</legend>
+</fieldset>
+<form class="layui-form-pane" action="<{:url('add')}>"  enctype="multipart/form-data" method="post" onsubmit="return MemberAddSaveInfoCheck();">
+    <div class="layui-form-item">
+        <label class="layui-form-label">标题</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberName" class="layui-input"/>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 120px;padding-top:40px;">说明</label>
+        <div class="layui-input-inline inputTextWidth">
+            <textarea name="BalanceTitle" style="height: 120px;" class="layui-input"></textarea>
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">份数</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberTrueName" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">总价</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">支付状态</label>
+        <div class="layui-input-inline inputTextWidth">
+            <input type="text" name="MemberMobile" class="layui-input" />
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label" style="height: 403px;padding-top:150px;">说明详情</label>
+        <div class="layui-input-inline inputTextWidth" style="width: 80%;">
+            <textarea id="EditContent" name="AboutContent" style="width: 100%; height: 400px;"></textarea>
+        </div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">支付状态</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="PayState" value="1" title="已支付" checked>
+            <input type="radio" name="PayState" value="0" title="未支付">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item ">
+        <label class="layui-form-label">审核进度</label>
+        <div class="layui-form layui-input-inline inputTextWidth radiofile">
+            <input type="radio" name="MemberState" value="0" title="待审核" checked>
+            <input type="radio" name="MemberState" value="1" title="代写中">
+            <input type="radio" name="MemberState" value="2" title="已完成">
+            <input type="radio" name="MemberState" value="3" title="已取消">
+        </div>
+        <div class="layui-form-mid layui-word-aux"></div>
+    </div>
+    <div class="layui-form-item">
+        <button class="layui-btn"  type="submit">提交保存</button>
+    </div>
+</form>
+<{include file="public/admin_footer" /}>
+<script>
+    layui.use('upload', function(){
+        var $ = layui.jquery,upload = layui.upload;
+    });
+</script>

@@ -1,0 +1,103 @@
+<{include file="public/admin_header" /}>
+<style type="text/css">
+    .layui-form-item{margin-bottom:0;}
+    .layui-elem-quote{padding: 3px 15px;}
+    .layui-form-item .layui-form-label{ width: 90px;}
+    .layui-form-item .layui-input-inline .layui-input{ width: 170px; margin-right: 0;}
+</style>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top:0;">
+    <legend><{$MenuName}>列表</legend>
+</fieldset>
+<blockquote class="layui-elem-quote">
+    <div class="layui-form layui-form-pane">
+        <form action="<{:url('index')}>" method="get">
+            <div class="layui-form-item">
+                <!--<label class="layui-form-label">会员名称</label>-->
+                <!--<div class="layui-input-inline">-->
+                    <!--<input type="text" name="keyword" placeholder="请输入会员名称" value="<{$UrlParam.keyword|default=''}>" class="layui-input" />-->
+                <!--</div>-->
+                <label class="layui-form-label">邀请码</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="InviteCode" placeholder="请输入邀请码" value="<{$UrlParam.InviteCode|default=''}>" class="layui-input" />
+                </div>
+                <label class="layui-form-label">推广者</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="InviteName" placeholder="请输入推广者" value="<{$UrlParam.InviteName|default=''}>" class="layui-input" />
+                </div>
+                <button class="layui-btn search" type="submit">搜索</button>
+            </div>
+        </form>
+    </div>
+</blockquote>
+<form class="layui-form" id="MyForm" method="post">
+    <div class="page-module-table">
+        <table class="layui-table">
+            <thead>
+            <tr>
+                <th width="60" class="listtitle">
+                    <input lay-skin="primary" lay-filter="AllSelectBox" type='checkbox'>
+                </th>
+                <th class="listtitle">邀请码</th>
+                <th class="listtitle">推广者</th>
+                <th class="listtitle">分享连接</th>
+                <th class="listtitle">充值明细</th>
+                <th class="listtitle">充值统计</th>
+				<th class="listtitle">消费统计</th>
+				<th class="listtitle">退稿统计</th>
+                <th width="100" class="listtitle">状态</th>
+                <th width="160" class="listtitle">添加时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <{volist name="List" id="val"}>
+            <tr>
+                <td align="center"><input type="checkbox" name="Del[]" lay-skin="primary" lay-filter="ItemBox" value="<{$val.InviteID}>" /></td>
+                <td align="center">
+                    <{$val.InviteCode}>
+                </td>
+                <td align="center">
+                    <{$val.InviteName}>
+                </td>
+                <td align="center">
+                    <a href="<{$HostName}>/member.php/login/index?act=reg&invite=<{$val.InviteCode}>" target="_blank"><{$HostName}>/member.php/login/index?act=reg&invite=<{$val.InviteCode}>.html</a>
+                </td>
+                <td align="center">
+                    <a href="<{:url('balance/index',['InviteMemberID'=>$val.InviteMemberID,'keyword2'=>$val.InviteCode])}>">点此查看</a>
+                </td>
+                <td align="center">
+                   <span style="color:#f95000;"><{$val.TopUpMoney}></span>
+                </td>
+				 <td align="center">
+                    <{$val.DowMoney}>
+                </td>
+				 <td align="center">
+                    <{$val.TgMoney}>
+                </td>
+                <td align="center">
+                    <input type="checkbox" <{if condition="$val['InviteState'] eq 1"}>checked<{/if}> name="InviteState" lay-skin="switch" Url="<{:url('ajax/ListStateChange')}>" TableName="invite" MainFieldID="InviteID" ChangeField="InviteState" ID="<{$val.InviteID}>" lay-filter="State" lay-text="启用|禁用">
+                </td>
+                <td align="center">
+                    <{$val.InviteTime}>
+                </td>
+            </tr>
+            <{/volist}>
+            </tbody>
+        </table>
+    </div>
+    <div class="layui-form layui-form-pane" style="margin-top: 10px;">
+        <div class="layui-form-item" style="float: left;">
+            <div class="layui-input-inline">
+                <select id="OperationType">
+                    <option value="0">请选择...</option>
+                    <option value="Del" url="<{:url('del')}>">批量删除</option>
+                </select>
+            </div>
+            <button class="layui-btn search" type="button" onclick="ExecuteCheck();">执行</button>
+        </div>
+        <div class="layui-box layui-laypage layui-laypage-default" style="float:right; margin: 0;">
+            <{$List->render()}>
+        </div>
+        <div class="clear"></div>
+    </div>
+</form>
+<{include file="public/admin_footer"}>

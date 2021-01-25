@@ -1,0 +1,351 @@
+<{include file="public/member_header" /}>
+
+<div class="am-cf admin-main">
+  <!-- sidebar start -->
+  <{include file="public/member_main" /}>
+  <!-- sidebar end -->
+
+  <!-- content start -->
+ <div class="admin-content">
+    <div class="admin-content-body">
+      <div class="am-cf am-padding am-padding-bottom-0">
+        <div class="am-fl am-cf am-btn-group">
+          <a href="<{:url('order/myorder')}>" class="am-btn am-btn-default am-btn-sm">媒体订单</a>
+		  <a href="<{:url('weorder/myorder')}>" class="am-btn am-btn-primary am-btn-sm">自媒体订单</a> 
+		   <a href="<{:url('Videoorder/myorder')}>" class="am-btn am-btn-default am-btn-sm">视频自媒体订单</a> 
+		  </div>
+      <hr>
+    </div>
+
+	<div class="am-g am-hide-sm-only">
+            <div class="am-u-sm-12 am-u-sm-centered">
+ 				  <form action="?" method="get" class="am-form-inline">
+                    <div class="am-form-group">
+                        <label for="title" class="am-form-label am-padding-left" style="white-space: nowrap">标题:</label>
+                        <input type="text" id="title" name="title" value="<{$UrlParam.title|default=''}>" class="am-form-field" autocomplete="off" placeholder="标题">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="ordernum" class="am-form-label am-padding-left" style="white-space: nowrap">订单号:</label>
+                        <input type="text" id="order" name="order" value="<{$UrlParam.order|default=''}>" class="am-form-field" autocomplete="off" placeholder="订单号">
+                    </div><br/><br/>
+                    <div class="am-form-group">
+                        <label for="start_time" class="am-form-label am-padding-left" style="white-space: nowrap">起始时间:</label>
+                        <input type="text" id="startdate" name="startdate" value="<{$UrlParam.startdate|default=''}>" class="am-form-field" data-am-datepicker placeholder="start" autocomplete="off">
+                    </div>
+                    <div class="am-form-group">
+                        <label for="end_time" class="am-form-label" style="white-space: nowrap">至:</label>
+                        <input type="text" id="enddate" name="enddate" value="<{$UrlParam.enddate|default=''}>" class="am-form-field" data-am-datepicker placeholder="end" autocomplete="off">
+                    </div>
+                    <div class="am-btn-group am-margin-left-xs">
+
+					<input type="submit" value="搜索" class="am-btn am-btn-primary">
+                     <!--<input type="button" id='exportbtn' onclick="ExportOrderExcel('<{:url('exportorderexcel')}>');"   value="导出订单" class="am-btn am-btn-success" style="margin-left: 16px">--->
+                     </div>
+                </form>
+            </div>
+            <hr>
+        </div>
+		<div class="am-g">
+            <div class="am-u-sm-12 am-margin-bottom-xs">
+                <div class="am-btn-group" id="status_change">
+					<a href="/member.php/weorder/myorder.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=-1&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="$UrlParam['status'] eq -1"}> am-btn-secondary<{else}>layui-btn-primary<{/if}>">全部</a> 
+					<a href="/member.php/weorder/myorder.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=0&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '0'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">未处理</a>
+					<a href="/member.php/weorder/myorder.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=1&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '1'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">发布中</a>
+					<a href="/member.php/weorder/myorder.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=2&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '2'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">已完成</a>
+					<a href="/member.php/weorder/myorder.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=3&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '3'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">已拒稿</a>
+					<a href="/member.php/weorder/myorder.html?article_customer=<{$UrlParam.article_customer|default=''}>&status=4&order=<{$UrlParam.order|default=''}>&title=<{$UrlParam.title|default=''}>&startdate=<{$UrlParam.startdate|default=''}>&enddate=<{$UrlParam.enddate|default=''}>" class="am-btn <{if condition="isset($UrlParam['status']) && $UrlParam['status'] eq '4'"}>am-btn-secondary<{else}>layui-btn-primary<{/if}>">已取消</a>
+                </div>
+            </div>
+        </div>
+
+	 
+<div class="am-g">
+  <div class="am-u-sm-12">
+    <div id="my_article_wrapper" class="dataTables_wrapper no-footer">
+      <table id="my_order" class="am-table am-table-bordered am-table-striped am-table-hover dataTable no-footer" style="width: 100%;" role="grid" aria-describedby="my_article_info">
+        <thead>
+          <tr role="row">
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 200px;">订单号</th>
+            <th class="sorting_disabled quart_td td250" rowspan="1" colspan="1" style="width: 183px;"><span class="am-hide-sm-only" style="display: inline !important;">文章</span>标题</th>
+            <th class="sorting_disabled quart_td td100" rowspan="1" colspan="1" style="width: 100px;"><span class="am-hide-sm-only" style="display: inline !important;">发布</span>网址</th>
+			<th class="sorting_disabled quart_td td200" rowspan="1" colspan="1" style="width: 100px;"><span class="am-hide-sm-only" style="display: inline !important;">平台</span>名称</th>
+            <th class="sorting_disabled quart_td td100" rowspan="1" colspan="1" style="width: 120px;"><span class="am-hide-sm-only" style="display: inline !important;">媒体</span>名称</th>
+             <th class="am-hide-sm-only sorting_disabled price_td" rowspan="1" colspan="1" style="width: 80px;">费用</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 80px;">状态</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 76px;">提交时间</th>
+            <th class="am-hide-sm-only sorting_disabled" rowspan="1" colspan="1" style="width: 76px;">发布时间</th>
+            <th class="sorting_disabled quart_td last_td" rowspan="1" colspan="1" style="width: 150px;">操作</th>
+          </tr>
+        </thead>
+        <tbody>
+		 <{volist name="list" id="v"}>
+          <tr role="row" class="odd">
+            <td class=" am-hide-sm-only"><{$v.order_number}></td>
+            <td class=" quart_td td250"><a href="/index/welook/id/<{$v.article_id}>" target="_blank" title='预览'><{$v.article_title}></a></td>
+            <td class=" quart_td td100">
+			<{if condition="$v.order_state eq 2"}>
+			<a href="<{$v.fabu_site}>" style="color:red;" target="_blank">点击查看</a>
+			<{/if}>
+			<br/>
+			<{$v.fabu_content}>
+			</td>
+			 <td class=" am-hide-sm-only"><{$v.mtmc}></td>
+            <td class=" quart_td td100"><{$v.media_name}></td>
+             <td class=" am-hide-sm-only price_td"><{$v.media_money}></td>
+            <td class=" am-hide-sm-only">
+ 			 <{if condition="$v['order_state'] eq 0"}>
+				<sapn style="color:red">未处理</sapn>
+				<{/if}>
+				<{if condition="$v['order_state'] eq 1"}>
+				<sapn style="color:red">发布中</sapn>
+				<{/if}>
+				<{if condition="$v['order_state'] eq 2"}>
+				已发布
+				<{/if}>
+				<{if condition="$v['order_state'] eq 3"}>
+				已退稿
+				<{/if}>
+				<{if condition="$v['order_state'] eq 4"}>
+				已取消
+				<{/if}>
+				 <{if condition="$v['order_state'] eq 5"}>
+				定时发送
+				<{/if}>
+			
+			</td>
+            <td class=" am-hide-sm-only"><{$v.order_time|date="Y-m-d H:i:s",###}></td>
+            <td class=" am-hide-sm-only">
+			<{if condition="$v.release_time"}>
+				<{$v.release_time|date="Y-m-d H:i:s",###}>
+			<{else/}>
+				未发布
+			<{/if}>
+			</td>
+            <td class=" quart_td last_td" data-config='{"id":<{$v.article_id}>,"media_name":"<{$v.media_name}>","title":" <{$v.article_title}>","ordernum":"<{$v.order_number}>","orderid":"<{$v.agencyorder_id}>","order_remark":"<{$v.article_remarks}>"}'>
+			<{if condition="$v['order_state'] eq 2"}>
+			<span class="opat copy"><button class="am-btn am-btn-default am-radius am-btn-xs">复制</button></span>
+			
+			<{/if}>
+			<{if condition="$v['order_state'] eq 0"}>
+			<span class="opat copy"><button class="am-btn am-btn-default am-radius am-btn-xs">复制</button></span>
+			<span class="opat"><a href="/member.php/weorder/edit/id/<{$v.article_id}>" class="am-btn am-btn-secondary am-radius am-btn-xs am-hide-sm-only">编辑</a></span>
+			<span class="opat collect"><button class="am-btn am-btn-success am-radius am-btn-xs">收稿</button></span>
+			<{/if}>
+
+			<{if condition="$v['order_state'] eq 1"}>
+			<span class="opat"><a href="/member.php/weorder/edit/id/<{$v.article_id}>" class="am-btn am-btn-secondary am-radius am-btn-xs am-hide-sm-only">编辑</a></span>
+			<span class="opat publish"><button class="am-btn am-btn-primary am-radius am-btn-xs">发布</button></span>
+			<span class="opat refuse"><button class="am-btn am-btn-danger am-radius am-btn-xs">拒稿</button></span>
+			<{/if}>
+			<{if condition="$v['order_state'] eq 3"}>
+			<span class="opat copy"><button class="am-btn am-btn-default am-radius am-btn-xs">复制</button></span>
+			已拒稿
+			<{/if}>
+ 			</td>
+          </tr>
+		  <{/volist}>
+        </tbody>
+      </table>
+      <div class="clear"></div>
+    </div>
+	<div style="float:right;margin-right:100px;"> <{$list->render()}></div>
+  </div>
+</div>
+
+</div>
+<{include file="public/member_footer" /}>
+<textarea id="copy_text" style="position: absolute;left:-9999px;"></textarea>
+
+
+<div class="am-modal am-modal-alert am-modal-active" tabindex="-1" id="my-alert" style="display: none;">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd">提示</div>
+        <div class="am-modal-bd"> </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn">确定</span>
+        </div>
+    </div>
+</div>
+
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-confirm1">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="pub_head">title</div>
+        <div class="am-modal-bd" style="overflow: hidden">
+            <div class="am-form-group">
+                <form id="dia_form_1" class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label class="am-u-sm-3 am-form-label am-padding-right-0" id="pub_name">媒体名称</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="pub_url" value="" placeholder="请输入网址" required autocomplete="off">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel>取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm>确定</span>
+        </div>
+    </div>
+</div>
+
+<div class="am-modal am-modal-prompt" tabindex="-1" id="my-confirm2">
+    <div class="am-modal-dialog">
+        <div class="am-modal-hd" id="refuse_head">title</div>
+        <div class="am-modal-bd" style="overflow: hidden">
+            <div class="am-form-group">
+                <form id="dia_form_2" class="am-form am-form-horizontal">
+                    <div class="am-form-group">
+                        <label class="am-u-sm-3 am-form-label am-padding-right-0">拒绝原因</label>
+                        <div class="am-u-sm-9">
+                            <select id="reason1">
+                                <option value="">请选择</option>
+                                <option value="内容不适合"> 内容不适合</option>
+                                <option value="无有效来源">无有效来源</option>
+                                <option value="已截稿">已截稿</option>
+                                <option value="暂停收稿">暂停收稿</option>
+                                <option value="重复提交">重复提交</option>
+                                <option value="网站故障">网站故障</option>
+                                <option value="标题不行">标题不行</option>
+                                <option value="客户要求取消">客户要求取消</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="am-form-group">
+                        <label class="am-u-sm-3 am-form-label am-padding-right-0" id="reason_label2">其他原因</label>
+                        <div class="am-u-sm-9">
+                            <input type="text" id="reason2" value="" placeholder="不可带联系方式及媒体成本,否则予以封号" autocomplete="off">
+                        </div>
+                    </div>
+                    <div class="am-form-group" id="error_reason" style="display: none;">
+                        <span class="text_red">*请选择或填写拒稿理由</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="am-modal-footer">
+            <span class="am-modal-btn" data-am-modal-cancel="">取消</span>
+            <span class="am-modal-btn" data-am-modal-confirm="">确定</span>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="__STATIC__/lib/layui/css/layui.css" />
+<script type="text/javascript" src="__STATIC__/lib/layui/layui.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+    function ExportOrderExcel(Url){
+        var order=$('#order').val();
+        var title=$('#title').val();
+        var startdate=$('#startdate').val();
+        var enddate=$('#enddate').val();
+        location.href=Url+'?order='+order+'&title='+title+'&startdate='+startdate+'&enddate='+enddate;
+    }
+</script>
+
+<script>
+    $(".msg_count").each(function () {
+        var val = $(this).html();
+        if(val != "0" && val != ""){$(this).show()}
+    });
+    $("#status_change").on("click", "button", function () {
+        $(this).addClass("am-btn-secondary").siblings().removeClass("am-btn-secondary");
+    });
+	var my_order = $("#my_order");
+    my_order.on("click", "span.opat", function(){
+        var _t = $(this),
+            _class = this.className.slice(5),
+            data_config = _t.closest("td").attr("data-config"),
+            config = JSON.parse(data_config);
+        switch (_class) {
+            case "copy":
+                var remark = '';
+                if(config.order_remark){
+                    remark = "备注：" + config.order_remark;
+                }
+                var str = config.title+'\n'+"http://www.zxal.cn/index/welook/id/" +config.id+'\n'+ config.media_name;
+                var copy_text = document.getElementById("copy_text");
+                copy_text.value = str + '\n' + remark;
+                copy_text.select();
+                copy_text.setSelectionRange(0, copy_text.value.length);
+                document.execCommand('Copy');
+                $("#my-alert").find(".am-modal-bd").html("<p>复制成功，内容如下：<p>" + str + '<br>' + remark).end().modal('open');
+                break;
+
+            case "publish"://发稿
+                $("#pub_head").html(config.title);
+                $("#pub_name").html(config.media_name);
+                $("#pub_url").val("");
+                $("#my-confirm1").attr("data-config",data_config).modal({
+                    relatedTarget: this,
+                    closeOnConfirm: false,
+                    onConfirm: function(options) {
+                        var is_all_right = $("#dia_form_1").validator('isFormValid');
+                        var pub_url = $("#pub_url").val();
+                        if(!is_all_right || !pub_url){return;}
+                        config = JSON.parse($("#my-confirm1").attr("data-config"));
+                        $.post('/member.php/weorder/publish/',{ordernum:config.ordernum,url:pub_url},function(data){
+                            if(data.code === 200){
+                                $("#my-alert").find(".am-modal-bd").html(data.msg).end().modal('open');
+								setTimeout(function(){window.location.reload(true);},2000);
+                            }else{
+                                $("#my-alert").find(".am-modal-bd").html(data.msg).end().modal('open');
+								setTimeout(function(){window.location.reload(true);},2000);
+                            }
+                            $("#my-confirm1").modal("close");
+                        });
+                    }
+                });
+                break;
+            case "collect"://收稿
+                $.post('/member.php/weorder/collect',{ordernum:config.ordernum},function(data){
+                    var msg = "";
+                    if(data.code==200){
+                        msg = '<span class="text_green"><span class="am-icon-check"></span>'+ data.msg +'</span>';
+                    }else{
+                        msg = '<span class="text_red"><span class="am-icon-close" style="font-size: 36px;vertical-align: sub;"></span> &nbsp;'+ data.msg +'</span>';
+                    }
+					$("#my-alert").find(".am-modal-bd").html(msg).end().modal('open');
+					setTimeout(function(){window.location.reload(true);},2000);
+                });
+                break;
+            case "refuse"://拒稿
+                $("#refuse_head").html(config.title);
+                $("#pub_name2").html(config.media_name);
+                $("#reason1").val("");
+                $("#reason2").val("");
+                $("#my-confirm2").attr("data-config",data_config).modal({
+                    relatedTarget: this,
+                    closeViaDimmer: false,
+                    closeOnConfirm: false,
+                    onConfirm: function(options) {
+                        var reason1=$('#reason1').val();
+                        var reason2=$('#reason2').val();
+                        var reason=reason1+ " " +reason2;
+                        var reg = /(http|https):\/\/([\w.]+\/?)\S*/;
+                        config = JSON.parse($("#my-confirm2").attr("data-config"));                        
+                        if(!(reason1 || reason2)){
+                            $("#error_reason .text_red").html("* 请选择或填写拒稿理由");
+                            $("#error_reason").show();
+                        } else {
+                            if(reg.test(reason2)){
+                                $("#error_reason .text_red").html("* 拒稿理由中不能包含url链接");
+                                $("#error_reason").show();
+                            } else {
+                                $.post('/member.php/weorder/refuse',{ordernum:config.ordernum,orderid:config.orderid,reason:reason},function(data){
+                                    $("#my-confirm2").modal("close");
+                                    $("#error_reason").hide();									setTimeout(function(){window.location.reload(true);},2000);
+                                });
+                            }
+                        }
+                    },
+                    onCancel: function() {
+                        $("#error_reason").hide();
+                    }
+                });
+                break;
+        }
+    });
+</script>
