@@ -30,17 +30,29 @@
 
 ## 数据库选择
 
+
 默认采用mysql数据库，请导入数据库文件（xxx.sql）并修改数据库连接文件信息（/app/database.php）
+
 return [
+
   // 数据库类型
+
   'type'           => 'mysql',//无需修改
+
   // 服务器地址
+
   'hostname'       => '127.0.0.1',//默认127.0.0.1 或 localhost
+
   // 数据库名
+
   'database'       => 'meitishare',//您创建的数据库名称
+
   // 用户名
+
   'username'       => 'root',//数据库账户
+
   // 密码
+
   'password'       => 'root',//数据库密码
 
 ## 目录结构
