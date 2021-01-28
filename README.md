@@ -4,7 +4,7 @@
 
 详细开发文档参考 [法旅新媒体开源系统MJv1.0手册](https://www.showdoc.com.cn/p/329804f941ebb9addaf6aea89cfc0308)
 
-demo演示地址 [法旅新媒体开源系统演示地址](http://www.zxal.cn)
+demo演示地址 [法旅新媒体开源系统演示地址](http://www.zxal.cn/member.php/login/index.html)
 
 注册邀请码：88888
 
